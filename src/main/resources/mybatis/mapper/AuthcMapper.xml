@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pers.tandy.chis.modules.systemmanagement.dao.AuthcMapper">
+  <resultMap id="BaseResultMap" type="pers.tandy.chis.modules.systemmanagement.bean.Authc">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="module_order" jdbcType="INTEGER" property="moduleOrder" />
+    <result column="module_name" jdbcType="VARCHAR" property="moduleName" />
+    <result column="module_index" jdbcType="VARCHAR" property="moduleIndex" />
+    <result column="menu_order" jdbcType="INTEGER" property="menuOrder" />
+    <result column="menu_name" jdbcType="VARCHAR" property="menuName" />
+    <result column="menu_index" jdbcType="VARCHAR" property="menuIndex" />
+    <result column="path_order" jdbcType="INTEGER" property="pathOrder" />
+    <result column="path_name" jdbcType="VARCHAR" property="pathName" />
+    <result column="path_index" jdbcType="VARCHAR" property="pathIndex" />
+    <result column="role_names" jdbcType="VARCHAR" property="roleNames" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, module_order, module_name, module_index, menu_order, menu_name, menu_index, path_order,
+    path_name, path_index, role_names
+  </sql>
+  <select id="selectByExample" parameterType="pers.tandy.chis.modules.systemmanagement.bean.AuthcExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sys_authc
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sys_authc
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sys_authc
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="pers.tandy.chis.modules.systemmanagement.bean.AuthcExample">
+    delete from sys_authc
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="pers.tandy.chis.modules.systemmanagement.bean.Authc">
+    insert into sys_authc (id, module_order, module_name,
+      module_index, menu_order, menu_name,
+      menu_index, path_order, path_name,
+      path_index, role_names)
+    values (#{id,jdbcType=INTEGER}, #{moduleOrder,jdbcType=INTEGER}, #{moduleName,jdbcType=VARCHAR},
+      #{moduleIndex,jdbcType=VARCHAR}, #{menuOrder,jdbcType=INTEGER}, #{menuName,jdbcType=VARCHAR},
+      #{menuIndex,jdbcType=VARCHAR}, #{pathOrder,jdbcType=INTEGER}, #{pathName,jdbcType=VARCHAR},
+      #{pathIndex,jdbcType=VARCHAR}, #{roleNames,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="pers.tandy.chis.modules.systemmanagement.bean.Authc">
+    insert into sys_authc
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="moduleOrder != null">
+        module_order,
+      </if>
+      <if test="moduleName != null">
+        module_name,
+      </if>
+      <if test="moduleIndex != null">
+        module_index,
+      </if>
+      <if test="menuOrder != null">
+        menu_order,
+      </if>
+      <if test="menuName != null">
+        menu_name,
+      </if>
+      <if test="menuIndex != null">
+        menu_index,
+      </if>
+      <if test="pathOrder != null">
+        path_order,
+      </if>
+      <if test="pathName != null">
+        path_name,
+      </if>
+      <if test="pathIndex != null">
+        path_index,
+      </if>
+      <if test="roleNames != null">
+        role_names,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="moduleOrder != null">
+        #{moduleOrder,jdbcType=INTEGER},
+      </if>
+      <if test="moduleName != null">
+        #{moduleName,jdbcType=VARCHAR},
+      </if>
+      <if test="moduleIndex != null">
+        #{moduleIndex,jdbcType=VARCHAR},
+      </if>
+      <if test="menuOrder != null">
+        #{menuOrder,jdbcType=INTEGER},
+      </if>
+      <if test="menuName != null">
+        #{menuName,jdbcType=VARCHAR},
+      </if>
+      <if test="menuIndex != null">
+        #{menuIndex,jdbcType=VARCHAR},
+      </if>
+      <if test="pathOrder != null">
+        #{pathOrder,jdbcType=INTEGER},
+      </if>
+      <if test="pathName != null">
+        #{pathName,jdbcType=VARCHAR},
+      </if>
+      <if test="pathIndex != null">
+        #{pathIndex,jdbcType=VARCHAR},
+      </if>
+      <if test="roleNames != null">
+        #{roleNames,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="pers.tandy.chis.modules.systemmanagement.bean.AuthcExample" resultType="java.lang.Long">
+    select count(*) from sys_authc
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update sys_authc
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.moduleOrder != null">
+        module_order = #{record.moduleOrder,jdbcType=INTEGER},
+      </if>
+      <if test="record.moduleName != null">
+        module_name = #{record.moduleName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.moduleIndex != null">
+        module_index = #{record.moduleIndex,jdbcType=VARCHAR},
+      </if>
+      <if test="record.menuOrder != null">
+        menu_order = #{record.menuOrder,jdbcType=INTEGER},
+      </if>
+      <if test="record.menuName != null">
+        menu_name = #{record.menuName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.menuIndex != null">
+        menu_index = #{record.menuIndex,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pathOrder != null">
+        path_order = #{record.pathOrder,jdbcType=INTEGER},
+      </if>
+      <if test="record.pathName != null">
+        path_name = #{record.pathName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pathIndex != null">
+        path_index = #{record.pathIndex,jdbcType=VARCHAR},
+      </if>
+      <if test="record.roleNames != null">
+        role_names = #{record.roleNames,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update sys_authc
+    set id = #{record.id,jdbcType=INTEGER},
+      module_order = #{record.moduleOrder,jdbcType=INTEGER},
+      module_name = #{record.moduleName,jdbcType=VARCHAR},
+      module_index = #{record.moduleIndex,jdbcType=VARCHAR},
+      menu_order = #{record.menuOrder,jdbcType=INTEGER},
+      menu_name = #{record.menuName,jdbcType=VARCHAR},
+      menu_index = #{record.menuIndex,jdbcType=VARCHAR},
+      path_order = #{record.pathOrder,jdbcType=INTEGER},
+      path_name = #{record.pathName,jdbcType=VARCHAR},
+      path_index = #{record.pathIndex,jdbcType=VARCHAR},
+      role_names = #{record.roleNames,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="pers.tandy.chis.modules.systemmanagement.bean.Authc">
+    update sys_authc
+    <set>
+      <if test="moduleOrder != null">
+        module_order = #{moduleOrder,jdbcType=INTEGER},
+      </if>
+      <if test="moduleName != null">
+        module_name = #{moduleName,jdbcType=VARCHAR},
+      </if>
+      <if test="moduleIndex != null">
+        module_index = #{moduleIndex,jdbcType=VARCHAR},
+      </if>
+      <if test="menuOrder != null">
+        menu_order = #{menuOrder,jdbcType=INTEGER},
+      </if>
+      <if test="menuName != null">
+        menu_name = #{menuName,jdbcType=VARCHAR},
+      </if>
+      <if test="menuIndex != null">
+        menu_index = #{menuIndex,jdbcType=VARCHAR},
+      </if>
+      <if test="pathOrder != null">
+        path_order = #{pathOrder,jdbcType=INTEGER},
+      </if>
+      <if test="pathName != null">
+        path_name = #{pathName,jdbcType=VARCHAR},
+      </if>
+      <if test="pathIndex != null">
+        path_index = #{pathIndex,jdbcType=VARCHAR},
+      </if>
+      <if test="roleNames != null">
+        role_names = #{roleNames,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="pers.tandy.chis.modules.systemmanagement.bean.Authc">
+    update sys_authc
+    set module_order = #{moduleOrder,jdbcType=INTEGER},
+      module_name = #{moduleName,jdbcType=VARCHAR},
+      module_index = #{moduleIndex,jdbcType=VARCHAR},
+      menu_order = #{menuOrder,jdbcType=INTEGER},
+      menu_name = #{menuName,jdbcType=VARCHAR},
+      menu_index = #{menuIndex,jdbcType=VARCHAR},
+      path_order = #{pathOrder,jdbcType=INTEGER},
+      path_name = #{pathName,jdbcType=VARCHAR},
+      path_index = #{pathIndex,jdbcType=VARCHAR},
+      role_names = #{roleNames,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <!--********************************************************************************************-->
+  <update id="updateRoleNamesByMap" parameterType="java.util.Map">
+    <foreach collection="_parameter.entrySet()" index="id" item="roleNames">
+      UPDATE sys_authc
+      SET role_names=#{roleNames}
+      WHERE id=#{id};
+    </foreach>
+  </update>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</mapper>

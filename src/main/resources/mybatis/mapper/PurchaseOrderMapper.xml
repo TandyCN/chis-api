@@ -1,0 +1,532 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pers.tandy.chis.modules.purchasemanagement.dao.PurchaseOrderMapper">
+  <resultMap id="BaseResultMap" type="pers.tandy.chis.modules.purchasemanagement.bean.PurchaseOrder">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="lsh" jdbcType="VARCHAR" property="lsh" />
+    <result column="mxh" jdbcType="VARCHAR" property="mxh" />
+    <result column="gsm_goods_id" jdbcType="INTEGER" property="gsmGoodsId" />
+    <result column="plan_quantity" jdbcType="SMALLINT" property="planQuantity" />
+    <result column="purchase_quantity" jdbcType="SMALLINT" property="purchaseQuantity" />
+    <result column="purchase_price" jdbcType="REAL" property="purchasePrice" />
+    <result column="sys_clinic_id" jdbcType="INTEGER" property="sysClinicId" />
+    <result column="pem_supplier_id" jdbcType="INTEGER" property="pemSupplierId" />
+    <result column="pem_purchase_plan_id" jdbcType="INTEGER" property="pemPurchasePlanId" />
+    <result column="creator_id" jdbcType="INTEGER" property="creatorId" />
+    <result column="creation_date" jdbcType="DATE" property="creationDate" />
+    <result column="approver_id" jdbcType="INTEGER" property="approverId" />
+    <result column="approve_date" jdbcType="DATE" property="approveDate" />
+    <result column="approve_state" jdbcType="TINYINT" property="approveState" />
+    <result column="inventory_state" jdbcType="BIT" property="inventoryState" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, lsh, mxh, gsm_goods_id, plan_quantity, purchase_quantity, purchase_price, sys_clinic_id,
+    pem_supplier_id, pem_purchase_plan_id, creator_id, creation_date, approver_id, approve_date,
+    approve_state, inventory_state
+  </sql>
+  <select id="selectByExample" parameterType="pers.tandy.chis.modules.purchasemanagement.bean.PurchaseOrderExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from pem_purchase_order
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from pem_purchase_order
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from pem_purchase_order
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="pers.tandy.chis.modules.purchasemanagement.bean.PurchaseOrderExample">
+    delete from pem_purchase_order
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="pers.tandy.chis.modules.purchasemanagement.bean.PurchaseOrder">
+    insert into pem_purchase_order (id, lsh, mxh,
+      gsm_goods_id, plan_quantity, purchase_quantity,
+      purchase_price, sys_clinic_id, pem_supplier_id,
+      pem_purchase_plan_id, creator_id, creation_date,
+      approver_id, approve_date, approve_state,
+      inventory_state)
+    values (#{id,jdbcType=INTEGER}, #{lsh,jdbcType=VARCHAR}, #{mxh,jdbcType=VARCHAR},
+      #{gsmGoodsId,jdbcType=INTEGER}, #{planQuantity,jdbcType=SMALLINT}, #{purchaseQuantity,jdbcType=SMALLINT},
+      #{purchasePrice,jdbcType=REAL}, #{sysClinicId,jdbcType=INTEGER}, #{pemSupplierId,jdbcType=INTEGER},
+      #{pemPurchasePlanId,jdbcType=INTEGER}, #{creatorId,jdbcType=INTEGER}, #{creationDate,jdbcType=DATE},
+      #{approverId,jdbcType=INTEGER}, #{approveDate,jdbcType=DATE}, #{approveState,jdbcType=TINYINT},
+      #{inventoryState,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="pers.tandy.chis.modules.purchasemanagement.bean.PurchaseOrder">
+    insert into pem_purchase_order
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="lsh != null">
+        lsh,
+      </if>
+      <if test="mxh != null">
+        mxh,
+      </if>
+      <if test="gsmGoodsId != null">
+        gsm_goods_id,
+      </if>
+      <if test="planQuantity != null">
+        plan_quantity,
+      </if>
+      <if test="purchaseQuantity != null">
+        purchase_quantity,
+      </if>
+      <if test="purchasePrice != null">
+        purchase_price,
+      </if>
+      <if test="sysClinicId != null">
+        sys_clinic_id,
+      </if>
+      <if test="pemSupplierId != null">
+        pem_supplier_id,
+      </if>
+      <if test="pemPurchasePlanId != null">
+        pem_purchase_plan_id,
+      </if>
+      <if test="creatorId != null">
+        creator_id,
+      </if>
+      <if test="creationDate != null">
+        creation_date,
+      </if>
+      <if test="approverId != null">
+        approver_id,
+      </if>
+      <if test="approveDate != null">
+        approve_date,
+      </if>
+      <if test="approveState != null">
+        approve_state,
+      </if>
+      <if test="inventoryState != null">
+        inventory_state,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="lsh != null">
+        #{lsh,jdbcType=VARCHAR},
+      </if>
+      <if test="mxh != null">
+        #{mxh,jdbcType=VARCHAR},
+      </if>
+      <if test="gsmGoodsId != null">
+        #{gsmGoodsId,jdbcType=INTEGER},
+      </if>
+      <if test="planQuantity != null">
+        #{planQuantity,jdbcType=SMALLINT},
+      </if>
+      <if test="purchaseQuantity != null">
+        #{purchaseQuantity,jdbcType=SMALLINT},
+      </if>
+      <if test="purchasePrice != null">
+        #{purchasePrice,jdbcType=REAL},
+      </if>
+      <if test="sysClinicId != null">
+        #{sysClinicId,jdbcType=INTEGER},
+      </if>
+      <if test="pemSupplierId != null">
+        #{pemSupplierId,jdbcType=INTEGER},
+      </if>
+      <if test="pemPurchasePlanId != null">
+        #{pemPurchasePlanId,jdbcType=INTEGER},
+      </if>
+      <if test="creatorId != null">
+        #{creatorId,jdbcType=INTEGER},
+      </if>
+      <if test="creationDate != null">
+        #{creationDate,jdbcType=DATE},
+      </if>
+      <if test="approverId != null">
+        #{approverId,jdbcType=INTEGER},
+      </if>
+      <if test="approveDate != null">
+        #{approveDate,jdbcType=DATE},
+      </if>
+      <if test="approveState != null">
+        #{approveState,jdbcType=TINYINT},
+      </if>
+      <if test="inventoryState != null">
+        #{inventoryState,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="pers.tandy.chis.modules.purchasemanagement.bean.PurchaseOrderExample" resultType="java.lang.Long">
+    select count(*) from pem_purchase_order
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update pem_purchase_order
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.lsh != null">
+        lsh = #{record.lsh,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mxh != null">
+        mxh = #{record.mxh,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gsmGoodsId != null">
+        gsm_goods_id = #{record.gsmGoodsId,jdbcType=INTEGER},
+      </if>
+      <if test="record.planQuantity != null">
+        plan_quantity = #{record.planQuantity,jdbcType=SMALLINT},
+      </if>
+      <if test="record.purchaseQuantity != null">
+        purchase_quantity = #{record.purchaseQuantity,jdbcType=SMALLINT},
+      </if>
+      <if test="record.purchasePrice != null">
+        purchase_price = #{record.purchasePrice,jdbcType=REAL},
+      </if>
+      <if test="record.sysClinicId != null">
+        sys_clinic_id = #{record.sysClinicId,jdbcType=INTEGER},
+      </if>
+      <if test="record.pemSupplierId != null">
+        pem_supplier_id = #{record.pemSupplierId,jdbcType=INTEGER},
+      </if>
+      <if test="record.pemPurchasePlanId != null">
+        pem_purchase_plan_id = #{record.pemPurchasePlanId,jdbcType=INTEGER},
+      </if>
+      <if test="record.creatorId != null">
+        creator_id = #{record.creatorId,jdbcType=INTEGER},
+      </if>
+      <if test="record.creationDate != null">
+        creation_date = #{record.creationDate,jdbcType=DATE},
+      </if>
+      <if test="record.approverId != null">
+        approver_id = #{record.approverId,jdbcType=INTEGER},
+      </if>
+      <if test="record.approveDate != null">
+        approve_date = #{record.approveDate,jdbcType=DATE},
+      </if>
+      <if test="record.approveState != null">
+        approve_state = #{record.approveState,jdbcType=TINYINT},
+      </if>
+      <if test="record.inventoryState != null">
+        inventory_state = #{record.inventoryState,jdbcType=BIT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update pem_purchase_order
+    set id = #{record.id,jdbcType=INTEGER},
+      lsh = #{record.lsh,jdbcType=VARCHAR},
+      mxh = #{record.mxh,jdbcType=VARCHAR},
+      gsm_goods_id = #{record.gsmGoodsId,jdbcType=INTEGER},
+      plan_quantity = #{record.planQuantity,jdbcType=SMALLINT},
+      purchase_quantity = #{record.purchaseQuantity,jdbcType=SMALLINT},
+      purchase_price = #{record.purchasePrice,jdbcType=REAL},
+      sys_clinic_id = #{record.sysClinicId,jdbcType=INTEGER},
+      pem_supplier_id = #{record.pemSupplierId,jdbcType=INTEGER},
+      pem_purchase_plan_id = #{record.pemPurchasePlanId,jdbcType=INTEGER},
+      creator_id = #{record.creatorId,jdbcType=INTEGER},
+      creation_date = #{record.creationDate,jdbcType=DATE},
+      approver_id = #{record.approverId,jdbcType=INTEGER},
+      approve_date = #{record.approveDate,jdbcType=DATE},
+      approve_state = #{record.approveState,jdbcType=TINYINT},
+      inventory_state = #{record.inventoryState,jdbcType=BIT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="pers.tandy.chis.modules.purchasemanagement.bean.PurchaseOrder">
+    update pem_purchase_order
+    <set>
+      <if test="lsh != null">
+        lsh = #{lsh,jdbcType=VARCHAR},
+      </if>
+      <if test="mxh != null">
+        mxh = #{mxh,jdbcType=VARCHAR},
+      </if>
+      <if test="gsmGoodsId != null">
+        gsm_goods_id = #{gsmGoodsId,jdbcType=INTEGER},
+      </if>
+      <if test="planQuantity != null">
+        plan_quantity = #{planQuantity,jdbcType=SMALLINT},
+      </if>
+      <if test="purchaseQuantity != null">
+        purchase_quantity = #{purchaseQuantity,jdbcType=SMALLINT},
+      </if>
+      <if test="purchasePrice != null">
+        purchase_price = #{purchasePrice,jdbcType=REAL},
+      </if>
+      <if test="sysClinicId != null">
+        sys_clinic_id = #{sysClinicId,jdbcType=INTEGER},
+      </if>
+      <if test="pemSupplierId != null">
+        pem_supplier_id = #{pemSupplierId,jdbcType=INTEGER},
+      </if>
+      <if test="pemPurchasePlanId != null">
+        pem_purchase_plan_id = #{pemPurchasePlanId,jdbcType=INTEGER},
+      </if>
+      <if test="creatorId != null">
+        creator_id = #{creatorId,jdbcType=INTEGER},
+      </if>
+      <if test="creationDate != null">
+        creation_date = #{creationDate,jdbcType=DATE},
+      </if>
+      <if test="approverId != null">
+        approver_id = #{approverId,jdbcType=INTEGER},
+      </if>
+      <if test="approveDate != null">
+        approve_date = #{approveDate,jdbcType=DATE},
+      </if>
+      <if test="approveState != null">
+        approve_state = #{approveState,jdbcType=TINYINT},
+      </if>
+      <if test="inventoryState != null">
+        inventory_state = #{inventoryState,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="pers.tandy.chis.modules.purchasemanagement.bean.PurchaseOrder">
+    update pem_purchase_order
+    set lsh = #{lsh,jdbcType=VARCHAR},
+      mxh = #{mxh,jdbcType=VARCHAR},
+      gsm_goods_id = #{gsmGoodsId,jdbcType=INTEGER},
+      plan_quantity = #{planQuantity,jdbcType=SMALLINT},
+      purchase_quantity = #{purchaseQuantity,jdbcType=SMALLINT},
+      purchase_price = #{purchasePrice,jdbcType=REAL},
+      sys_clinic_id = #{sysClinicId,jdbcType=INTEGER},
+      pem_supplier_id = #{pemSupplierId,jdbcType=INTEGER},
+      pem_purchase_plan_id = #{pemPurchasePlanId,jdbcType=INTEGER},
+      creator_id = #{creatorId,jdbcType=INTEGER},
+      creation_date = #{creationDate,jdbcType=DATE},
+      approver_id = #{approverId,jdbcType=INTEGER},
+      approve_date = #{approveDate,jdbcType=DATE},
+      approve_state = #{approveState,jdbcType=TINYINT},
+      inventory_state = #{inventoryState,jdbcType=BIT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+
+  <!-- ************************************************************************************************************* -->
+
+  <insert id="insertList">
+    insert into pem_purchase_order
+    (
+    id,
+    lsh,
+    mxh,
+    gsm_goods_id,
+    plan_quantity,
+    purchase_quantity,
+    purchase_price,
+    sys_clinic_id,
+    pem_supplier_id,
+    pem_purchase_plan_id,
+    creator_id,
+    creation_date,
+    approver_id,
+    approve_date,
+    approve_state,
+    inventory_state
+    )
+    values
+    <foreach collection="poList" item="order" separator=",">
+      (
+      #{order.id,jdbcType=INTEGER},
+      #{order.lsh,jdbcType=VARCHAR},
+      #{order.mxh,jdbcType=VARCHAR},
+      #{order.gsmGoodsId,jdbcType=INTEGER},
+      #{order.planQuantity,jdbcType=SMALLINT},
+      #{order.purchaseQuantity,jdbcType=SMALLINT},
+      #{order.purchasePrice,jdbcType=REAL},
+      #{order.sysClinicId,jdbcType=INTEGER},
+      #{order.pemSupplierId,jdbcType=INTEGER},
+      #{order.pemPurchasePlanId,jdbcType=INTEGER},
+      #{order.creatorId,jdbcType=INTEGER},
+      #{order.creationDate,jdbcType=DATE},
+      #{order.approverId,jdbcType=INTEGER},
+      #{order.approveDate,jdbcType=DATE},
+      #{order.approveState,jdbcType=TINYINT},
+      #{order.inventoryState,jdbcType=BIT}
+      )
+    </foreach>
+  </insert>
+
+  <update id="updateApproveStateByLsh">
+    update pem_purchase_order
+    set approver_id = #{approverId}, approve_date = #{approveDate}, approve_state = #{updateApproveState}
+    where lsh = #{lsh} and approve_state = #{currentApproveState}
+  </update>
+
+  <update id="updateInventoryStateByCriteria">
+    update pem_purchase_order
+    set inventory_state = #{inventoryState}
+    where lsh = #{lsh} and sys_clinic_id = #{sysClinicId}
+  </update>
+
+  <select id="selectLshGroupListByCriteria" resultType="map">
+    select
+    creationDate, lsh, pemSupplierName, sum(purchaseQuantity * purchasePrice) as totalPurchasePrice,
+    creatorName, approverName, approveDate, approveState
+    from view_pem_purchase_order
+    <trim prefix="where" suffixOverrides="and">
+      <if test="creationDate != null &amp;&amp; creationDate.length == 2">
+        (creationDate between #{creationDate[0]} and #{creationDate[1]}) and
+      </if>
+      <if test="approveState != null">
+        (approveState = #{approveState}) and
+      </if>
+      <if test="lsh != null &amp;&amp; lsh.trim() != ''">
+        (lsh = #{lsh}) and
+      </if>
+      <if test="pemSupplierName != null &amp;&amp; pemSupplierName.trim() != ''">
+        (pemSupplierName like '${pemSupplierName}%' or pemSupplierCode like '${pemSupplierName}%') and
+      </if>
+    </trim>
+    group by lsh
+    order by creationDate desc, lsh desc
+  </select>
+
+  <select id="selectGoodsGroupListByLsh" resultType="map">
+    select
+      lsh, gsmGoodsTypeName, gsmGoodsId, gsmGoodsOid, gsmGoodsName, gsmGoodsSpecs, goodsUnitsName,
+      sum(planQuantity) as planQuantity,sum(purchaseQuantity) as purchaseQuantity, purchasePrice,
+      sum(purchaseQuantity * purchasePrice) as totalPurchasePrice, originName, manufacturerName,
+      approveState
+    from view_pem_purchase_order
+    where lsh = #{lsh}
+    group by gsmGoodsId
+    order by gsmGoodsOid
+  </select>
+
+  <select id="selectClinicLshGroupListByInventoryState" resultType="map">
+    select
+      creationDate, lsh, pemSupplierName, sysClinicName,
+      sum(purchaseQuantity * purchasePrice) as totalPurchasePrice, creatorName, inventoryState
+    from view_pem_purchase_order
+    <trim prefix="where" suffixOverrides="and">
+      <if test="sysClinicId != null">
+        (sysClinicId = #{sysClinicId}) and
+      </if>
+      <if test="inventoryState != null">
+        (inventoryState = #{inventoryState}) and
+      </if>
+    </trim>
+    group by lsh
+    order by creationDate desc, lsh desc
+  </select>
+
+  <select id="selectClinicListByLsh" resultType="map">
+    select *
+    from view_pem_purchase_order
+    where lsh = #{lsh} and sysClinicId = #{sysClinicId}
+  </select>
+
+  <select id="selectTrackListByLsh" resultType="map">
+    SELECT
+    a.id, a.sysClinicId, a.sysClinicName, a.gsmGoodsTypeName, a.gsmGoodsId, a.gsmGoodsOid,
+    a.gsmGoodsName, a.gsmGoodsSpecs, a.goodsUnitsName,a.retailPrice, a.manufacturerName, a.originName,
+    b.ph , b.pch, b.quantity as addQuantity, b.cost_price as addCostPrice,
+    b.expiry_date as expiryDate, b.approve_state as addApproveState,
+    c.inventoryQuantity
+    FROM (
+	  SELECT *
+	  FROM view_pem_purchase_order
+	  WHERE lsh = #{lsh}
+    ) a
+    LEFT JOIN iym_inventory_add b ON a.id = b.`pem_purchase_order_id`
+    LEFT JOIN (
+	  SELECT iym_inventory_add_id, sum(quantity) as inventoryQuantity
+	  FROM iym_inventory
+	  WHERE split_quantity = 1
+	  GROUP BY iym_inventory_add_id
+    ) c ON b.id = c.`iym_inventory_add_id`
+  </select>
+
+
+
+
+
+
+
+
+
+</mapper>

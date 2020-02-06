@@ -1,0 +1,413 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pers.tandy.chis.modules.doctorworkstation.dao.ClinicalHistoryMapper">
+  <resultMap id="BaseResultMap" type="pers.tandy.chis.modules.doctorworkstation.bean.ClinicalHistory">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="mrm_member_id" jdbcType="INTEGER" property="mrmMemberId" />
+    <result column="chief_complaint" jdbcType="VARCHAR" property="chiefComplaint" />
+    <result column="present_illness" jdbcType="VARCHAR" property="presentIllness" />
+    <result column="physical_examination" jdbcType="VARCHAR" property="physicalExamination" />
+    <result column="past_history" jdbcType="VARCHAR" property="pastHistory" />
+    <result column="allergen_history" jdbcType="VARCHAR" property="allergenHistory" />
+    <result column="auxiliary_examination" jdbcType="VARCHAR" property="auxiliaryExamination" />
+    <result column="dialectical" jdbcType="VARCHAR" property="dialectical" />
+    <result column="diagnose_json" jdbcType="VARCHAR" property="diagnoseJson" />
+    <result column="dwt_diagnose_type_id" jdbcType="INTEGER" property="dwtDiagnoseTypeId" />
+    <result column="finished" jdbcType="BIT" property="finished" />
+    <result column="sys_doctor_id" jdbcType="INTEGER" property="sysDoctorId" />
+    <result column="creation_date" jdbcType="TIMESTAMP" property="creationDate" />
+    <result column="sys_clinic_id" jdbcType="INTEGER" property="sysClinicId" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, mrm_member_id, chief_complaint, present_illness, physical_examination, past_history,
+    allergen_history, auxiliary_examination, dialectical, diagnose_json, dwt_diagnose_type_id,
+    finished, sys_doctor_id, creation_date, sys_clinic_id
+  </sql>
+  <select id="selectByExample" parameterType="pers.tandy.chis.modules.doctorworkstation.bean.ClinicalHistoryExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from dwt_clinical_history
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from dwt_clinical_history
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from dwt_clinical_history
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="pers.tandy.chis.modules.doctorworkstation.bean.ClinicalHistoryExample">
+    delete from dwt_clinical_history
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="pers.tandy.chis.modules.doctorworkstation.bean.ClinicalHistory" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+    insert into dwt_clinical_history (id, mrm_member_id, chief_complaint,
+      present_illness, physical_examination, past_history,
+      allergen_history, auxiliary_examination,
+      dialectical, diagnose_json, dwt_diagnose_type_id,
+      finished, sys_doctor_id, creation_date,
+      sys_clinic_id)
+    values (#{id,jdbcType=INTEGER}, #{mrmMemberId,jdbcType=INTEGER}, #{chiefComplaint,jdbcType=VARCHAR},
+      #{presentIllness,jdbcType=VARCHAR}, #{physicalExamination,jdbcType=VARCHAR}, #{pastHistory,jdbcType=VARCHAR},
+      #{allergenHistory,jdbcType=VARCHAR}, #{auxiliaryExamination,jdbcType=VARCHAR},
+      #{dialectical,jdbcType=VARCHAR}, #{diagnoseJson,jdbcType=VARCHAR}, #{dwtDiagnoseTypeId,jdbcType=INTEGER},
+      #{finished,jdbcType=BIT}, #{sysDoctorId,jdbcType=INTEGER}, #{creationDate,jdbcType=TIMESTAMP},
+      #{sysClinicId,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="pers.tandy.chis.modules.doctorworkstation.bean.ClinicalHistory">
+    insert into dwt_clinical_history
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="mrmMemberId != null">
+        mrm_member_id,
+      </if>
+      <if test="chiefComplaint != null">
+        chief_complaint,
+      </if>
+      <if test="presentIllness != null">
+        present_illness,
+      </if>
+      <if test="physicalExamination != null">
+        physical_examination,
+      </if>
+      <if test="pastHistory != null">
+        past_history,
+      </if>
+      <if test="allergenHistory != null">
+        allergen_history,
+      </if>
+      <if test="auxiliaryExamination != null">
+        auxiliary_examination,
+      </if>
+      <if test="dialectical != null">
+        dialectical,
+      </if>
+      <if test="diagnoseJson != null">
+        diagnose_json,
+      </if>
+      <if test="dwtDiagnoseTypeId != null">
+        dwt_diagnose_type_id,
+      </if>
+      <if test="finished != null">
+        finished,
+      </if>
+      <if test="sysDoctorId != null">
+        sys_doctor_id,
+      </if>
+      <if test="creationDate != null">
+        creation_date,
+      </if>
+      <if test="sysClinicId != null">
+        sys_clinic_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="mrmMemberId != null">
+        #{mrmMemberId,jdbcType=INTEGER},
+      </if>
+      <if test="chiefComplaint != null">
+        #{chiefComplaint,jdbcType=VARCHAR},
+      </if>
+      <if test="presentIllness != null">
+        #{presentIllness,jdbcType=VARCHAR},
+      </if>
+      <if test="physicalExamination != null">
+        #{physicalExamination,jdbcType=VARCHAR},
+      </if>
+      <if test="pastHistory != null">
+        #{pastHistory,jdbcType=VARCHAR},
+      </if>
+      <if test="allergenHistory != null">
+        #{allergenHistory,jdbcType=VARCHAR},
+      </if>
+      <if test="auxiliaryExamination != null">
+        #{auxiliaryExamination,jdbcType=VARCHAR},
+      </if>
+      <if test="dialectical != null">
+        #{dialectical,jdbcType=VARCHAR},
+      </if>
+      <if test="diagnoseJson != null">
+        #{diagnoseJson,jdbcType=VARCHAR},
+      </if>
+      <if test="dwtDiagnoseTypeId != null">
+        #{dwtDiagnoseTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="finished != null">
+        #{finished,jdbcType=BIT},
+      </if>
+      <if test="sysDoctorId != null">
+        #{sysDoctorId,jdbcType=INTEGER},
+      </if>
+      <if test="creationDate != null">
+        #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sysClinicId != null">
+        #{sysClinicId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="pers.tandy.chis.modules.doctorworkstation.bean.ClinicalHistoryExample" resultType="java.lang.Long">
+    select count(*) from dwt_clinical_history
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update dwt_clinical_history
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.mrmMemberId != null">
+        mrm_member_id = #{record.mrmMemberId,jdbcType=INTEGER},
+      </if>
+      <if test="record.chiefComplaint != null">
+        chief_complaint = #{record.chiefComplaint,jdbcType=VARCHAR},
+      </if>
+      <if test="record.presentIllness != null">
+        present_illness = #{record.presentIllness,jdbcType=VARCHAR},
+      </if>
+      <if test="record.physicalExamination != null">
+        physical_examination = #{record.physicalExamination,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pastHistory != null">
+        past_history = #{record.pastHistory,jdbcType=VARCHAR},
+      </if>
+      <if test="record.allergenHistory != null">
+        allergen_history = #{record.allergenHistory,jdbcType=VARCHAR},
+      </if>
+      <if test="record.auxiliaryExamination != null">
+        auxiliary_examination = #{record.auxiliaryExamination,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dialectical != null">
+        dialectical = #{record.dialectical,jdbcType=VARCHAR},
+      </if>
+      <if test="record.diagnoseJson != null">
+        diagnose_json = #{record.diagnoseJson,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dwtDiagnoseTypeId != null">
+        dwt_diagnose_type_id = #{record.dwtDiagnoseTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.finished != null">
+        finished = #{record.finished,jdbcType=BIT},
+      </if>
+      <if test="record.sysDoctorId != null">
+        sys_doctor_id = #{record.sysDoctorId,jdbcType=INTEGER},
+      </if>
+      <if test="record.creationDate != null">
+        creation_date = #{record.creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.sysClinicId != null">
+        sys_clinic_id = #{record.sysClinicId,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update dwt_clinical_history
+    set id = #{record.id,jdbcType=INTEGER},
+      mrm_member_id = #{record.mrmMemberId,jdbcType=INTEGER},
+      chief_complaint = #{record.chiefComplaint,jdbcType=VARCHAR},
+      present_illness = #{record.presentIllness,jdbcType=VARCHAR},
+      physical_examination = #{record.physicalExamination,jdbcType=VARCHAR},
+      past_history = #{record.pastHistory,jdbcType=VARCHAR},
+      allergen_history = #{record.allergenHistory,jdbcType=VARCHAR},
+      auxiliary_examination = #{record.auxiliaryExamination,jdbcType=VARCHAR},
+      dialectical = #{record.dialectical,jdbcType=VARCHAR},
+      diagnose_json = #{record.diagnoseJson,jdbcType=VARCHAR},
+      dwt_diagnose_type_id = #{record.dwtDiagnoseTypeId,jdbcType=INTEGER},
+      finished = #{record.finished,jdbcType=BIT},
+      sys_doctor_id = #{record.sysDoctorId,jdbcType=INTEGER},
+      creation_date = #{record.creationDate,jdbcType=TIMESTAMP},
+      sys_clinic_id = #{record.sysClinicId,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="pers.tandy.chis.modules.doctorworkstation.bean.ClinicalHistory">
+    update dwt_clinical_history
+    <set>
+      <if test="mrmMemberId != null">
+        mrm_member_id = #{mrmMemberId,jdbcType=INTEGER},
+      </if>
+      <if test="chiefComplaint != null">
+        chief_complaint = #{chiefComplaint,jdbcType=VARCHAR},
+      </if>
+      <if test="presentIllness != null">
+        present_illness = #{presentIllness,jdbcType=VARCHAR},
+      </if>
+      <if test="physicalExamination != null">
+        physical_examination = #{physicalExamination,jdbcType=VARCHAR},
+      </if>
+      <if test="pastHistory != null">
+        past_history = #{pastHistory,jdbcType=VARCHAR},
+      </if>
+      <if test="allergenHistory != null">
+        allergen_history = #{allergenHistory,jdbcType=VARCHAR},
+      </if>
+      <if test="auxiliaryExamination != null">
+        auxiliary_examination = #{auxiliaryExamination,jdbcType=VARCHAR},
+      </if>
+      <if test="dialectical != null">
+        dialectical = #{dialectical,jdbcType=VARCHAR},
+      </if>
+      <if test="diagnoseJson != null">
+        diagnose_json = #{diagnoseJson,jdbcType=VARCHAR},
+      </if>
+      <if test="dwtDiagnoseTypeId != null">
+        dwt_diagnose_type_id = #{dwtDiagnoseTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="finished != null">
+        finished = #{finished,jdbcType=BIT},
+      </if>
+      <if test="sysDoctorId != null">
+        sys_doctor_id = #{sysDoctorId,jdbcType=INTEGER},
+      </if>
+      <if test="creationDate != null">
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sysClinicId != null">
+        sys_clinic_id = #{sysClinicId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="pers.tandy.chis.modules.doctorworkstation.bean.ClinicalHistory">
+    update dwt_clinical_history
+    set mrm_member_id = #{mrmMemberId,jdbcType=INTEGER},
+      chief_complaint = #{chiefComplaint,jdbcType=VARCHAR},
+      present_illness = #{presentIllness,jdbcType=VARCHAR},
+      physical_examination = #{physicalExamination,jdbcType=VARCHAR},
+      past_history = #{pastHistory,jdbcType=VARCHAR},
+      allergen_history = #{allergenHistory,jdbcType=VARCHAR},
+      auxiliary_examination = #{auxiliaryExamination,jdbcType=VARCHAR},
+      dialectical = #{dialectical,jdbcType=VARCHAR},
+      diagnose_json = #{diagnoseJson,jdbcType=VARCHAR},
+      dwt_diagnose_type_id = #{dwtDiagnoseTypeId,jdbcType=INTEGER},
+      finished = #{finished,jdbcType=BIT},
+      sys_doctor_id = #{sysDoctorId,jdbcType=INTEGER},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      sys_clinic_id = #{sysClinicId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <!-- ************************************************************************************************************* -->
+  <!-- 重新生成时 别忘了对自动生成的 insert 方法设置返回主键 (useGeneratedKeys="true" keyProperty="id" keyColumn="id")    -->
+
+  <update id="updateFinishedById">
+    update dwt_clinical_history
+    set finished = #{finished}
+    where id = #{id}
+  </update>
+
+  <select id="selectByCriteria" resultType="map">
+    select *
+    from view_dwt_clinical_history
+    <trim prefix="where" suffixOverrides="and">
+      <if test="creationDate != null &amp;&amp; creationDate.length == 2">
+        (DATE_FORMAT(creationDate, '%Y-%m-%d') between #{creationDate[0]} and #{creationDate[1]}) and
+      </if>
+      <if test="mrmMemberId != null">
+        (mrmMemberId = #{mrmMemberId}) and
+      </if>
+      <if test="dwtDiagnoseTypeId != null">
+        (dwtDiagnoseTypeId = #{dwtDiagnoseTypeId}) and
+      </if>
+      (finished is true)
+    </trim>
+    order by creationDate desc
+  </select>
+
+  <select id="selectLastUnfinishedByCriteria" resultType="map">
+    select *
+    from view_dwt_clinical_history
+    where
+          (creationDate between DATE_SUB(NOW(), INTERVAL 1 DAY) and NOW()) and /*在一天之内*/
+          (mrmMemberId = #{mrmMemberId}) and
+          (sysDoctorId = #{sysDoctorId}) and
+          (finished is false)
+    order by creationDate desc
+    LIMIT 1
+  </select>
+
+
+
+</mapper>

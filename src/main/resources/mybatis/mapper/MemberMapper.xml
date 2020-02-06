@@ -1,0 +1,954 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pers.tandy.chis.modules.membermanagement.dao.MemberMapper">
+  <resultMap id="BaseResultMap" type="pers.tandy.chis.modules.membermanagement.bean.Member">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="oid" jdbcType="VARCHAR" property="oid" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="gender_id" jdbcType="INTEGER" property="genderId" />
+    <result column="id_card_no" jdbcType="VARCHAR" property="idCardNo" />
+    <result column="birth" jdbcType="DATE" property="birth" />
+    <result column="nationality_id" jdbcType="INTEGER" property="nationalityId" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="marital_id" jdbcType="INTEGER" property="maritalId" />
+    <result column="education_id" jdbcType="INTEGER" property="educationId" />
+    <result column="domicile_place" jdbcType="BIT" property="domicilePlace" />
+    <result column="blood_type_id" jdbcType="INTEGER" property="bloodTypeId" />
+    <result column="rh_id" jdbcType="INTEGER" property="rhId" />
+    <result column="company" jdbcType="VARCHAR" property="company" />
+    <result column="profession_id" jdbcType="INTEGER" property="professionId" />
+    <result column="mrm_township_id" jdbcType="INTEGER" property="mrmTownshipId" />
+    <result column="mrm_committee_id" jdbcType="INTEGER" property="mrmCommitteeId" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="dp_address" jdbcType="VARCHAR" property="dpAddress" />
+    <result column="contact_name" jdbcType="VARCHAR" property="contactName" />
+    <result column="contact_phone" jdbcType="VARCHAR" property="contactPhone" />
+    <result column="doctor_id" jdbcType="INTEGER" property="doctorId" />
+    <result column="doctor_phone" jdbcType="VARCHAR" property="doctorPhone" />
+    <result column="mrm_member_type_id" jdbcType="INTEGER" property="mrmMemberTypeId" />
+    <result column="e_mail" jdbcType="VARCHAR" property="eMail" />
+    <result column="notes" jdbcType="VARCHAR" property="notes" />
+    <result column="balance" jdbcType="REAL" property="balance" />
+    <result column="given_balance" jdbcType="REAL" property="givenBalance" />
+    <result column="points" jdbcType="INTEGER" property="points" />
+    <result column="image_url" jdbcType="VARCHAR" property="imageUrl" />
+    <result column="committee_archive_index" jdbcType="INTEGER" property="committeeArchiveIndex" />
+    <result column="archive_no" jdbcType="VARCHAR" property="archiveNo" />
+    <result column="genetic_illness" jdbcType="VARCHAR" property="geneticIllness" />
+    <result column="kitchen_exhaust_id" jdbcType="INTEGER" property="kitchenExhaustId" />
+    <result column="fuel_type_id" jdbcType="INTEGER" property="fuelTypeId" />
+    <result column="water_source_id" jdbcType="INTEGER" property="waterSourceId" />
+    <result column="toilet_type_id" jdbcType="INTEGER" property="toiletTypeId" />
+    <result column="livestock_fence_id" jdbcType="INTEGER" property="livestockFenceId" />
+    <result column="archive_state" jdbcType="BIT" property="archiveState" />
+    <result column="state" jdbcType="BIT" property="state" />
+    <result column="sys_clinic_id" jdbcType="INTEGER" property="sysClinicId" />
+    <result column="creator_id" jdbcType="INTEGER" property="creatorId" />
+    <result column="creation_date" jdbcType="DATE" property="creationDate" />
+    <result column="last_updater_id" jdbcType="INTEGER" property="lastUpdaterId" />
+    <result column="last_update_date" jdbcType="DATE" property="lastUpdateDate" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, oid, name, code, gender_id, id_card_no, birth, nationality_id, phone, marital_id,
+    education_id, domicile_place, blood_type_id, rh_id, company, profession_id, mrm_township_id,
+    mrm_committee_id, address, dp_address, contact_name, contact_phone, doctor_id, doctor_phone,
+    mrm_member_type_id, e_mail, notes, balance, given_balance, points, image_url, committee_archive_index,
+    archive_no, genetic_illness, kitchen_exhaust_id, fuel_type_id, water_source_id, toilet_type_id,
+    livestock_fence_id, archive_state, state, sys_clinic_id, creator_id, creation_date,
+    last_updater_id, last_update_date
+  </sql>
+  <select id="selectByExample" parameterType="pers.tandy.chis.modules.membermanagement.bean.MemberExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from mrm_member
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from mrm_member
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from mrm_member
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="pers.tandy.chis.modules.membermanagement.bean.MemberExample">
+    delete from mrm_member
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="pers.tandy.chis.modules.membermanagement.bean.Member">
+    insert into mrm_member (id, oid, name,
+      code, gender_id, id_card_no,
+      birth, nationality_id, phone,
+      marital_id, education_id, domicile_place,
+      blood_type_id, rh_id, company,
+      profession_id, mrm_township_id, mrm_committee_id,
+      address, dp_address, contact_name,
+      contact_phone, doctor_id, doctor_phone,
+      mrm_member_type_id, e_mail, notes,
+      balance, given_balance, points,
+      image_url, committee_archive_index, archive_no,
+      genetic_illness, kitchen_exhaust_id, fuel_type_id,
+      water_source_id, toilet_type_id, livestock_fence_id,
+      archive_state, state, sys_clinic_id,
+      creator_id, creation_date, last_updater_id,
+      last_update_date)
+    values (#{id,jdbcType=INTEGER}, #{oid,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
+      #{code,jdbcType=VARCHAR}, #{genderId,jdbcType=INTEGER}, #{idCardNo,jdbcType=VARCHAR},
+      #{birth,jdbcType=DATE}, #{nationalityId,jdbcType=INTEGER}, #{phone,jdbcType=VARCHAR},
+      #{maritalId,jdbcType=INTEGER}, #{educationId,jdbcType=INTEGER}, #{domicilePlace,jdbcType=BIT},
+      #{bloodTypeId,jdbcType=INTEGER}, #{rhId,jdbcType=INTEGER}, #{company,jdbcType=VARCHAR},
+      #{professionId,jdbcType=INTEGER}, #{mrmTownshipId,jdbcType=INTEGER}, #{mrmCommitteeId,jdbcType=INTEGER},
+      #{address,jdbcType=VARCHAR}, #{dpAddress,jdbcType=VARCHAR}, #{contactName,jdbcType=VARCHAR},
+      #{contactPhone,jdbcType=VARCHAR}, #{doctorId,jdbcType=INTEGER}, #{doctorPhone,jdbcType=VARCHAR},
+      #{mrmMemberTypeId,jdbcType=INTEGER}, #{eMail,jdbcType=VARCHAR}, #{notes,jdbcType=VARCHAR},
+      #{balance,jdbcType=REAL}, #{givenBalance,jdbcType=REAL}, #{points,jdbcType=INTEGER},
+      #{imageUrl,jdbcType=VARCHAR}, #{committeeArchiveIndex,jdbcType=INTEGER}, #{archiveNo,jdbcType=VARCHAR},
+      #{geneticIllness,jdbcType=VARCHAR}, #{kitchenExhaustId,jdbcType=INTEGER}, #{fuelTypeId,jdbcType=INTEGER},
+      #{waterSourceId,jdbcType=INTEGER}, #{toiletTypeId,jdbcType=INTEGER}, #{livestockFenceId,jdbcType=INTEGER},
+      #{archiveState,jdbcType=BIT}, #{state,jdbcType=BIT}, #{sysClinicId,jdbcType=INTEGER},
+      #{creatorId,jdbcType=INTEGER}, #{creationDate,jdbcType=DATE}, #{lastUpdaterId,jdbcType=INTEGER},
+      #{lastUpdateDate,jdbcType=DATE})
+  </insert>
+  <insert id="insertSelective" parameterType="pers.tandy.chis.modules.membermanagement.bean.Member">
+    insert into mrm_member
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="oid != null">
+        oid,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="code != null">
+        code,
+      </if>
+      <if test="genderId != null">
+        gender_id,
+      </if>
+      <if test="idCardNo != null">
+        id_card_no,
+      </if>
+      <if test="birth != null">
+        birth,
+      </if>
+      <if test="nationalityId != null">
+        nationality_id,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="maritalId != null">
+        marital_id,
+      </if>
+      <if test="educationId != null">
+        education_id,
+      </if>
+      <if test="domicilePlace != null">
+        domicile_place,
+      </if>
+      <if test="bloodTypeId != null">
+        blood_type_id,
+      </if>
+      <if test="rhId != null">
+        rh_id,
+      </if>
+      <if test="company != null">
+        company,
+      </if>
+      <if test="professionId != null">
+        profession_id,
+      </if>
+      <if test="mrmTownshipId != null">
+        mrm_township_id,
+      </if>
+      <if test="mrmCommitteeId != null">
+        mrm_committee_id,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="dpAddress != null">
+        dp_address,
+      </if>
+      <if test="contactName != null">
+        contact_name,
+      </if>
+      <if test="contactPhone != null">
+        contact_phone,
+      </if>
+      <if test="doctorId != null">
+        doctor_id,
+      </if>
+      <if test="doctorPhone != null">
+        doctor_phone,
+      </if>
+      <if test="mrmMemberTypeId != null">
+        mrm_member_type_id,
+      </if>
+      <if test="eMail != null">
+        e_mail,
+      </if>
+      <if test="notes != null">
+        notes,
+      </if>
+      <if test="balance != null">
+        balance,
+      </if>
+      <if test="givenBalance != null">
+        given_balance,
+      </if>
+      <if test="points != null">
+        points,
+      </if>
+      <if test="imageUrl != null">
+        image_url,
+      </if>
+      <if test="committeeArchiveIndex != null">
+        committee_archive_index,
+      </if>
+      <if test="archiveNo != null">
+        archive_no,
+      </if>
+      <if test="geneticIllness != null">
+        genetic_illness,
+      </if>
+      <if test="kitchenExhaustId != null">
+        kitchen_exhaust_id,
+      </if>
+      <if test="fuelTypeId != null">
+        fuel_type_id,
+      </if>
+      <if test="waterSourceId != null">
+        water_source_id,
+      </if>
+      <if test="toiletTypeId != null">
+        toilet_type_id,
+      </if>
+      <if test="livestockFenceId != null">
+        livestock_fence_id,
+      </if>
+      <if test="archiveState != null">
+        archive_state,
+      </if>
+      <if test="state != null">
+        state,
+      </if>
+      <if test="sysClinicId != null">
+        sys_clinic_id,
+      </if>
+      <if test="creatorId != null">
+        creator_id,
+      </if>
+      <if test="creationDate != null">
+        creation_date,
+      </if>
+      <if test="lastUpdaterId != null">
+        last_updater_id,
+      </if>
+      <if test="lastUpdateDate != null">
+        last_update_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="oid != null">
+        #{oid,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null">
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="genderId != null">
+        #{genderId,jdbcType=INTEGER},
+      </if>
+      <if test="idCardNo != null">
+        #{idCardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="birth != null">
+        #{birth,jdbcType=DATE},
+      </if>
+      <if test="nationalityId != null">
+        #{nationalityId,jdbcType=INTEGER},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="maritalId != null">
+        #{maritalId,jdbcType=INTEGER},
+      </if>
+      <if test="educationId != null">
+        #{educationId,jdbcType=INTEGER},
+      </if>
+      <if test="domicilePlace != null">
+        #{domicilePlace,jdbcType=BIT},
+      </if>
+      <if test="bloodTypeId != null">
+        #{bloodTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="rhId != null">
+        #{rhId,jdbcType=INTEGER},
+      </if>
+      <if test="company != null">
+        #{company,jdbcType=VARCHAR},
+      </if>
+      <if test="professionId != null">
+        #{professionId,jdbcType=INTEGER},
+      </if>
+      <if test="mrmTownshipId != null">
+        #{mrmTownshipId,jdbcType=INTEGER},
+      </if>
+      <if test="mrmCommitteeId != null">
+        #{mrmCommitteeId,jdbcType=INTEGER},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="dpAddress != null">
+        #{dpAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="contactName != null">
+        #{contactName,jdbcType=VARCHAR},
+      </if>
+      <if test="contactPhone != null">
+        #{contactPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorId != null">
+        #{doctorId,jdbcType=INTEGER},
+      </if>
+      <if test="doctorPhone != null">
+        #{doctorPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="mrmMemberTypeId != null">
+        #{mrmMemberTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="eMail != null">
+        #{eMail,jdbcType=VARCHAR},
+      </if>
+      <if test="notes != null">
+        #{notes,jdbcType=VARCHAR},
+      </if>
+      <if test="balance != null">
+        #{balance,jdbcType=REAL},
+      </if>
+      <if test="givenBalance != null">
+        #{givenBalance,jdbcType=REAL},
+      </if>
+      <if test="points != null">
+        #{points,jdbcType=INTEGER},
+      </if>
+      <if test="imageUrl != null">
+        #{imageUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="committeeArchiveIndex != null">
+        #{committeeArchiveIndex,jdbcType=INTEGER},
+      </if>
+      <if test="archiveNo != null">
+        #{archiveNo,jdbcType=VARCHAR},
+      </if>
+      <if test="geneticIllness != null">
+        #{geneticIllness,jdbcType=VARCHAR},
+      </if>
+      <if test="kitchenExhaustId != null">
+        #{kitchenExhaustId,jdbcType=INTEGER},
+      </if>
+      <if test="fuelTypeId != null">
+        #{fuelTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="waterSourceId != null">
+        #{waterSourceId,jdbcType=INTEGER},
+      </if>
+      <if test="toiletTypeId != null">
+        #{toiletTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="livestockFenceId != null">
+        #{livestockFenceId,jdbcType=INTEGER},
+      </if>
+      <if test="archiveState != null">
+        #{archiveState,jdbcType=BIT},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=BIT},
+      </if>
+      <if test="sysClinicId != null">
+        #{sysClinicId,jdbcType=INTEGER},
+      </if>
+      <if test="creatorId != null">
+        #{creatorId,jdbcType=INTEGER},
+      </if>
+      <if test="creationDate != null">
+        #{creationDate,jdbcType=DATE},
+      </if>
+      <if test="lastUpdaterId != null">
+        #{lastUpdaterId,jdbcType=INTEGER},
+      </if>
+      <if test="lastUpdateDate != null">
+        #{lastUpdateDate,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="pers.tandy.chis.modules.membermanagement.bean.MemberExample" resultType="java.lang.Long">
+    select count(*) from mrm_member
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update mrm_member
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.oid != null">
+        oid = #{record.oid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.code != null">
+        code = #{record.code,jdbcType=VARCHAR},
+      </if>
+      <if test="record.genderId != null">
+        gender_id = #{record.genderId,jdbcType=INTEGER},
+      </if>
+      <if test="record.idCardNo != null">
+        id_card_no = #{record.idCardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.birth != null">
+        birth = #{record.birth,jdbcType=DATE},
+      </if>
+      <if test="record.nationalityId != null">
+        nationality_id = #{record.nationalityId,jdbcType=INTEGER},
+      </if>
+      <if test="record.phone != null">
+        phone = #{record.phone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.maritalId != null">
+        marital_id = #{record.maritalId,jdbcType=INTEGER},
+      </if>
+      <if test="record.educationId != null">
+        education_id = #{record.educationId,jdbcType=INTEGER},
+      </if>
+      <if test="record.domicilePlace != null">
+        domicile_place = #{record.domicilePlace,jdbcType=BIT},
+      </if>
+      <if test="record.bloodTypeId != null">
+        blood_type_id = #{record.bloodTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.rhId != null">
+        rh_id = #{record.rhId,jdbcType=INTEGER},
+      </if>
+      <if test="record.company != null">
+        company = #{record.company,jdbcType=VARCHAR},
+      </if>
+      <if test="record.professionId != null">
+        profession_id = #{record.professionId,jdbcType=INTEGER},
+      </if>
+      <if test="record.mrmTownshipId != null">
+        mrm_township_id = #{record.mrmTownshipId,jdbcType=INTEGER},
+      </if>
+      <if test="record.mrmCommitteeId != null">
+        mrm_committee_id = #{record.mrmCommitteeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.address != null">
+        address = #{record.address,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dpAddress != null">
+        dp_address = #{record.dpAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contactName != null">
+        contact_name = #{record.contactName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contactPhone != null">
+        contact_phone = #{record.contactPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.doctorId != null">
+        doctor_id = #{record.doctorId,jdbcType=INTEGER},
+      </if>
+      <if test="record.doctorPhone != null">
+        doctor_phone = #{record.doctorPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mrmMemberTypeId != null">
+        mrm_member_type_id = #{record.mrmMemberTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.eMail != null">
+        e_mail = #{record.eMail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.notes != null">
+        notes = #{record.notes,jdbcType=VARCHAR},
+      </if>
+      <if test="record.balance != null">
+        balance = #{record.balance,jdbcType=REAL},
+      </if>
+      <if test="record.givenBalance != null">
+        given_balance = #{record.givenBalance,jdbcType=REAL},
+      </if>
+      <if test="record.points != null">
+        points = #{record.points,jdbcType=INTEGER},
+      </if>
+      <if test="record.imageUrl != null">
+        image_url = #{record.imageUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.committeeArchiveIndex != null">
+        committee_archive_index = #{record.committeeArchiveIndex,jdbcType=INTEGER},
+      </if>
+      <if test="record.archiveNo != null">
+        archive_no = #{record.archiveNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.geneticIllness != null">
+        genetic_illness = #{record.geneticIllness,jdbcType=VARCHAR},
+      </if>
+      <if test="record.kitchenExhaustId != null">
+        kitchen_exhaust_id = #{record.kitchenExhaustId,jdbcType=INTEGER},
+      </if>
+      <if test="record.fuelTypeId != null">
+        fuel_type_id = #{record.fuelTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.waterSourceId != null">
+        water_source_id = #{record.waterSourceId,jdbcType=INTEGER},
+      </if>
+      <if test="record.toiletTypeId != null">
+        toilet_type_id = #{record.toiletTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.livestockFenceId != null">
+        livestock_fence_id = #{record.livestockFenceId,jdbcType=INTEGER},
+      </if>
+      <if test="record.archiveState != null">
+        archive_state = #{record.archiveState,jdbcType=BIT},
+      </if>
+      <if test="record.state != null">
+        state = #{record.state,jdbcType=BIT},
+      </if>
+      <if test="record.sysClinicId != null">
+        sys_clinic_id = #{record.sysClinicId,jdbcType=INTEGER},
+      </if>
+      <if test="record.creatorId != null">
+        creator_id = #{record.creatorId,jdbcType=INTEGER},
+      </if>
+      <if test="record.creationDate != null">
+        creation_date = #{record.creationDate,jdbcType=DATE},
+      </if>
+      <if test="record.lastUpdaterId != null">
+        last_updater_id = #{record.lastUpdaterId,jdbcType=INTEGER},
+      </if>
+      <if test="record.lastUpdateDate != null">
+        last_update_date = #{record.lastUpdateDate,jdbcType=DATE},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update mrm_member
+    set id = #{record.id,jdbcType=INTEGER},
+      oid = #{record.oid,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      code = #{record.code,jdbcType=VARCHAR},
+      gender_id = #{record.genderId,jdbcType=INTEGER},
+      id_card_no = #{record.idCardNo,jdbcType=VARCHAR},
+      birth = #{record.birth,jdbcType=DATE},
+      nationality_id = #{record.nationalityId,jdbcType=INTEGER},
+      phone = #{record.phone,jdbcType=VARCHAR},
+      marital_id = #{record.maritalId,jdbcType=INTEGER},
+      education_id = #{record.educationId,jdbcType=INTEGER},
+      domicile_place = #{record.domicilePlace,jdbcType=BIT},
+      blood_type_id = #{record.bloodTypeId,jdbcType=INTEGER},
+      rh_id = #{record.rhId,jdbcType=INTEGER},
+      company = #{record.company,jdbcType=VARCHAR},
+      profession_id = #{record.professionId,jdbcType=INTEGER},
+      mrm_township_id = #{record.mrmTownshipId,jdbcType=INTEGER},
+      mrm_committee_id = #{record.mrmCommitteeId,jdbcType=INTEGER},
+      address = #{record.address,jdbcType=VARCHAR},
+      dp_address = #{record.dpAddress,jdbcType=VARCHAR},
+      contact_name = #{record.contactName,jdbcType=VARCHAR},
+      contact_phone = #{record.contactPhone,jdbcType=VARCHAR},
+      doctor_id = #{record.doctorId,jdbcType=INTEGER},
+      doctor_phone = #{record.doctorPhone,jdbcType=VARCHAR},
+      mrm_member_type_id = #{record.mrmMemberTypeId,jdbcType=INTEGER},
+      e_mail = #{record.eMail,jdbcType=VARCHAR},
+      notes = #{record.notes,jdbcType=VARCHAR},
+      balance = #{record.balance,jdbcType=REAL},
+      given_balance = #{record.givenBalance,jdbcType=REAL},
+      points = #{record.points,jdbcType=INTEGER},
+      image_url = #{record.imageUrl,jdbcType=VARCHAR},
+      committee_archive_index = #{record.committeeArchiveIndex,jdbcType=INTEGER},
+      archive_no = #{record.archiveNo,jdbcType=VARCHAR},
+      genetic_illness = #{record.geneticIllness,jdbcType=VARCHAR},
+      kitchen_exhaust_id = #{record.kitchenExhaustId,jdbcType=INTEGER},
+      fuel_type_id = #{record.fuelTypeId,jdbcType=INTEGER},
+      water_source_id = #{record.waterSourceId,jdbcType=INTEGER},
+      toilet_type_id = #{record.toiletTypeId,jdbcType=INTEGER},
+      livestock_fence_id = #{record.livestockFenceId,jdbcType=INTEGER},
+      archive_state = #{record.archiveState,jdbcType=BIT},
+      state = #{record.state,jdbcType=BIT},
+      sys_clinic_id = #{record.sysClinicId,jdbcType=INTEGER},
+      creator_id = #{record.creatorId,jdbcType=INTEGER},
+      creation_date = #{record.creationDate,jdbcType=DATE},
+      last_updater_id = #{record.lastUpdaterId,jdbcType=INTEGER},
+      last_update_date = #{record.lastUpdateDate,jdbcType=DATE}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="pers.tandy.chis.modules.membermanagement.bean.Member">
+    update mrm_member
+    <set>
+      <if test="oid != null">
+        oid = #{oid,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null">
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="genderId != null">
+        gender_id = #{genderId,jdbcType=INTEGER},
+      </if>
+      <if test="idCardNo != null">
+        id_card_no = #{idCardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="birth != null">
+        birth = #{birth,jdbcType=DATE},
+      </if>
+      <if test="nationalityId != null">
+        nationality_id = #{nationalityId,jdbcType=INTEGER},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="maritalId != null">
+        marital_id = #{maritalId,jdbcType=INTEGER},
+      </if>
+      <if test="educationId != null">
+        education_id = #{educationId,jdbcType=INTEGER},
+      </if>
+      <if test="domicilePlace != null">
+        domicile_place = #{domicilePlace,jdbcType=BIT},
+      </if>
+      <if test="bloodTypeId != null">
+        blood_type_id = #{bloodTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="rhId != null">
+        rh_id = #{rhId,jdbcType=INTEGER},
+      </if>
+      <if test="company != null">
+        company = #{company,jdbcType=VARCHAR},
+      </if>
+      <if test="professionId != null">
+        profession_id = #{professionId,jdbcType=INTEGER},
+      </if>
+      <if test="mrmTownshipId != null">
+        mrm_township_id = #{mrmTownshipId,jdbcType=INTEGER},
+      </if>
+      <if test="mrmCommitteeId != null">
+        mrm_committee_id = #{mrmCommitteeId,jdbcType=INTEGER},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="dpAddress != null">
+        dp_address = #{dpAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="contactName != null">
+        contact_name = #{contactName,jdbcType=VARCHAR},
+      </if>
+      <if test="contactPhone != null">
+        contact_phone = #{contactPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorId != null">
+        doctor_id = #{doctorId,jdbcType=INTEGER},
+      </if>
+      <if test="doctorPhone != null">
+        doctor_phone = #{doctorPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="mrmMemberTypeId != null">
+        mrm_member_type_id = #{mrmMemberTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="eMail != null">
+        e_mail = #{eMail,jdbcType=VARCHAR},
+      </if>
+      <if test="notes != null">
+        notes = #{notes,jdbcType=VARCHAR},
+      </if>
+      <if test="balance != null">
+        balance = #{balance,jdbcType=REAL},
+      </if>
+      <if test="givenBalance != null">
+        given_balance = #{givenBalance,jdbcType=REAL},
+      </if>
+      <if test="points != null">
+        points = #{points,jdbcType=INTEGER},
+      </if>
+      <if test="imageUrl != null">
+        image_url = #{imageUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="committeeArchiveIndex != null">
+        committee_archive_index = #{committeeArchiveIndex,jdbcType=INTEGER},
+      </if>
+      <if test="archiveNo != null">
+        archive_no = #{archiveNo,jdbcType=VARCHAR},
+      </if>
+      <if test="geneticIllness != null">
+        genetic_illness = #{geneticIllness,jdbcType=VARCHAR},
+      </if>
+      <if test="kitchenExhaustId != null">
+        kitchen_exhaust_id = #{kitchenExhaustId,jdbcType=INTEGER},
+      </if>
+      <if test="fuelTypeId != null">
+        fuel_type_id = #{fuelTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="waterSourceId != null">
+        water_source_id = #{waterSourceId,jdbcType=INTEGER},
+      </if>
+      <if test="toiletTypeId != null">
+        toilet_type_id = #{toiletTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="livestockFenceId != null">
+        livestock_fence_id = #{livestockFenceId,jdbcType=INTEGER},
+      </if>
+      <if test="archiveState != null">
+        archive_state = #{archiveState,jdbcType=BIT},
+      </if>
+      <if test="state != null">
+        state = #{state,jdbcType=BIT},
+      </if>
+      <if test="sysClinicId != null">
+        sys_clinic_id = #{sysClinicId,jdbcType=INTEGER},
+      </if>
+      <if test="creatorId != null">
+        creator_id = #{creatorId,jdbcType=INTEGER},
+      </if>
+      <if test="creationDate != null">
+        creation_date = #{creationDate,jdbcType=DATE},
+      </if>
+      <if test="lastUpdaterId != null">
+        last_updater_id = #{lastUpdaterId,jdbcType=INTEGER},
+      </if>
+      <if test="lastUpdateDate != null">
+        last_update_date = #{lastUpdateDate,jdbcType=DATE},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="pers.tandy.chis.modules.membermanagement.bean.Member">
+    update mrm_member
+    set oid = #{oid,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      code = #{code,jdbcType=VARCHAR},
+      gender_id = #{genderId,jdbcType=INTEGER},
+      id_card_no = #{idCardNo,jdbcType=VARCHAR},
+      birth = #{birth,jdbcType=DATE},
+      nationality_id = #{nationalityId,jdbcType=INTEGER},
+      phone = #{phone,jdbcType=VARCHAR},
+      marital_id = #{maritalId,jdbcType=INTEGER},
+      education_id = #{educationId,jdbcType=INTEGER},
+      domicile_place = #{domicilePlace,jdbcType=BIT},
+      blood_type_id = #{bloodTypeId,jdbcType=INTEGER},
+      rh_id = #{rhId,jdbcType=INTEGER},
+      company = #{company,jdbcType=VARCHAR},
+      profession_id = #{professionId,jdbcType=INTEGER},
+      mrm_township_id = #{mrmTownshipId,jdbcType=INTEGER},
+      mrm_committee_id = #{mrmCommitteeId,jdbcType=INTEGER},
+      address = #{address,jdbcType=VARCHAR},
+      dp_address = #{dpAddress,jdbcType=VARCHAR},
+      contact_name = #{contactName,jdbcType=VARCHAR},
+      contact_phone = #{contactPhone,jdbcType=VARCHAR},
+      doctor_id = #{doctorId,jdbcType=INTEGER},
+      doctor_phone = #{doctorPhone,jdbcType=VARCHAR},
+      mrm_member_type_id = #{mrmMemberTypeId,jdbcType=INTEGER},
+      e_mail = #{eMail,jdbcType=VARCHAR},
+      notes = #{notes,jdbcType=VARCHAR},
+      balance = #{balance,jdbcType=REAL},
+      given_balance = #{givenBalance,jdbcType=REAL},
+      points = #{points,jdbcType=INTEGER},
+      image_url = #{imageUrl,jdbcType=VARCHAR},
+      committee_archive_index = #{committeeArchiveIndex,jdbcType=INTEGER},
+      archive_no = #{archiveNo,jdbcType=VARCHAR},
+      genetic_illness = #{geneticIllness,jdbcType=VARCHAR},
+      kitchen_exhaust_id = #{kitchenExhaustId,jdbcType=INTEGER},
+      fuel_type_id = #{fuelTypeId,jdbcType=INTEGER},
+      water_source_id = #{waterSourceId,jdbcType=INTEGER},
+      toilet_type_id = #{toiletTypeId,jdbcType=INTEGER},
+      livestock_fence_id = #{livestockFenceId,jdbcType=INTEGER},
+      archive_state = #{archiveState,jdbcType=BIT},
+      state = #{state,jdbcType=BIT},
+      sys_clinic_id = #{sysClinicId,jdbcType=INTEGER},
+      creator_id = #{creatorId,jdbcType=INTEGER},
+      creation_date = #{creationDate,jdbcType=DATE},
+      last_updater_id = #{lastUpdaterId,jdbcType=INTEGER},
+      last_update_date = #{lastUpdateDate,jdbcType=DATE}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+
+  <!-- ************************************************************************************************************* -->
+
+  <update id="updateBalanceAndPoints">
+    update mrm_member
+    set balance = balance - #{balance}, points = points + #{points}
+    where id = #{id}
+  </update>
+
+  <update id="updateBalanceForDeposit">
+    update mrm_member
+    set balance = balance + #{balance}
+    where id = #{id}
+  </update>
+
+  <select id="selectByCriteria" resultType="map">
+    SELECT
+    a.*,
+    CASE WHEN allergy.id IS NULL THEN '无' ELSE '有' END AS hasAllergy,
+    CASE WHEN exposure.id IS NULL THEN '无' ELSE '有' END AS hasExposure,
+    CASE WHEN disability.id IS NULL THEN '无' ELSE '有' END AS hasDisability,
+    CASE WHEN previous.id IS NULL THEN '无' ELSE '有' END AS hasPrevious,
+    CASE WHEN family.id IS NULL THEN '无' ELSE '有' END AS hasFamily,
+    CASE WHEN a.geneticIllness IS NULL THEN '无' WHEN a.geneticIllness = '' THEN '无' ELSE '有' END AS hasGeneticIllness
+    FROM view_mrm_member a
+    LEFT JOIN (SELECT mrm_member_id AS id FROM mrm_member_health WHERE sys_dict_type_id = #{allergyId} GROUP BY mrm_member_id) allergy ON  a.id = allergy.id
+    LEFT JOIN (SELECT mrm_member_id AS id FROM mrm_member_health WHERE sys_dict_type_id = #{exposureId} GROUP BY mrm_member_id) exposure ON  a.id = exposure.id
+    LEFT JOIN (SELECT mrm_member_id AS id FROM mrm_member_health WHERE sys_dict_type_id = #{disabilityId} GROUP BY mrm_member_id) disability ON  a.id = disability.id
+    LEFT JOIN (SELECT mrm_member_id AS id FROM mrm_member_health WHERE sys_dict_type_id IN <foreach collection="previousIdList" item="item" open="(" separator="," close=")"> #{item}</foreach> GROUP BY mrm_member_id) previous ON  a.id = previous.id
+    LEFT JOIN (SELECT mrm_member_id AS id FROM mrm_member_health WHERE sys_dict_type_id IN <foreach collection="familyIdList" item="item" open="(" separator="," close=")"> #{item}</foreach> GROUP BY mrm_member_id) family ON  a.id = family.id
+    <trim prefix="where" suffixOverrides="and">
+      <if test="mrmMemberId != null">
+        (a.id = #{mrmMemberId}) AND
+      </if>
+      <if test="state != null">
+        (a.state = #{state}) and
+      </if>
+      <if test="name != null &amp;&amp; name.trim() != ''">
+        (a.name LIKE '${name}%' OR a.code LIKE '${name}%') AND
+      </if>
+      <if test="phone != null &amp;&amp; phone.trim() != ''">
+        (a.phone LIKE '${phone}%') AND
+      </if>
+      <if test="idCardNo != null &amp;&amp; idCardNo.trim() != ''">
+        (a.idCardNo LIKE '${idCardNo}%') AND
+      </if>
+      <if test="healthState != null &amp;&amp; healthState.trim() != ''">
+        <if test="healthState == 'hasExposure'">
+          (exposure.id is not null) and
+        </if>
+        <if test="healthState == 'hasAllergy'">
+          (allergy.id is not null) and
+        </if>
+        <if test="healthState == 'hasDisability'">
+          (disability.id is not null) and
+        </if>
+        <if test="healthState == 'hasPrevious'">
+          (previous.id is not null) and
+        </if>
+        <if test="healthState == 'hasFamily'">
+          (family.id is not null) and
+        </if>
+        <if test="healthState == 'hasGeneticIllness'">
+          (a.geneticIllness is not null or a.geneticIllness != '') and
+        </if>
+      </if>
+    </trim>
+    ORDER BY a.id
+  </select>
+
+  <select id="selectEnabledLikeByKeyword" resultType="map">
+    SELECT *
+    FROM view_mrm_member
+    WHERE
+      (state IS TRUE) AND
+      ((phone LIKE '${keyword}%') OR (name LIKE '${keyword}%') OR (code LIKE '${keyword}%'))
+    ORDER BY id DESC
+    LIMIT 30
+  </select>
+
+  <select id="selectLastMemberMapByCommitteeId" resultType="map">
+    SELECT
+      a.committee_archive_index AS maxIndex, b.type_no AS committeeNo,
+      c.type_no AS townshipNo, d.area_id AS areaNo
+    FROM mrm_member a
+    LEFT JOIN mrm_committee b ON a.mrm_committee_id = b.id
+    LEFT JOIN mrm_township c ON b.mrm_township_id = c.id
+    LEFT JOIN sys_location d ON c.sys_location_id = d.id
+    WHERE mrm_committee_id = #{mrmCommitteeId}
+    ORDER BY a.id DESC
+    LIMIT 1
+  </select>
+
+</mapper>

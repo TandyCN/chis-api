@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pers.tandy.chis.modules.doctorworkstation.dao.CommonDiagnoseMapper">
+  <resultMap id="BaseResultMap" type="pers.tandy.chis.modules.doctorworkstation.bean.CommonDiagnose">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="dwt_diagnose_type_id" jdbcType="INTEGER" property="dwtDiagnoseTypeId" />
+    <result column="share_state" jdbcType="BIT" property="shareState" />
+    <result column="normative" jdbcType="BIT" property="normative" />
+    <result column="creator_id" jdbcType="INTEGER" property="creatorId" />
+    <result column="creation_date" jdbcType="DATE" property="creationDate" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, name, code, dwt_diagnose_type_id, share_state, normative, creator_id, creation_date
+  </sql>
+  <select id="selectByExample" parameterType="pers.tandy.chis.modules.doctorworkstation.bean.CommonDiagnoseExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from dwt_common_diagnose
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from dwt_common_diagnose
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from dwt_common_diagnose
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="pers.tandy.chis.modules.doctorworkstation.bean.CommonDiagnoseExample">
+    delete from dwt_common_diagnose
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <!-- 返回主键ID -->
+  <insert id="insert" parameterType="pers.tandy.chis.modules.doctorworkstation.bean.CommonDiagnose" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+    insert into dwt_common_diagnose (id, name, code,
+      dwt_diagnose_type_id, share_state, normative,
+      creator_id, creation_date)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR},
+      #{dwtDiagnoseTypeId,jdbcType=INTEGER}, #{shareState,jdbcType=BIT}, #{normative,jdbcType=BIT},
+      #{creatorId,jdbcType=INTEGER}, #{creationDate,jdbcType=DATE})
+  </insert>
+  <insert id="insertSelective" parameterType="pers.tandy.chis.modules.doctorworkstation.bean.CommonDiagnose">
+    insert into dwt_common_diagnose
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="code != null">
+        code,
+      </if>
+      <if test="dwtDiagnoseTypeId != null">
+        dwt_diagnose_type_id,
+      </if>
+      <if test="shareState != null">
+        share_state,
+      </if>
+      <if test="normative != null">
+        normative,
+      </if>
+      <if test="creatorId != null">
+        creator_id,
+      </if>
+      <if test="creationDate != null">
+        creation_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null">
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="dwtDiagnoseTypeId != null">
+        #{dwtDiagnoseTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="shareState != null">
+        #{shareState,jdbcType=BIT},
+      </if>
+      <if test="normative != null">
+        #{normative,jdbcType=BIT},
+      </if>
+      <if test="creatorId != null">
+        #{creatorId,jdbcType=INTEGER},
+      </if>
+      <if test="creationDate != null">
+        #{creationDate,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="pers.tandy.chis.modules.doctorworkstation.bean.CommonDiagnoseExample" resultType="java.lang.Long">
+    select count(*) from dwt_common_diagnose
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update dwt_common_diagnose
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.code != null">
+        code = #{record.code,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dwtDiagnoseTypeId != null">
+        dwt_diagnose_type_id = #{record.dwtDiagnoseTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.shareState != null">
+        share_state = #{record.shareState,jdbcType=BIT},
+      </if>
+      <if test="record.normative != null">
+        normative = #{record.normative,jdbcType=BIT},
+      </if>
+      <if test="record.creatorId != null">
+        creator_id = #{record.creatorId,jdbcType=INTEGER},
+      </if>
+      <if test="record.creationDate != null">
+        creation_date = #{record.creationDate,jdbcType=DATE},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update dwt_common_diagnose
+    set id = #{record.id,jdbcType=INTEGER},
+      name = #{record.name,jdbcType=VARCHAR},
+      code = #{record.code,jdbcType=VARCHAR},
+      dwt_diagnose_type_id = #{record.dwtDiagnoseTypeId,jdbcType=INTEGER},
+      share_state = #{record.shareState,jdbcType=BIT},
+      normative = #{record.normative,jdbcType=BIT},
+      creator_id = #{record.creatorId,jdbcType=INTEGER},
+      creation_date = #{record.creationDate,jdbcType=DATE}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="pers.tandy.chis.modules.doctorworkstation.bean.CommonDiagnose">
+    update dwt_common_diagnose
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null">
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="dwtDiagnoseTypeId != null">
+        dwt_diagnose_type_id = #{dwtDiagnoseTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="shareState != null">
+        share_state = #{shareState,jdbcType=BIT},
+      </if>
+      <if test="normative != null">
+        normative = #{normative,jdbcType=BIT},
+      </if>
+      <if test="creatorId != null">
+        creator_id = #{creatorId,jdbcType=INTEGER},
+      </if>
+      <if test="creationDate != null">
+        creation_date = #{creationDate,jdbcType=DATE},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="pers.tandy.chis.modules.doctorworkstation.bean.CommonDiagnose">
+    update dwt_common_diagnose
+    set name = #{name,jdbcType=VARCHAR},
+      code = #{code,jdbcType=VARCHAR},
+      dwt_diagnose_type_id = #{dwtDiagnoseTypeId,jdbcType=INTEGER},
+      share_state = #{shareState,jdbcType=BIT},
+      normative = #{normative,jdbcType=BIT},
+      creator_id = #{creatorId,jdbcType=INTEGER},
+      creation_date = #{creationDate,jdbcType=DATE}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+
+  <!-- ************************************************************************************************************* -->
+  <select id="selectByCriteria" resultType="map">
+    select *
+    from view_dwt_common_diagnose
+    <trim prefix="where" suffixOverrides="and">
+      (dwtDiagnoseTypeId = #{dwtDiagnoseTypeId}) and
+      <if test="shareState">
+        (creatorId = #{creatorId} or shareState is true) and
+      </if>
+      <if test="!shareState">
+        (creatorId = #{creatorId}) and
+      </if>
+      <if test="name != null &amp;&amp; name.trim() != ''">
+        (name like '${name}%' or code like '${name}%') and
+      </if>
+    </trim>
+    order by id
+  </select>
+
+  <select id="selectLikeByName" resultMap="BaseResultMap">
+    select *
+    from
+      dwt_common_diagnose
+    where
+      (dwt_diagnose_type_id = #{dwtDiagnoseTypeId}) and
+      (name like '${name}%' or code like '${name}%')
+    order by id
+    LIMIT 30
+  </select>
+
+
+
+
+</mapper>

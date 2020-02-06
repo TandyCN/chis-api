@@ -1,0 +1,534 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pers.tandy.chis.modules.systemmanagement.dao.DoctorMapper">
+  <resultMap id="BaseResultMap" type="pers.tandy.chis.modules.systemmanagement.bean.Doctor">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="sys_clinic_room_id" jdbcType="INTEGER" property="sysClinicRoomId" />
+    <result column="mon_begin_time" jdbcType="TIME" property="monBeginTime" />
+    <result column="mon_end_time" jdbcType="TIME" property="monEndTime" />
+    <result column="mon_no" jdbcType="SMALLINT" property="monNo" />
+    <result column="tue_begin_time" jdbcType="TIME" property="tueBeginTime" />
+    <result column="tue_end_time" jdbcType="TIME" property="tueEndTime" />
+    <result column="tue_no" jdbcType="SMALLINT" property="tueNo" />
+    <result column="wed_begin_time" jdbcType="TIME" property="wedBeginTime" />
+    <result column="wed_end_time" jdbcType="TIME" property="wedEndTime" />
+    <result column="wed_no" jdbcType="SMALLINT" property="wedNo" />
+    <result column="thu_begin_time" jdbcType="TIME" property="thuBeginTime" />
+    <result column="thu_end_time" jdbcType="TIME" property="thuEndTime" />
+    <result column="thu_no" jdbcType="SMALLINT" property="thuNo" />
+    <result column="fri_begin_time" jdbcType="TIME" property="friBeginTime" />
+    <result column="fri_end_time" jdbcType="TIME" property="friEndTime" />
+    <result column="fri_no" jdbcType="SMALLINT" property="friNo" />
+    <result column="sat_begin_time" jdbcType="TIME" property="satBeginTime" />
+    <result column="sat_end_time" jdbcType="TIME" property="satEndTime" />
+    <result column="sat_no" jdbcType="SMALLINT" property="satNo" />
+    <result column="sun_begin_time" jdbcType="TIME" property="sunBeginTime" />
+    <result column="sun_end_time" jdbcType="TIME" property="sunEndTime" />
+    <result column="sun_no" jdbcType="SMALLINT" property="sunNo" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, sys_clinic_room_id, mon_begin_time, mon_end_time, mon_no, tue_begin_time, tue_end_time,
+    tue_no, wed_begin_time, wed_end_time, wed_no, thu_begin_time, thu_end_time, thu_no,
+    fri_begin_time, fri_end_time, fri_no, sat_begin_time, sat_end_time, sat_no, sun_begin_time,
+    sun_end_time, sun_no
+  </sql>
+  <select id="selectByExample" parameterType="pers.tandy.chis.modules.systemmanagement.bean.DoctorExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sys_doctor
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sys_doctor
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sys_doctor
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="pers.tandy.chis.modules.systemmanagement.bean.DoctorExample">
+    delete from sys_doctor
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="pers.tandy.chis.modules.systemmanagement.bean.Doctor">
+    insert into sys_doctor (id, sys_clinic_room_id, mon_begin_time,
+      mon_end_time, mon_no, tue_begin_time,
+      tue_end_time, tue_no, wed_begin_time,
+      wed_end_time, wed_no, thu_begin_time,
+      thu_end_time, thu_no, fri_begin_time,
+      fri_end_time, fri_no, sat_begin_time,
+      sat_end_time, sat_no, sun_begin_time,
+      sun_end_time, sun_no)
+    values (#{id,jdbcType=INTEGER}, #{sysClinicRoomId,jdbcType=INTEGER}, #{monBeginTime,jdbcType=TIME},
+      #{monEndTime,jdbcType=TIME}, #{monNo,jdbcType=SMALLINT}, #{tueBeginTime,jdbcType=TIME},
+      #{tueEndTime,jdbcType=TIME}, #{tueNo,jdbcType=SMALLINT}, #{wedBeginTime,jdbcType=TIME},
+      #{wedEndTime,jdbcType=TIME}, #{wedNo,jdbcType=SMALLINT}, #{thuBeginTime,jdbcType=TIME},
+      #{thuEndTime,jdbcType=TIME}, #{thuNo,jdbcType=SMALLINT}, #{friBeginTime,jdbcType=TIME},
+      #{friEndTime,jdbcType=TIME}, #{friNo,jdbcType=SMALLINT}, #{satBeginTime,jdbcType=TIME},
+      #{satEndTime,jdbcType=TIME}, #{satNo,jdbcType=SMALLINT}, #{sunBeginTime,jdbcType=TIME},
+      #{sunEndTime,jdbcType=TIME}, #{sunNo,jdbcType=SMALLINT})
+  </insert>
+  <insert id="insertSelective" parameterType="pers.tandy.chis.modules.systemmanagement.bean.Doctor">
+    insert into sys_doctor
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="sysClinicRoomId != null">
+        sys_clinic_room_id,
+      </if>
+      <if test="monBeginTime != null">
+        mon_begin_time,
+      </if>
+      <if test="monEndTime != null">
+        mon_end_time,
+      </if>
+      <if test="monNo != null">
+        mon_no,
+      </if>
+      <if test="tueBeginTime != null">
+        tue_begin_time,
+      </if>
+      <if test="tueEndTime != null">
+        tue_end_time,
+      </if>
+      <if test="tueNo != null">
+        tue_no,
+      </if>
+      <if test="wedBeginTime != null">
+        wed_begin_time,
+      </if>
+      <if test="wedEndTime != null">
+        wed_end_time,
+      </if>
+      <if test="wedNo != null">
+        wed_no,
+      </if>
+      <if test="thuBeginTime != null">
+        thu_begin_time,
+      </if>
+      <if test="thuEndTime != null">
+        thu_end_time,
+      </if>
+      <if test="thuNo != null">
+        thu_no,
+      </if>
+      <if test="friBeginTime != null">
+        fri_begin_time,
+      </if>
+      <if test="friEndTime != null">
+        fri_end_time,
+      </if>
+      <if test="friNo != null">
+        fri_no,
+      </if>
+      <if test="satBeginTime != null">
+        sat_begin_time,
+      </if>
+      <if test="satEndTime != null">
+        sat_end_time,
+      </if>
+      <if test="satNo != null">
+        sat_no,
+      </if>
+      <if test="sunBeginTime != null">
+        sun_begin_time,
+      </if>
+      <if test="sunEndTime != null">
+        sun_end_time,
+      </if>
+      <if test="sunNo != null">
+        sun_no,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="sysClinicRoomId != null">
+        #{sysClinicRoomId,jdbcType=INTEGER},
+      </if>
+      <if test="monBeginTime != null">
+        #{monBeginTime,jdbcType=TIME},
+      </if>
+      <if test="monEndTime != null">
+        #{monEndTime,jdbcType=TIME},
+      </if>
+      <if test="monNo != null">
+        #{monNo,jdbcType=SMALLINT},
+      </if>
+      <if test="tueBeginTime != null">
+        #{tueBeginTime,jdbcType=TIME},
+      </if>
+      <if test="tueEndTime != null">
+        #{tueEndTime,jdbcType=TIME},
+      </if>
+      <if test="tueNo != null">
+        #{tueNo,jdbcType=SMALLINT},
+      </if>
+      <if test="wedBeginTime != null">
+        #{wedBeginTime,jdbcType=TIME},
+      </if>
+      <if test="wedEndTime != null">
+        #{wedEndTime,jdbcType=TIME},
+      </if>
+      <if test="wedNo != null">
+        #{wedNo,jdbcType=SMALLINT},
+      </if>
+      <if test="thuBeginTime != null">
+        #{thuBeginTime,jdbcType=TIME},
+      </if>
+      <if test="thuEndTime != null">
+        #{thuEndTime,jdbcType=TIME},
+      </if>
+      <if test="thuNo != null">
+        #{thuNo,jdbcType=SMALLINT},
+      </if>
+      <if test="friBeginTime != null">
+        #{friBeginTime,jdbcType=TIME},
+      </if>
+      <if test="friEndTime != null">
+        #{friEndTime,jdbcType=TIME},
+      </if>
+      <if test="friNo != null">
+        #{friNo,jdbcType=SMALLINT},
+      </if>
+      <if test="satBeginTime != null">
+        #{satBeginTime,jdbcType=TIME},
+      </if>
+      <if test="satEndTime != null">
+        #{satEndTime,jdbcType=TIME},
+      </if>
+      <if test="satNo != null">
+        #{satNo,jdbcType=SMALLINT},
+      </if>
+      <if test="sunBeginTime != null">
+        #{sunBeginTime,jdbcType=TIME},
+      </if>
+      <if test="sunEndTime != null">
+        #{sunEndTime,jdbcType=TIME},
+      </if>
+      <if test="sunNo != null">
+        #{sunNo,jdbcType=SMALLINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="pers.tandy.chis.modules.systemmanagement.bean.DoctorExample" resultType="java.lang.Long">
+    select count(*) from sys_doctor
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update sys_doctor
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.sysClinicRoomId != null">
+        sys_clinic_room_id = #{record.sysClinicRoomId,jdbcType=INTEGER},
+      </if>
+      <if test="record.monBeginTime != null">
+        mon_begin_time = #{record.monBeginTime,jdbcType=TIME},
+      </if>
+      <if test="record.monEndTime != null">
+        mon_end_time = #{record.monEndTime,jdbcType=TIME},
+      </if>
+      <if test="record.monNo != null">
+        mon_no = #{record.monNo,jdbcType=SMALLINT},
+      </if>
+      <if test="record.tueBeginTime != null">
+        tue_begin_time = #{record.tueBeginTime,jdbcType=TIME},
+      </if>
+      <if test="record.tueEndTime != null">
+        tue_end_time = #{record.tueEndTime,jdbcType=TIME},
+      </if>
+      <if test="record.tueNo != null">
+        tue_no = #{record.tueNo,jdbcType=SMALLINT},
+      </if>
+      <if test="record.wedBeginTime != null">
+        wed_begin_time = #{record.wedBeginTime,jdbcType=TIME},
+      </if>
+      <if test="record.wedEndTime != null">
+        wed_end_time = #{record.wedEndTime,jdbcType=TIME},
+      </if>
+      <if test="record.wedNo != null">
+        wed_no = #{record.wedNo,jdbcType=SMALLINT},
+      </if>
+      <if test="record.thuBeginTime != null">
+        thu_begin_time = #{record.thuBeginTime,jdbcType=TIME},
+      </if>
+      <if test="record.thuEndTime != null">
+        thu_end_time = #{record.thuEndTime,jdbcType=TIME},
+      </if>
+      <if test="record.thuNo != null">
+        thu_no = #{record.thuNo,jdbcType=SMALLINT},
+      </if>
+      <if test="record.friBeginTime != null">
+        fri_begin_time = #{record.friBeginTime,jdbcType=TIME},
+      </if>
+      <if test="record.friEndTime != null">
+        fri_end_time = #{record.friEndTime,jdbcType=TIME},
+      </if>
+      <if test="record.friNo != null">
+        fri_no = #{record.friNo,jdbcType=SMALLINT},
+      </if>
+      <if test="record.satBeginTime != null">
+        sat_begin_time = #{record.satBeginTime,jdbcType=TIME},
+      </if>
+      <if test="record.satEndTime != null">
+        sat_end_time = #{record.satEndTime,jdbcType=TIME},
+      </if>
+      <if test="record.satNo != null">
+        sat_no = #{record.satNo,jdbcType=SMALLINT},
+      </if>
+      <if test="record.sunBeginTime != null">
+        sun_begin_time = #{record.sunBeginTime,jdbcType=TIME},
+      </if>
+      <if test="record.sunEndTime != null">
+        sun_end_time = #{record.sunEndTime,jdbcType=TIME},
+      </if>
+      <if test="record.sunNo != null">
+        sun_no = #{record.sunNo,jdbcType=SMALLINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update sys_doctor
+    set id = #{record.id,jdbcType=INTEGER},
+      sys_clinic_room_id = #{record.sysClinicRoomId,jdbcType=INTEGER},
+      mon_begin_time = #{record.monBeginTime,jdbcType=TIME},
+      mon_end_time = #{record.monEndTime,jdbcType=TIME},
+      mon_no = #{record.monNo,jdbcType=SMALLINT},
+      tue_begin_time = #{record.tueBeginTime,jdbcType=TIME},
+      tue_end_time = #{record.tueEndTime,jdbcType=TIME},
+      tue_no = #{record.tueNo,jdbcType=SMALLINT},
+      wed_begin_time = #{record.wedBeginTime,jdbcType=TIME},
+      wed_end_time = #{record.wedEndTime,jdbcType=TIME},
+      wed_no = #{record.wedNo,jdbcType=SMALLINT},
+      thu_begin_time = #{record.thuBeginTime,jdbcType=TIME},
+      thu_end_time = #{record.thuEndTime,jdbcType=TIME},
+      thu_no = #{record.thuNo,jdbcType=SMALLINT},
+      fri_begin_time = #{record.friBeginTime,jdbcType=TIME},
+      fri_end_time = #{record.friEndTime,jdbcType=TIME},
+      fri_no = #{record.friNo,jdbcType=SMALLINT},
+      sat_begin_time = #{record.satBeginTime,jdbcType=TIME},
+      sat_end_time = #{record.satEndTime,jdbcType=TIME},
+      sat_no = #{record.satNo,jdbcType=SMALLINT},
+      sun_begin_time = #{record.sunBeginTime,jdbcType=TIME},
+      sun_end_time = #{record.sunEndTime,jdbcType=TIME},
+      sun_no = #{record.sunNo,jdbcType=SMALLINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="pers.tandy.chis.modules.systemmanagement.bean.Doctor">
+    update sys_doctor
+    <set>
+      <if test="sysClinicRoomId != null">
+        sys_clinic_room_id = #{sysClinicRoomId,jdbcType=INTEGER},
+      </if>
+      <if test="monBeginTime != null">
+        mon_begin_time = #{monBeginTime,jdbcType=TIME},
+      </if>
+      <if test="monEndTime != null">
+        mon_end_time = #{monEndTime,jdbcType=TIME},
+      </if>
+      <if test="monNo != null">
+        mon_no = #{monNo,jdbcType=SMALLINT},
+      </if>
+      <if test="tueBeginTime != null">
+        tue_begin_time = #{tueBeginTime,jdbcType=TIME},
+      </if>
+      <if test="tueEndTime != null">
+        tue_end_time = #{tueEndTime,jdbcType=TIME},
+      </if>
+      <if test="tueNo != null">
+        tue_no = #{tueNo,jdbcType=SMALLINT},
+      </if>
+      <if test="wedBeginTime != null">
+        wed_begin_time = #{wedBeginTime,jdbcType=TIME},
+      </if>
+      <if test="wedEndTime != null">
+        wed_end_time = #{wedEndTime,jdbcType=TIME},
+      </if>
+      <if test="wedNo != null">
+        wed_no = #{wedNo,jdbcType=SMALLINT},
+      </if>
+      <if test="thuBeginTime != null">
+        thu_begin_time = #{thuBeginTime,jdbcType=TIME},
+      </if>
+      <if test="thuEndTime != null">
+        thu_end_time = #{thuEndTime,jdbcType=TIME},
+      </if>
+      <if test="thuNo != null">
+        thu_no = #{thuNo,jdbcType=SMALLINT},
+      </if>
+      <if test="friBeginTime != null">
+        fri_begin_time = #{friBeginTime,jdbcType=TIME},
+      </if>
+      <if test="friEndTime != null">
+        fri_end_time = #{friEndTime,jdbcType=TIME},
+      </if>
+      <if test="friNo != null">
+        fri_no = #{friNo,jdbcType=SMALLINT},
+      </if>
+      <if test="satBeginTime != null">
+        sat_begin_time = #{satBeginTime,jdbcType=TIME},
+      </if>
+      <if test="satEndTime != null">
+        sat_end_time = #{satEndTime,jdbcType=TIME},
+      </if>
+      <if test="satNo != null">
+        sat_no = #{satNo,jdbcType=SMALLINT},
+      </if>
+      <if test="sunBeginTime != null">
+        sun_begin_time = #{sunBeginTime,jdbcType=TIME},
+      </if>
+      <if test="sunEndTime != null">
+        sun_end_time = #{sunEndTime,jdbcType=TIME},
+      </if>
+      <if test="sunNo != null">
+        sun_no = #{sunNo,jdbcType=SMALLINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="pers.tandy.chis.modules.systemmanagement.bean.Doctor">
+    update sys_doctor
+    set sys_clinic_room_id = #{sysClinicRoomId,jdbcType=INTEGER},
+      mon_begin_time = #{monBeginTime,jdbcType=TIME},
+      mon_end_time = #{monEndTime,jdbcType=TIME},
+      mon_no = #{monNo,jdbcType=SMALLINT},
+      tue_begin_time = #{tueBeginTime,jdbcType=TIME},
+      tue_end_time = #{tueEndTime,jdbcType=TIME},
+      tue_no = #{tueNo,jdbcType=SMALLINT},
+      wed_begin_time = #{wedBeginTime,jdbcType=TIME},
+      wed_end_time = #{wedEndTime,jdbcType=TIME},
+      wed_no = #{wedNo,jdbcType=SMALLINT},
+      thu_begin_time = #{thuBeginTime,jdbcType=TIME},
+      thu_end_time = #{thuEndTime,jdbcType=TIME},
+      thu_no = #{thuNo,jdbcType=SMALLINT},
+      fri_begin_time = #{friBeginTime,jdbcType=TIME},
+      fri_end_time = #{friEndTime,jdbcType=TIME},
+      fri_no = #{friNo,jdbcType=SMALLINT},
+      sat_begin_time = #{satBeginTime,jdbcType=TIME},
+      sat_end_time = #{satEndTime,jdbcType=TIME},
+      sat_no = #{satNo,jdbcType=SMALLINT},
+      sun_begin_time = #{sunBeginTime,jdbcType=TIME},
+      sun_end_time = #{sunEndTime,jdbcType=TIME},
+      sun_no = #{sunNo,jdbcType=SMALLINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+
+
+
+  <!-- ************************************************************************************************************* -->
+  <select id="selectClinicListByCriteria" resultType="map">
+    select *
+    from view_sys_doctor
+    <trim prefix="where" suffixOverrides="and">
+      <if test="sysClinicId != null">
+        sysClinicId = #{sysClinicId} and
+      </if>
+      <if test="name != null &amp;&amp; name.trim() != ''">
+        (name like '${name}%' or code like '${name}%') and
+      </if>
+    </trim>
+    order by id
+  </select>
+
+  <select id="selectClinicEnabled" resultType="map">
+    select *
+    from view_sys_doctor
+    where
+      (sysClinicId = #{sysClinicId}) and
+      (roomSysClinicId = #{sysClinicId}) and
+      (state = true)
+    order by id
+  </select>
+
+  <select id="selectAllEnabled" resultType="map">
+    select *
+    from view_sys_doctor
+    where
+      (state = true)
+    order by id
+  </select>
+
+
+</mapper>

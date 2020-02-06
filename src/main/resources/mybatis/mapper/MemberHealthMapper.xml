@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pers.tandy.chis.modules.membermanagement.dao.MemberHealthMapper">
+  <resultMap id="BaseResultMap" type="pers.tandy.chis.modules.membermanagement.bean.MemberHealth">
+    <result column="mrm_member_id" jdbcType="INTEGER" property="mrmMemberId" />
+    <result column="sys_dict_type_id" jdbcType="INTEGER" property="sysDictTypeId" />
+    <result column="sys_dict_id" jdbcType="INTEGER" property="sysDictId" />
+    <result column="diagnosis_detail" jdbcType="VARCHAR" property="diagnosisDetail" />
+    <result column="diagnosis_date" jdbcType="DATE" property="diagnosisDate" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    mrm_member_id, sys_dict_type_id, sys_dict_id, diagnosis_detail, diagnosis_date
+  </sql>
+  <select id="selectByExample" parameterType="pers.tandy.chis.modules.membermanagement.bean.MemberHealthExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from mrm_member_health
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="pers.tandy.chis.modules.membermanagement.bean.MemberHealthExample">
+    delete from mrm_member_health
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="pers.tandy.chis.modules.membermanagement.bean.MemberHealth">
+    insert into mrm_member_health (mrm_member_id, sys_dict_type_id, sys_dict_id,
+      diagnosis_detail, diagnosis_date)
+    values (#{mrmMemberId,jdbcType=INTEGER}, #{sysDictTypeId,jdbcType=INTEGER}, #{sysDictId,jdbcType=INTEGER},
+      #{diagnosisDetail,jdbcType=VARCHAR}, #{diagnosisDate,jdbcType=DATE})
+  </insert>
+  <insert id="insertSelective" parameterType="pers.tandy.chis.modules.membermanagement.bean.MemberHealth">
+    insert into mrm_member_health
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="mrmMemberId != null">
+        mrm_member_id,
+      </if>
+      <if test="sysDictTypeId != null">
+        sys_dict_type_id,
+      </if>
+      <if test="sysDictId != null">
+        sys_dict_id,
+      </if>
+      <if test="diagnosisDetail != null">
+        diagnosis_detail,
+      </if>
+      <if test="diagnosisDate != null">
+        diagnosis_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="mrmMemberId != null">
+        #{mrmMemberId,jdbcType=INTEGER},
+      </if>
+      <if test="sysDictTypeId != null">
+        #{sysDictTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="sysDictId != null">
+        #{sysDictId,jdbcType=INTEGER},
+      </if>
+      <if test="diagnosisDetail != null">
+        #{diagnosisDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="diagnosisDate != null">
+        #{diagnosisDate,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="pers.tandy.chis.modules.membermanagement.bean.MemberHealthExample" resultType="java.lang.Long">
+    select count(*) from mrm_member_health
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update mrm_member_health
+    <set>
+      <if test="record.mrmMemberId != null">
+        mrm_member_id = #{record.mrmMemberId,jdbcType=INTEGER},
+      </if>
+      <if test="record.sysDictTypeId != null">
+        sys_dict_type_id = #{record.sysDictTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.sysDictId != null">
+        sys_dict_id = #{record.sysDictId,jdbcType=INTEGER},
+      </if>
+      <if test="record.diagnosisDetail != null">
+        diagnosis_detail = #{record.diagnosisDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.diagnosisDate != null">
+        diagnosis_date = #{record.diagnosisDate,jdbcType=DATE},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update mrm_member_health
+    set mrm_member_id = #{record.mrmMemberId,jdbcType=INTEGER},
+      sys_dict_type_id = #{record.sysDictTypeId,jdbcType=INTEGER},
+      sys_dict_id = #{record.sysDictId,jdbcType=INTEGER},
+      diagnosis_detail = #{record.diagnosisDetail,jdbcType=VARCHAR},
+      diagnosis_date = #{record.diagnosisDate,jdbcType=DATE}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+
+
+  <!-- ************************************************************************************************************* -->
+  <insert id="insertList">
+    insert into mrm_member_health
+    (
+    mrm_member_id,
+    sys_dict_type_id,
+    sys_dict_id,
+    diagnosis_detail,
+    diagnosis_date
+    )
+    values
+    <foreach collection="memberHealthList" item="health" separator="," close=";">
+      (
+      #{health.mrmMemberId,jdbcType=INTEGER},
+      #{health.sysDictTypeId,jdbcType=INTEGER},
+      #{health.sysDictId,jdbcType=INTEGER},
+      #{health.diagnosisDetail,jdbcType=VARCHAR},
+      #{health.diagnosisDate,jdbcType=DATE}
+      )
+    </foreach>
+  </insert>
+
+</mapper>

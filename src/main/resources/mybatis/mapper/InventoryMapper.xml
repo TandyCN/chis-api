@@ -1,0 +1,574 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pers.tandy.chis.modules.inventorymanagement.dao.InventoryMapper">
+  <resultMap id="BaseResultMap" type="pers.tandy.chis.modules.inventorymanagement.bean.Inventory">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="sys_clinic_id" jdbcType="INTEGER" property="sysClinicId" />
+    <result column="iym_inventory_type_id" jdbcType="INTEGER" property="iymInventoryTypeId" />
+    <result column="gsm_goods_id" jdbcType="INTEGER" property="gsmGoodsId" />
+    <result column="ph" jdbcType="VARCHAR" property="ph" />
+    <result column="pch" jdbcType="VARCHAR" property="pch" />
+    <result column="split_quantity" jdbcType="INTEGER" property="splitQuantity" />
+    <result column="quantity" jdbcType="SMALLINT" property="quantity" />
+    <result column="cost_price" jdbcType="REAL" property="costPrice" />
+    <result column="average_cost_price" jdbcType="REAL" property="averageCostPrice" />
+    <result column="purchase_tax_rate" jdbcType="TINYINT" property="purchaseTaxRate" />
+    <result column="sell_tax_rate" jdbcType="TINYINT" property="sellTaxRate" />
+    <result column="produced_date" jdbcType="DATE" property="producedDate" />
+    <result column="expiry_date" jdbcType="DATE" property="expiryDate" />
+    <result column="pem_supplier_id" jdbcType="INTEGER" property="pemSupplierId" />
+    <result column="iym_inventory_add_id" jdbcType="INTEGER" property="iymInventoryAddId" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, sys_clinic_id, iym_inventory_type_id, gsm_goods_id, ph, pch, split_quantity,
+    quantity, cost_price, average_cost_price, purchase_tax_rate, sell_tax_rate, produced_date,
+    expiry_date, pem_supplier_id, iym_inventory_add_id
+  </sql>
+  <select id="selectByExample" parameterType="pers.tandy.chis.modules.inventorymanagement.bean.InventoryExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from iym_inventory
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from iym_inventory
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from iym_inventory
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="pers.tandy.chis.modules.inventorymanagement.bean.InventoryExample">
+    delete from iym_inventory
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="pers.tandy.chis.modules.inventorymanagement.bean.Inventory">
+    insert into iym_inventory (id, sys_clinic_id, iym_inventory_type_id,
+      gsm_goods_id, ph, pch,
+      split_quantity, quantity, cost_price,
+      average_cost_price, purchase_tax_rate, sell_tax_rate,
+      produced_date, expiry_date, pem_supplier_id,
+      iym_inventory_add_id)
+    values (#{id,jdbcType=INTEGER}, #{sysClinicId,jdbcType=INTEGER}, #{iymInventoryTypeId,jdbcType=INTEGER},
+      #{gsmGoodsId,jdbcType=INTEGER}, #{ph,jdbcType=VARCHAR}, #{pch,jdbcType=VARCHAR},
+      #{splitQuantity,jdbcType=INTEGER}, #{quantity,jdbcType=SMALLINT}, #{costPrice,jdbcType=REAL},
+      #{averageCostPrice,jdbcType=REAL}, #{purchaseTaxRate,jdbcType=TINYINT}, #{sellTaxRate,jdbcType=TINYINT},
+      #{producedDate,jdbcType=DATE}, #{expiryDate,jdbcType=DATE}, #{pemSupplierId,jdbcType=INTEGER},
+      #{iymInventoryAddId,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="pers.tandy.chis.modules.inventorymanagement.bean.Inventory">
+    insert into iym_inventory
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="sysClinicId != null">
+        sys_clinic_id,
+      </if>
+      <if test="iymInventoryTypeId != null">
+        iym_inventory_type_id,
+      </if>
+      <if test="gsmGoodsId != null">
+        gsm_goods_id,
+      </if>
+      <if test="ph != null">
+        ph,
+      </if>
+      <if test="pch != null">
+        pch,
+      </if>
+      <if test="splitQuantity != null">
+        split_quantity,
+      </if>
+      <if test="quantity != null">
+        quantity,
+      </if>
+      <if test="costPrice != null">
+        cost_price,
+      </if>
+      <if test="averageCostPrice != null">
+        average_cost_price,
+      </if>
+      <if test="purchaseTaxRate != null">
+        purchase_tax_rate,
+      </if>
+      <if test="sellTaxRate != null">
+        sell_tax_rate,
+      </if>
+      <if test="producedDate != null">
+        produced_date,
+      </if>
+      <if test="expiryDate != null">
+        expiry_date,
+      </if>
+      <if test="pemSupplierId != null">
+        pem_supplier_id,
+      </if>
+      <if test="iymInventoryAddId != null">
+        iym_inventory_add_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="sysClinicId != null">
+        #{sysClinicId,jdbcType=INTEGER},
+      </if>
+      <if test="iymInventoryTypeId != null">
+        #{iymInventoryTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="gsmGoodsId != null">
+        #{gsmGoodsId,jdbcType=INTEGER},
+      </if>
+      <if test="ph != null">
+        #{ph,jdbcType=VARCHAR},
+      </if>
+      <if test="pch != null">
+        #{pch,jdbcType=VARCHAR},
+      </if>
+      <if test="splitQuantity != null">
+        #{splitQuantity,jdbcType=INTEGER},
+      </if>
+      <if test="quantity != null">
+        #{quantity,jdbcType=SMALLINT},
+      </if>
+      <if test="costPrice != null">
+        #{costPrice,jdbcType=REAL},
+      </if>
+      <if test="averageCostPrice != null">
+        #{averageCostPrice,jdbcType=REAL},
+      </if>
+      <if test="purchaseTaxRate != null">
+        #{purchaseTaxRate,jdbcType=TINYINT},
+      </if>
+      <if test="sellTaxRate != null">
+        #{sellTaxRate,jdbcType=TINYINT},
+      </if>
+      <if test="producedDate != null">
+        #{producedDate,jdbcType=DATE},
+      </if>
+      <if test="expiryDate != null">
+        #{expiryDate,jdbcType=DATE},
+      </if>
+      <if test="pemSupplierId != null">
+        #{pemSupplierId,jdbcType=INTEGER},
+      </if>
+      <if test="iymInventoryAddId != null">
+        #{iymInventoryAddId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="pers.tandy.chis.modules.inventorymanagement.bean.InventoryExample" resultType="java.lang.Long">
+    select count(*) from iym_inventory
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update iym_inventory
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.sysClinicId != null">
+        sys_clinic_id = #{record.sysClinicId,jdbcType=INTEGER},
+      </if>
+      <if test="record.iymInventoryTypeId != null">
+        iym_inventory_type_id = #{record.iymInventoryTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.gsmGoodsId != null">
+        gsm_goods_id = #{record.gsmGoodsId,jdbcType=INTEGER},
+      </if>
+      <if test="record.ph != null">
+        ph = #{record.ph,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pch != null">
+        pch = #{record.pch,jdbcType=VARCHAR},
+      </if>
+      <if test="record.splitQuantity != null">
+        split_quantity = #{record.splitQuantity,jdbcType=INTEGER},
+      </if>
+      <if test="record.quantity != null">
+        quantity = #{record.quantity,jdbcType=SMALLINT},
+      </if>
+      <if test="record.costPrice != null">
+        cost_price = #{record.costPrice,jdbcType=REAL},
+      </if>
+      <if test="record.averageCostPrice != null">
+        average_cost_price = #{record.averageCostPrice,jdbcType=REAL},
+      </if>
+      <if test="record.purchaseTaxRate != null">
+        purchase_tax_rate = #{record.purchaseTaxRate,jdbcType=TINYINT},
+      </if>
+      <if test="record.sellTaxRate != null">
+        sell_tax_rate = #{record.sellTaxRate,jdbcType=TINYINT},
+      </if>
+      <if test="record.producedDate != null">
+        produced_date = #{record.producedDate,jdbcType=DATE},
+      </if>
+      <if test="record.expiryDate != null">
+        expiry_date = #{record.expiryDate,jdbcType=DATE},
+      </if>
+      <if test="record.pemSupplierId != null">
+        pem_supplier_id = #{record.pemSupplierId,jdbcType=INTEGER},
+      </if>
+      <if test="record.iymInventoryAddId != null">
+        iym_inventory_add_id = #{record.iymInventoryAddId,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update iym_inventory
+    set id = #{record.id,jdbcType=INTEGER},
+      sys_clinic_id = #{record.sysClinicId,jdbcType=INTEGER},
+      iym_inventory_type_id = #{record.iymInventoryTypeId,jdbcType=INTEGER},
+      gsm_goods_id = #{record.gsmGoodsId,jdbcType=INTEGER},
+      ph = #{record.ph,jdbcType=VARCHAR},
+      pch = #{record.pch,jdbcType=VARCHAR},
+      split_quantity = #{record.splitQuantity,jdbcType=INTEGER},
+      quantity = #{record.quantity,jdbcType=SMALLINT},
+      cost_price = #{record.costPrice,jdbcType=REAL},
+      average_cost_price = #{record.averageCostPrice,jdbcType=REAL},
+      purchase_tax_rate = #{record.purchaseTaxRate,jdbcType=TINYINT},
+      sell_tax_rate = #{record.sellTaxRate,jdbcType=TINYINT},
+      produced_date = #{record.producedDate,jdbcType=DATE},
+      expiry_date = #{record.expiryDate,jdbcType=DATE},
+      pem_supplier_id = #{record.pemSupplierId,jdbcType=INTEGER},
+      iym_inventory_add_id = #{record.iymInventoryAddId,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="pers.tandy.chis.modules.inventorymanagement.bean.Inventory">
+    update iym_inventory
+    <set>
+      <if test="sysClinicId != null">
+        sys_clinic_id = #{sysClinicId,jdbcType=INTEGER},
+      </if>
+      <if test="iymInventoryTypeId != null">
+        iym_inventory_type_id = #{iymInventoryTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="gsmGoodsId != null">
+        gsm_goods_id = #{gsmGoodsId,jdbcType=INTEGER},
+      </if>
+      <if test="ph != null">
+        ph = #{ph,jdbcType=VARCHAR},
+      </if>
+      <if test="pch != null">
+        pch = #{pch,jdbcType=VARCHAR},
+      </if>
+      <if test="splitQuantity != null">
+        split_quantity = #{splitQuantity,jdbcType=INTEGER},
+      </if>
+      <if test="quantity != null">
+        quantity = #{quantity,jdbcType=SMALLINT},
+      </if>
+      <if test="costPrice != null">
+        cost_price = #{costPrice,jdbcType=REAL},
+      </if>
+      <if test="averageCostPrice != null">
+        average_cost_price = #{averageCostPrice,jdbcType=REAL},
+      </if>
+      <if test="purchaseTaxRate != null">
+        purchase_tax_rate = #{purchaseTaxRate,jdbcType=TINYINT},
+      </if>
+      <if test="sellTaxRate != null">
+        sell_tax_rate = #{sellTaxRate,jdbcType=TINYINT},
+      </if>
+      <if test="producedDate != null">
+        produced_date = #{producedDate,jdbcType=DATE},
+      </if>
+      <if test="expiryDate != null">
+        expiry_date = #{expiryDate,jdbcType=DATE},
+      </if>
+      <if test="pemSupplierId != null">
+        pem_supplier_id = #{pemSupplierId,jdbcType=INTEGER},
+      </if>
+      <if test="iymInventoryAddId != null">
+        iym_inventory_add_id = #{iymInventoryAddId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="pers.tandy.chis.modules.inventorymanagement.bean.Inventory">
+    update iym_inventory
+    set sys_clinic_id = #{sysClinicId,jdbcType=INTEGER},
+      iym_inventory_type_id = #{iymInventoryTypeId,jdbcType=INTEGER},
+      gsm_goods_id = #{gsmGoodsId,jdbcType=INTEGER},
+      ph = #{ph,jdbcType=VARCHAR},
+      pch = #{pch,jdbcType=VARCHAR},
+      split_quantity = #{splitQuantity,jdbcType=INTEGER},
+      quantity = #{quantity,jdbcType=SMALLINT},
+      cost_price = #{costPrice,jdbcType=REAL},
+      average_cost_price = #{averageCostPrice,jdbcType=REAL},
+      purchase_tax_rate = #{purchaseTaxRate,jdbcType=TINYINT},
+      sell_tax_rate = #{sellTaxRate,jdbcType=TINYINT},
+      produced_date = #{producedDate,jdbcType=DATE},
+      expiry_date = #{expiryDate,jdbcType=DATE},
+      pem_supplier_id = #{pemSupplierId,jdbcType=INTEGER},
+      iym_inventory_add_id = #{iymInventoryAddId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+
+  <!-- ************************************************************************************************************* -->
+
+  <insert id="insertList">
+    insert into iym_inventory
+    (
+    id,
+    sys_clinic_id,
+    iym_inventory_type_id,
+    gsm_goods_id,
+    ph,
+    pch,
+    split_quantity,
+    quantity,
+    cost_price,
+    average_cost_price,
+    purchase_tax_rate,
+    sell_tax_rate,
+    produced_date,
+    expiry_date,
+    pem_supplier_id,
+    iym_inventory_add_id
+    )
+    values
+    <foreach collection="inventoryList" item="inventory" separator="," close=";">
+      (
+      #{inventory.id,jdbcType=INTEGER},
+      #{inventory.sysClinicId,jdbcType=INTEGER},
+      #{inventory.iymInventoryTypeId,jdbcType=INTEGER},
+      #{inventory.gsmGoodsId,jdbcType=INTEGER},
+      #{inventory.ph,jdbcType=VARCHAR},
+      #{inventory.pch,jdbcType=VARCHAR},
+      #{inventory.splitQuantity,jdbcType=INTEGER},
+      #{inventory.quantity,jdbcType=SMALLINT},
+      #{inventory.costPrice,jdbcType=REAL},
+      #{inventory.averageCostPrice,jdbcType=REAL},
+      #{inventory.purchaseTaxRate,jdbcType=TINYINT},
+      #{inventory.sellTaxRate,jdbcType=TINYINT},
+      #{inventory.producedDate,jdbcType=DATE},
+      #{inventory.expiryDate,jdbcType=DATE},
+      #{inventory.pemSupplierId,jdbcType=INTEGER},
+      #{inventory.iymInventoryAddId,jdbcType=INTEGER}
+      )
+    </foreach>
+  </insert>
+
+  <update id="updateQuantityByList">
+    <foreach collection="inventoryList" item="inventory" separator=";" close=";">
+      update iym_inventory
+      set quantity = quantity - #{inventory.quantity}
+      where id = #{inventory.id}
+    </foreach>
+  </update>
+
+  <update id="updateQuantityById">
+     update iym_inventory
+      set quantity = quantity - #{quantity}
+      where id = #{id}
+  </update>
+
+  <select id="selectLastByGoodsIdList" resultMap="BaseResultMap">
+    SELECT *
+    FROM iym_inventory
+    WHERE
+    id IN (
+      SELECT MAX(id)
+      FROM iym_inventory
+      WHERE
+      gsm_goods_id IN
+      <foreach collection="goodsIdList" item="goodsId" open="(" separator="," close=")">
+        #{goodsId}
+      </foreach>
+      GROUP BY gsm_goods_id
+      ORDER BY id DESC
+    )
+  </select>
+
+  <select id="selectClinicPchEnabledLikeByCriteria" resultType="map">
+    select *
+    from
+      view_iym_inventory
+    where
+      (sysClinicId = #{sysClinicId}) and
+      (iymInventoryTypeId = #{iymInventoryTypeId}) and
+      (quantity > 0) and
+      (gsmGoodsState is true) and
+      (gsmGoodsName like '${gsmGoodsName}%' or gsmGoodsCode like '${gsmGoodsName}%')
+    order by gsmGoodsTypeId, gsmGoodsOid, expiryDate
+    LIMIT 20
+  </select>
+
+  <select id="selectClinicPchEnabledByCriteriaForOutInventory" resultType="map">
+    select *
+    from
+      view_iym_inventory
+    where
+      (sysClinicId = #{sysClinicId}) and
+      (gsmGoodsId = #{gsmGoodsId}) and
+      (gsmGoodsState is true) and
+      (quantity > 0) and
+      (sellable is true)
+    order by expiryDate
+  </select>
+
+  <select id="selectClinicSubtractPchLikeByCriteria" resultType="map">
+    select *
+    from
+      view_iym_inventory
+    where
+      (sysClinicId = #{sysClinicId}) and
+      (iymInventoryTypeId = #{iymInventoryTypeId}) and
+      (pemSupplierId = #{pemSupplierId}) and
+      (quantity > 0) and
+      (splitQuantity = 1) and
+      (gsmGoodsName like '${gsmGoodsName}%' or gsmGoodsCode like '${gsmGoodsName}%')
+    order by gsmGoodsTypeId, gsmGoodsOid, expiryDate
+    LIMIT 20
+  </select>
+
+  <select id="selectByIdList" resultType="map">
+    select *
+    from view_iym_inventory
+    where id in
+    <foreach collection="idList" item="id" open="(" separator="," close=")">
+      #{id}
+    </foreach>
+  </select>
+
+  <select id="selectPhGroupListByCriteria" resultType="map">
+    select
+    iymInventoryTypeName, gsmGoodsTypeName, gsmGoodsOid, gsmGoodsName, gsmGoodsSpecs, goodsUnitsName, ph,
+    sum(quantity) as quantity, retailPrice, costPrice, producedDate, expiryDate, originName, manufacturerName,
+    sysClinicName
+    from view_iym_inventory
+    <trim prefix="where" suffixOverrides="and">
+      <if test="sysClinicId != null">
+        (sysClinicId = #{sysClinicId}) and
+      </if>
+      <if test="iymInventoryTypeId != null">
+        (iymInventoryTypeId = #{iymInventoryTypeId}) and
+      </if>
+      <if test="showZero != null &amp;&amp; !showZero">
+        (quantity > 0) and
+      </if>
+      <if test="sysClinicName != null &amp;&amp; sysClinicName.trim() != ''">
+        (sysClinicName like '${sysClinicName}%' or sysClinicCode like '${sysClinicName}%') and
+      </if>
+      <if test="gsmGoodsName != null &amp;&amp; gsmGoodsName.trim() != ''">
+        (gsmGoodsName like '${gsmGoodsName}%' or gsmGoodsCode like '${gsmGoodsName}%') and
+      </if>
+      <if test="ph != null &amp;&amp; ph.trim() != ''">
+        (ph like '${ph}%') and
+      </if>
+    </trim>
+    group by sysClinicId, iymInventoryTypeId, gsmGoodsId, ph, costPrice, expiryDate
+    order by sysClinicId, iymInventoryTypeId, gsmGoodsTypeId, gsmGoodsOid, expiryDate
+  </select>
+
+  <select id="selectClinicPchListByCriteria" resultType="map">
+    select *
+    from view_iym_inventory
+    <trim prefix="where" suffixOverrides="and">
+      <if test="sysClinicId != null">
+        (sysClinicId = #{sysClinicId}) and
+      </if>
+      <if test="iymInventoryTypeId != null">
+        (iymInventoryTypeId = #{iymInventoryTypeId}) and
+      </if>
+      <if test="showZero != null &amp;&amp; !showZero">
+        (quantity > 0) and
+      </if>
+      <if test="gsmGoodsName != null &amp;&amp; gsmGoodsName.trim() != ''">
+        (gsmGoodsName like '${gsmGoodsName}%' or gsmGoodsCode like '${gsmGoodsName}%') and
+      </if>
+      <if test="ph != null &amp;&amp; ph.trim() != ''">
+        (ph like '${ph}%') and
+      </if>
+    </trim>
+    order by sysClinicId, iymInventoryTypeId, gsmGoodsTypeId, gsmGoodsOid, expiryDate
+  </select>
+
+
+
+
+
+
+
+</mapper>

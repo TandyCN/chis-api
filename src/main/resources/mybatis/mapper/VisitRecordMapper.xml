@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pers.tandy.chis.modules.doctorworkstation.dao.VisitRecordMapper">
+  <resultMap id="BaseResultMap" type="pers.tandy.chis.modules.doctorworkstation.bean.VisitRecord">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="appointment_date" jdbcType="TIMESTAMP" property="appointmentDate" />
+    <result column="finish_date" jdbcType="TIMESTAMP" property="finishDate" />
+    <result column="mrm_member_id" jdbcType="INTEGER" property="mrmMemberId" />
+    <result column="dwt_clinical_history_id" jdbcType="INTEGER" property="dwtClinicalHistoryId" />
+    <result column="phase" jdbcType="INTEGER" property="phase" />
+    <result column="visit_content" jdbcType="VARCHAR" property="visitContent" />
+    <result column="sys_clinic_id" jdbcType="INTEGER" property="sysClinicId" />
+    <result column="creator_id" jdbcType="INTEGER" property="creatorId" />
+    <result column="creation_date" jdbcType="TIMESTAMP" property="creationDate" />
+    <result column="finished" jdbcType="BIT" property="finished" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, appointment_date, finish_date, mrm_member_id, dwt_clinical_history_id, phase,
+    visit_content, sys_clinic_id, creator_id, creation_date, finished
+  </sql>
+  <select id="selectByExample" parameterType="pers.tandy.chis.modules.doctorworkstation.bean.VisitRecordExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from dwt_visit_record
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from dwt_visit_record
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from dwt_visit_record
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="pers.tandy.chis.modules.doctorworkstation.bean.VisitRecordExample">
+    delete from dwt_visit_record
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="pers.tandy.chis.modules.doctorworkstation.bean.VisitRecord">
+    insert into dwt_visit_record (id, appointment_date, finish_date,
+      mrm_member_id, dwt_clinical_history_id, phase,
+      visit_content, sys_clinic_id, creator_id,
+      creation_date, finished)
+    values (#{id,jdbcType=INTEGER}, #{appointmentDate,jdbcType=TIMESTAMP}, #{finishDate,jdbcType=TIMESTAMP},
+      #{mrmMemberId,jdbcType=INTEGER}, #{dwtClinicalHistoryId,jdbcType=INTEGER}, #{phase,jdbcType=INTEGER},
+      #{visitContent,jdbcType=VARCHAR}, #{sysClinicId,jdbcType=INTEGER}, #{creatorId,jdbcType=INTEGER},
+      #{creationDate,jdbcType=TIMESTAMP}, #{finished,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="pers.tandy.chis.modules.doctorworkstation.bean.VisitRecord">
+    insert into dwt_visit_record
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="appointmentDate != null">
+        appointment_date,
+      </if>
+      <if test="finishDate != null">
+        finish_date,
+      </if>
+      <if test="mrmMemberId != null">
+        mrm_member_id,
+      </if>
+      <if test="dwtClinicalHistoryId != null">
+        dwt_clinical_history_id,
+      </if>
+      <if test="phase != null">
+        phase,
+      </if>
+      <if test="visitContent != null">
+        visit_content,
+      </if>
+      <if test="sysClinicId != null">
+        sys_clinic_id,
+      </if>
+      <if test="creatorId != null">
+        creator_id,
+      </if>
+      <if test="creationDate != null">
+        creation_date,
+      </if>
+      <if test="finished != null">
+        finished,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="appointmentDate != null">
+        #{appointmentDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="finishDate != null">
+        #{finishDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="mrmMemberId != null">
+        #{mrmMemberId,jdbcType=INTEGER},
+      </if>
+      <if test="dwtClinicalHistoryId != null">
+        #{dwtClinicalHistoryId,jdbcType=INTEGER},
+      </if>
+      <if test="phase != null">
+        #{phase,jdbcType=INTEGER},
+      </if>
+      <if test="visitContent != null">
+        #{visitContent,jdbcType=VARCHAR},
+      </if>
+      <if test="sysClinicId != null">
+        #{sysClinicId,jdbcType=INTEGER},
+      </if>
+      <if test="creatorId != null">
+        #{creatorId,jdbcType=INTEGER},
+      </if>
+      <if test="creationDate != null">
+        #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="finished != null">
+        #{finished,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="pers.tandy.chis.modules.doctorworkstation.bean.VisitRecordExample" resultType="java.lang.Long">
+    select count(*) from dwt_visit_record
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update dwt_visit_record
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.appointmentDate != null">
+        appointment_date = #{record.appointmentDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.finishDate != null">
+        finish_date = #{record.finishDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.mrmMemberId != null">
+        mrm_member_id = #{record.mrmMemberId,jdbcType=INTEGER},
+      </if>
+      <if test="record.dwtClinicalHistoryId != null">
+        dwt_clinical_history_id = #{record.dwtClinicalHistoryId,jdbcType=INTEGER},
+      </if>
+      <if test="record.phase != null">
+        phase = #{record.phase,jdbcType=INTEGER},
+      </if>
+      <if test="record.visitContent != null">
+        visit_content = #{record.visitContent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sysClinicId != null">
+        sys_clinic_id = #{record.sysClinicId,jdbcType=INTEGER},
+      </if>
+      <if test="record.creatorId != null">
+        creator_id = #{record.creatorId,jdbcType=INTEGER},
+      </if>
+      <if test="record.creationDate != null">
+        creation_date = #{record.creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.finished != null">
+        finished = #{record.finished,jdbcType=BIT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update dwt_visit_record
+    set id = #{record.id,jdbcType=INTEGER},
+      appointment_date = #{record.appointmentDate,jdbcType=TIMESTAMP},
+      finish_date = #{record.finishDate,jdbcType=TIMESTAMP},
+      mrm_member_id = #{record.mrmMemberId,jdbcType=INTEGER},
+      dwt_clinical_history_id = #{record.dwtClinicalHistoryId,jdbcType=INTEGER},
+      phase = #{record.phase,jdbcType=INTEGER},
+      visit_content = #{record.visitContent,jdbcType=VARCHAR},
+      sys_clinic_id = #{record.sysClinicId,jdbcType=INTEGER},
+      creator_id = #{record.creatorId,jdbcType=INTEGER},
+      creation_date = #{record.creationDate,jdbcType=TIMESTAMP},
+      finished = #{record.finished,jdbcType=BIT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="pers.tandy.chis.modules.doctorworkstation.bean.VisitRecord">
+    update dwt_visit_record
+    <set>
+      <if test="appointmentDate != null">
+        appointment_date = #{appointmentDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="finishDate != null">
+        finish_date = #{finishDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="mrmMemberId != null">
+        mrm_member_id = #{mrmMemberId,jdbcType=INTEGER},
+      </if>
+      <if test="dwtClinicalHistoryId != null">
+        dwt_clinical_history_id = #{dwtClinicalHistoryId,jdbcType=INTEGER},
+      </if>
+      <if test="phase != null">
+        phase = #{phase,jdbcType=INTEGER},
+      </if>
+      <if test="visitContent != null">
+        visit_content = #{visitContent,jdbcType=VARCHAR},
+      </if>
+      <if test="sysClinicId != null">
+        sys_clinic_id = #{sysClinicId,jdbcType=INTEGER},
+      </if>
+      <if test="creatorId != null">
+        creator_id = #{creatorId,jdbcType=INTEGER},
+      </if>
+      <if test="creationDate != null">
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="finished != null">
+        finished = #{finished,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="pers.tandy.chis.modules.doctorworkstation.bean.VisitRecord">
+    update dwt_visit_record
+    set appointment_date = #{appointmentDate,jdbcType=TIMESTAMP},
+      finish_date = #{finishDate,jdbcType=TIMESTAMP},
+      mrm_member_id = #{mrmMemberId,jdbcType=INTEGER},
+      dwt_clinical_history_id = #{dwtClinicalHistoryId,jdbcType=INTEGER},
+      phase = #{phase,jdbcType=INTEGER},
+      visit_content = #{visitContent,jdbcType=VARCHAR},
+      sys_clinic_id = #{sysClinicId,jdbcType=INTEGER},
+      creator_id = #{creatorId,jdbcType=INTEGER},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      finished = #{finished,jdbcType=BIT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <!-- ************************************************************************************************************* -->
+
+  <select id="selectByCriteria" resultType="map">
+    select *
+    from view_dwt_visit_record
+    <trim prefix="where" suffixOverrides="and">
+      <if test="appointmentDate != null &amp;&amp; appointmentDate.length == 2">
+        (appointmentDate between #{appointmentDate[0]} and #{appointmentDate[1]}) and
+      </if>
+      <if test="sysClinicId != null">
+        (sysClinicId = #{sysClinicId}) and
+      </if>
+      <if test="creatorId != null">
+        (creatorId = #{creatorId}) and
+      </if>
+      <if test="finished != null">
+        (finished = #{finished}) and
+      </if>
+      <if test="mrmMemberName != null &amp;&amp; mrmMemberName.trim() != ''">
+        (mrmMemberName like '${mrmMemberName}%' or mrmMemberCode like '${mrmMemberName}%' or phone like '${mrmMemberName}%') and
+      </if>
+    </trim>
+    order by appointmentDate
+  </select>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</mapper>

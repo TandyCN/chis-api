@@ -1,0 +1,438 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pers.tandy.chis.modules.chargesitemmanagement.dao.ItemApplyMapper">
+  <resultMap id="BaseResultMap" type="pers.tandy.chis.modules.chargesitemmanagement.bean.ItemApply">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="cim_item_type_id" jdbcType="INTEGER" property="cimItemTypeId" />
+    <result column="item_units_id" jdbcType="INTEGER" property="itemUnitsId" />
+    <result column="befit_gender_id" jdbcType="INTEGER" property="befitGenderId" />
+    <result column="billing_type_id" jdbcType="INTEGER" property="billingTypeId" />
+    <result column="quantity" jdbcType="TINYINT" property="quantity" />
+    <result column="retail_price" jdbcType="REAL" property="retailPrice" />
+    <result column="explains" jdbcType="VARCHAR" property="explains" />
+    <result column="discountable" jdbcType="BIT" property="discountable" />
+    <result column="creator_id" jdbcType="INTEGER" property="creatorId" />
+    <result column="creation_date" jdbcType="DATE" property="creationDate" />
+    <result column="pricer_id" jdbcType="INTEGER" property="pricerId" />
+    <result column="pricing_date" jdbcType="DATE" property="pricingDate" />
+    <result column="approver_id" jdbcType="INTEGER" property="approverId" />
+    <result column="approve_date" jdbcType="DATE" property="approveDate" />
+    <result column="approve_state" jdbcType="TINYINT" property="approveState" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, name, code, cim_item_type_id, item_units_id, befit_gender_id, billing_type_id,
+    quantity, retail_price, explains, discountable, creator_id, creation_date, pricer_id,
+    pricing_date, approver_id, approve_date, approve_state
+  </sql>
+  <select id="selectByExample" parameterType="pers.tandy.chis.modules.chargesitemmanagement.bean.ItemApplyExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from cim_item_apply
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from cim_item_apply
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from cim_item_apply
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="pers.tandy.chis.modules.chargesitemmanagement.bean.ItemApplyExample">
+    delete from cim_item_apply
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="pers.tandy.chis.modules.chargesitemmanagement.bean.ItemApply">
+    insert into cim_item_apply (id, name, code,
+      cim_item_type_id, item_units_id, befit_gender_id,
+      billing_type_id, quantity, retail_price,
+      explains, discountable, creator_id,
+      creation_date, pricer_id, pricing_date,
+      approver_id, approve_date, approve_state
+      )
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR},
+      #{cimItemTypeId,jdbcType=INTEGER}, #{itemUnitsId,jdbcType=INTEGER}, #{befitGenderId,jdbcType=INTEGER},
+      #{billingTypeId,jdbcType=INTEGER}, #{quantity,jdbcType=TINYINT}, #{retailPrice,jdbcType=REAL},
+      #{explains,jdbcType=VARCHAR}, #{discountable,jdbcType=BIT}, #{creatorId,jdbcType=INTEGER},
+      #{creationDate,jdbcType=DATE}, #{pricerId,jdbcType=INTEGER}, #{pricingDate,jdbcType=DATE},
+      #{approverId,jdbcType=INTEGER}, #{approveDate,jdbcType=DATE}, #{approveState,jdbcType=TINYINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="pers.tandy.chis.modules.chargesitemmanagement.bean.ItemApply">
+    insert into cim_item_apply
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="code != null">
+        code,
+      </if>
+      <if test="cimItemTypeId != null">
+        cim_item_type_id,
+      </if>
+      <if test="itemUnitsId != null">
+        item_units_id,
+      </if>
+      <if test="befitGenderId != null">
+        befit_gender_id,
+      </if>
+      <if test="billingTypeId != null">
+        billing_type_id,
+      </if>
+      <if test="quantity != null">
+        quantity,
+      </if>
+      <if test="retailPrice != null">
+        retail_price,
+      </if>
+      <if test="explains != null">
+        explains,
+      </if>
+      <if test="discountable != null">
+        discountable,
+      </if>
+      <if test="creatorId != null">
+        creator_id,
+      </if>
+      <if test="creationDate != null">
+        creation_date,
+      </if>
+      <if test="pricerId != null">
+        pricer_id,
+      </if>
+      <if test="pricingDate != null">
+        pricing_date,
+      </if>
+      <if test="approverId != null">
+        approver_id,
+      </if>
+      <if test="approveDate != null">
+        approve_date,
+      </if>
+      <if test="approveState != null">
+        approve_state,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null">
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="cimItemTypeId != null">
+        #{cimItemTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="itemUnitsId != null">
+        #{itemUnitsId,jdbcType=INTEGER},
+      </if>
+      <if test="befitGenderId != null">
+        #{befitGenderId,jdbcType=INTEGER},
+      </if>
+      <if test="billingTypeId != null">
+        #{billingTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="quantity != null">
+        #{quantity,jdbcType=TINYINT},
+      </if>
+      <if test="retailPrice != null">
+        #{retailPrice,jdbcType=REAL},
+      </if>
+      <if test="explains != null">
+        #{explains,jdbcType=VARCHAR},
+      </if>
+      <if test="discountable != null">
+        #{discountable,jdbcType=BIT},
+      </if>
+      <if test="creatorId != null">
+        #{creatorId,jdbcType=INTEGER},
+      </if>
+      <if test="creationDate != null">
+        #{creationDate,jdbcType=DATE},
+      </if>
+      <if test="pricerId != null">
+        #{pricerId,jdbcType=INTEGER},
+      </if>
+      <if test="pricingDate != null">
+        #{pricingDate,jdbcType=DATE},
+      </if>
+      <if test="approverId != null">
+        #{approverId,jdbcType=INTEGER},
+      </if>
+      <if test="approveDate != null">
+        #{approveDate,jdbcType=DATE},
+      </if>
+      <if test="approveState != null">
+        #{approveState,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="pers.tandy.chis.modules.chargesitemmanagement.bean.ItemApplyExample" resultType="java.lang.Long">
+    select count(*) from cim_item_apply
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update cim_item_apply
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.code != null">
+        code = #{record.code,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cimItemTypeId != null">
+        cim_item_type_id = #{record.cimItemTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.itemUnitsId != null">
+        item_units_id = #{record.itemUnitsId,jdbcType=INTEGER},
+      </if>
+      <if test="record.befitGenderId != null">
+        befit_gender_id = #{record.befitGenderId,jdbcType=INTEGER},
+      </if>
+      <if test="record.billingTypeId != null">
+        billing_type_id = #{record.billingTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.quantity != null">
+        quantity = #{record.quantity,jdbcType=TINYINT},
+      </if>
+      <if test="record.retailPrice != null">
+        retail_price = #{record.retailPrice,jdbcType=REAL},
+      </if>
+      <if test="record.explains != null">
+        explains = #{record.explains,jdbcType=VARCHAR},
+      </if>
+      <if test="record.discountable != null">
+        discountable = #{record.discountable,jdbcType=BIT},
+      </if>
+      <if test="record.creatorId != null">
+        creator_id = #{record.creatorId,jdbcType=INTEGER},
+      </if>
+      <if test="record.creationDate != null">
+        creation_date = #{record.creationDate,jdbcType=DATE},
+      </if>
+      <if test="record.pricerId != null">
+        pricer_id = #{record.pricerId,jdbcType=INTEGER},
+      </if>
+      <if test="record.pricingDate != null">
+        pricing_date = #{record.pricingDate,jdbcType=DATE},
+      </if>
+      <if test="record.approverId != null">
+        approver_id = #{record.approverId,jdbcType=INTEGER},
+      </if>
+      <if test="record.approveDate != null">
+        approve_date = #{record.approveDate,jdbcType=DATE},
+      </if>
+      <if test="record.approveState != null">
+        approve_state = #{record.approveState,jdbcType=TINYINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update cim_item_apply
+    set id = #{record.id,jdbcType=INTEGER},
+      name = #{record.name,jdbcType=VARCHAR},
+      code = #{record.code,jdbcType=VARCHAR},
+      cim_item_type_id = #{record.cimItemTypeId,jdbcType=INTEGER},
+      item_units_id = #{record.itemUnitsId,jdbcType=INTEGER},
+      befit_gender_id = #{record.befitGenderId,jdbcType=INTEGER},
+      billing_type_id = #{record.billingTypeId,jdbcType=INTEGER},
+      quantity = #{record.quantity,jdbcType=TINYINT},
+      retail_price = #{record.retailPrice,jdbcType=REAL},
+      explains = #{record.explains,jdbcType=VARCHAR},
+      discountable = #{record.discountable,jdbcType=BIT},
+      creator_id = #{record.creatorId,jdbcType=INTEGER},
+      creation_date = #{record.creationDate,jdbcType=DATE},
+      pricer_id = #{record.pricerId,jdbcType=INTEGER},
+      pricing_date = #{record.pricingDate,jdbcType=DATE},
+      approver_id = #{record.approverId,jdbcType=INTEGER},
+      approve_date = #{record.approveDate,jdbcType=DATE},
+      approve_state = #{record.approveState,jdbcType=TINYINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="pers.tandy.chis.modules.chargesitemmanagement.bean.ItemApply">
+    update cim_item_apply
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null">
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="cimItemTypeId != null">
+        cim_item_type_id = #{cimItemTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="itemUnitsId != null">
+        item_units_id = #{itemUnitsId,jdbcType=INTEGER},
+      </if>
+      <if test="befitGenderId != null">
+        befit_gender_id = #{befitGenderId,jdbcType=INTEGER},
+      </if>
+      <if test="billingTypeId != null">
+        billing_type_id = #{billingTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="quantity != null">
+        quantity = #{quantity,jdbcType=TINYINT},
+      </if>
+      <if test="retailPrice != null">
+        retail_price = #{retailPrice,jdbcType=REAL},
+      </if>
+      <if test="explains != null">
+        explains = #{explains,jdbcType=VARCHAR},
+      </if>
+      <if test="discountable != null">
+        discountable = #{discountable,jdbcType=BIT},
+      </if>
+      <if test="creatorId != null">
+        creator_id = #{creatorId,jdbcType=INTEGER},
+      </if>
+      <if test="creationDate != null">
+        creation_date = #{creationDate,jdbcType=DATE},
+      </if>
+      <if test="pricerId != null">
+        pricer_id = #{pricerId,jdbcType=INTEGER},
+      </if>
+      <if test="pricingDate != null">
+        pricing_date = #{pricingDate,jdbcType=DATE},
+      </if>
+      <if test="approverId != null">
+        approver_id = #{approverId,jdbcType=INTEGER},
+      </if>
+      <if test="approveDate != null">
+        approve_date = #{approveDate,jdbcType=DATE},
+      </if>
+      <if test="approveState != null">
+        approve_state = #{approveState,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="pers.tandy.chis.modules.chargesitemmanagement.bean.ItemApply">
+    update cim_item_apply
+    set name = #{name,jdbcType=VARCHAR},
+      code = #{code,jdbcType=VARCHAR},
+      cim_item_type_id = #{cimItemTypeId,jdbcType=INTEGER},
+      item_units_id = #{itemUnitsId,jdbcType=INTEGER},
+      befit_gender_id = #{befitGenderId,jdbcType=INTEGER},
+      billing_type_id = #{billingTypeId,jdbcType=INTEGER},
+      quantity = #{quantity,jdbcType=TINYINT},
+      retail_price = #{retailPrice,jdbcType=REAL},
+      explains = #{explains,jdbcType=VARCHAR},
+      discountable = #{discountable,jdbcType=BIT},
+      creator_id = #{creatorId,jdbcType=INTEGER},
+      creation_date = #{creationDate,jdbcType=DATE},
+      pricer_id = #{pricerId,jdbcType=INTEGER},
+      pricing_date = #{pricingDate,jdbcType=DATE},
+      approver_id = #{approverId,jdbcType=INTEGER},
+      approve_date = #{approveDate,jdbcType=DATE},
+      approve_state = #{approveState,jdbcType=TINYINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+
+  <!--***************************************************************************************************************-->
+  <select id="selectByCriteria" resultType="map">
+    select *
+    from view_cim_item_apply
+    <trim prefix="where" suffixOverrides="and">
+      <if test="creationDate != null &amp;&amp; creationDate.length == 2">
+        (creationDate between #{creationDate[0]} and #{creationDate[1]}) and
+      </if>
+      <if test="approveState != null">
+        (approveState = #{approveState}) and
+      </if>
+      <if test="name != null &amp;&amp; name.trim() != ''">
+        (name like '${name}%' or code like '${name}%')
+      </if>
+    </trim>
+    order by id desc
+  </select>
+
+</mapper>

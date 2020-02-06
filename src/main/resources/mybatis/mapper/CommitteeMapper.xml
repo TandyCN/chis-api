@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pers.tandy.chis.modules.membermanagement.dao.CommitteeMapper">
+  <resultMap id="BaseResultMap" type="pers.tandy.chis.modules.membermanagement.bean.Committee">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="type_id" jdbcType="TINYINT" property="typeId" />
+    <result column="type_no" jdbcType="SMALLINT" property="typeNo" />
+    <result column="mrm_township_id" jdbcType="INTEGER" property="mrmTownshipId" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, name, code, type_id, type_no, mrm_township_id
+  </sql>
+  <select id="selectByExample" parameterType="pers.tandy.chis.modules.membermanagement.bean.CommitteeExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from mrm_committee
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from mrm_committee
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from mrm_committee
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="pers.tandy.chis.modules.membermanagement.bean.CommitteeExample">
+    delete from mrm_committee
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="pers.tandy.chis.modules.membermanagement.bean.Committee">
+    insert into mrm_committee (id, name, code,
+      type_id, type_no, mrm_township_id
+      )
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR},
+      #{typeId,jdbcType=TINYINT}, #{typeNo,jdbcType=SMALLINT}, #{mrmTownshipId,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="pers.tandy.chis.modules.membermanagement.bean.Committee">
+    insert into mrm_committee
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="code != null">
+        code,
+      </if>
+      <if test="typeId != null">
+        type_id,
+      </if>
+      <if test="typeNo != null">
+        type_no,
+      </if>
+      <if test="mrmTownshipId != null">
+        mrm_township_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null">
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="typeId != null">
+        #{typeId,jdbcType=TINYINT},
+      </if>
+      <if test="typeNo != null">
+        #{typeNo,jdbcType=SMALLINT},
+      </if>
+      <if test="mrmTownshipId != null">
+        #{mrmTownshipId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="pers.tandy.chis.modules.membermanagement.bean.CommitteeExample" resultType="java.lang.Long">
+    select count(*) from mrm_committee
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update mrm_committee
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.code != null">
+        code = #{record.code,jdbcType=VARCHAR},
+      </if>
+      <if test="record.typeId != null">
+        type_id = #{record.typeId,jdbcType=TINYINT},
+      </if>
+      <if test="record.typeNo != null">
+        type_no = #{record.typeNo,jdbcType=SMALLINT},
+      </if>
+      <if test="record.mrmTownshipId != null">
+        mrm_township_id = #{record.mrmTownshipId,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update mrm_committee
+    set id = #{record.id,jdbcType=INTEGER},
+      name = #{record.name,jdbcType=VARCHAR},
+      code = #{record.code,jdbcType=VARCHAR},
+      type_id = #{record.typeId,jdbcType=TINYINT},
+      type_no = #{record.typeNo,jdbcType=SMALLINT},
+      mrm_township_id = #{record.mrmTownshipId,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="pers.tandy.chis.modules.membermanagement.bean.Committee">
+    update mrm_committee
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null">
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="typeId != null">
+        type_id = #{typeId,jdbcType=TINYINT},
+      </if>
+      <if test="typeNo != null">
+        type_no = #{typeNo,jdbcType=SMALLINT},
+      </if>
+      <if test="mrmTownshipId != null">
+        mrm_township_id = #{mrmTownshipId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="pers.tandy.chis.modules.membermanagement.bean.Committee">
+    update mrm_committee
+    set name = #{name,jdbcType=VARCHAR},
+      code = #{code,jdbcType=VARCHAR},
+      type_id = #{typeId,jdbcType=TINYINT},
+      type_no = #{typeNo,jdbcType=SMALLINT},
+      mrm_township_id = #{mrmTownshipId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <!-- ************************************************************************************************************* -->
+
+  <select id="selectMaxTypeNoByCriteria" resultType="short">
+    select IFNULL(max(type_no), 0) as typeNo
+    from mrm_committee
+    where
+      type_id = #{typeId} and
+      mrm_township_id = #{mrmTownshipId}
+  </select>
+
+  <select id="selectByCriteria" resultType="map">
+    select *
+    from view_mrm_committee
+    <trim prefix="where" suffixOverrides="and">
+      <if test="mrmTownshipName != null &amp;&amp; mrmTownshipName.trim() != ''">
+        (mrmTownshipName like '${mrmTownshipName}%' or mrmTownshipCode like '${mrmTownshipName}%') and
+      </if>
+      <if test="name != null &amp;&amp; name.trim() != ''">
+        (name like '${name}%' or code like '${name}%') and
+      </if>
+    </trim>
+    order by id desc
+  </select>
+
+  <select id="selectByMrmTownshipId" resultType="map">
+    select *
+    from view_mrm_committee
+    where mrmTownshipId = #{mrmTownshipId}
+  </select>
+
+  <select id="selectCommitteeMapById" resultType="map">
+    SELECT
+      0 as maxIndex, a.type_no AS committeeNo,
+      b.type_no AS townshipNo, c.area_id AS areaNo
+    FROM mrm_committee a
+    LEFT JOIN mrm_township b ON a.mrm_township_id = b.id
+    LEFT JOIN sys_location c ON b.sys_location_id = c.id
+    where a.id = #{id}
+  </select>
+
+
+
+
+
+
+
+
+
+
+
+
+</mapper>

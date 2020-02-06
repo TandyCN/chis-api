@@ -1,0 +1,437 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pers.tandy.chis.modules.purchasemanagement.dao.PurchasePlanMapper">
+  <resultMap id="BaseResultMap" type="pers.tandy.chis.modules.purchasemanagement.bean.PurchasePlan">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="lsh" jdbcType="VARCHAR" property="lsh" />
+    <result column="mxh" jdbcType="VARCHAR" property="mxh" />
+    <result column="gsm_goods_id" jdbcType="INTEGER" property="gsmGoodsId" />
+    <result column="quantity" jdbcType="SMALLINT" property="quantity" />
+    <result column="recommend_quantity" jdbcType="SMALLINT" property="recommendQuantity" />
+    <result column="plan_days" jdbcType="TINYINT" property="planDays" />
+    <result column="sys_clinic_id" jdbcType="INTEGER" property="sysClinicId" />
+    <result column="creator_id" jdbcType="INTEGER" property="creatorId" />
+    <result column="creation_date" jdbcType="DATE" property="creationDate" />
+    <result column="approver_id" jdbcType="INTEGER" property="approverId" />
+    <result column="approve_date" jdbcType="DATE" property="approveDate" />
+    <result column="approve_state" jdbcType="TINYINT" property="approveState" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, lsh, mxh, gsm_goods_id, quantity, recommend_quantity, plan_days, sys_clinic_id,
+    creator_id, creation_date, approver_id, approve_date, approve_state
+  </sql>
+  <select id="selectByExample" parameterType="pers.tandy.chis.modules.purchasemanagement.bean.PurchasePlanExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from pem_purchase_plan
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from pem_purchase_plan
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from pem_purchase_plan
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="pers.tandy.chis.modules.purchasemanagement.bean.PurchasePlanExample">
+    delete from pem_purchase_plan
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="pers.tandy.chis.modules.purchasemanagement.bean.PurchasePlan">
+    insert into pem_purchase_plan (id, lsh, mxh,
+      gsm_goods_id, quantity, recommend_quantity,
+      plan_days, sys_clinic_id, creator_id,
+      creation_date, approver_id, approve_date,
+      approve_state)
+    values (#{id,jdbcType=INTEGER}, #{lsh,jdbcType=VARCHAR}, #{mxh,jdbcType=VARCHAR},
+      #{gsmGoodsId,jdbcType=INTEGER}, #{quantity,jdbcType=SMALLINT}, #{recommendQuantity,jdbcType=SMALLINT},
+      #{planDays,jdbcType=TINYINT}, #{sysClinicId,jdbcType=INTEGER}, #{creatorId,jdbcType=INTEGER},
+      #{creationDate,jdbcType=DATE}, #{approverId,jdbcType=INTEGER}, #{approveDate,jdbcType=DATE},
+      #{approveState,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="pers.tandy.chis.modules.purchasemanagement.bean.PurchasePlan">
+    insert into pem_purchase_plan
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="lsh != null">
+        lsh,
+      </if>
+      <if test="mxh != null">
+        mxh,
+      </if>
+      <if test="gsmGoodsId != null">
+        gsm_goods_id,
+      </if>
+      <if test="quantity != null">
+        quantity,
+      </if>
+      <if test="recommendQuantity != null">
+        recommend_quantity,
+      </if>
+      <if test="planDays != null">
+        plan_days,
+      </if>
+      <if test="sysClinicId != null">
+        sys_clinic_id,
+      </if>
+      <if test="creatorId != null">
+        creator_id,
+      </if>
+      <if test="creationDate != null">
+        creation_date,
+      </if>
+      <if test="approverId != null">
+        approver_id,
+      </if>
+      <if test="approveDate != null">
+        approve_date,
+      </if>
+      <if test="approveState != null">
+        approve_state,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="lsh != null">
+        #{lsh,jdbcType=VARCHAR},
+      </if>
+      <if test="mxh != null">
+        #{mxh,jdbcType=VARCHAR},
+      </if>
+      <if test="gsmGoodsId != null">
+        #{gsmGoodsId,jdbcType=INTEGER},
+      </if>
+      <if test="quantity != null">
+        #{quantity,jdbcType=SMALLINT},
+      </if>
+      <if test="recommendQuantity != null">
+        #{recommendQuantity,jdbcType=SMALLINT},
+      </if>
+      <if test="planDays != null">
+        #{planDays,jdbcType=TINYINT},
+      </if>
+      <if test="sysClinicId != null">
+        #{sysClinicId,jdbcType=INTEGER},
+      </if>
+      <if test="creatorId != null">
+        #{creatorId,jdbcType=INTEGER},
+      </if>
+      <if test="creationDate != null">
+        #{creationDate,jdbcType=DATE},
+      </if>
+      <if test="approverId != null">
+        #{approverId,jdbcType=INTEGER},
+      </if>
+      <if test="approveDate != null">
+        #{approveDate,jdbcType=DATE},
+      </if>
+      <if test="approveState != null">
+        #{approveState,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="pers.tandy.chis.modules.purchasemanagement.bean.PurchasePlanExample" resultType="java.lang.Long">
+    select count(*) from pem_purchase_plan
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update pem_purchase_plan
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.lsh != null">
+        lsh = #{record.lsh,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mxh != null">
+        mxh = #{record.mxh,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gsmGoodsId != null">
+        gsm_goods_id = #{record.gsmGoodsId,jdbcType=INTEGER},
+      </if>
+      <if test="record.quantity != null">
+        quantity = #{record.quantity,jdbcType=SMALLINT},
+      </if>
+      <if test="record.recommendQuantity != null">
+        recommend_quantity = #{record.recommendQuantity,jdbcType=SMALLINT},
+      </if>
+      <if test="record.planDays != null">
+        plan_days = #{record.planDays,jdbcType=TINYINT},
+      </if>
+      <if test="record.sysClinicId != null">
+        sys_clinic_id = #{record.sysClinicId,jdbcType=INTEGER},
+      </if>
+      <if test="record.creatorId != null">
+        creator_id = #{record.creatorId,jdbcType=INTEGER},
+      </if>
+      <if test="record.creationDate != null">
+        creation_date = #{record.creationDate,jdbcType=DATE},
+      </if>
+      <if test="record.approverId != null">
+        approver_id = #{record.approverId,jdbcType=INTEGER},
+      </if>
+      <if test="record.approveDate != null">
+        approve_date = #{record.approveDate,jdbcType=DATE},
+      </if>
+      <if test="record.approveState != null">
+        approve_state = #{record.approveState,jdbcType=TINYINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update pem_purchase_plan
+    set id = #{record.id,jdbcType=INTEGER},
+      lsh = #{record.lsh,jdbcType=VARCHAR},
+      mxh = #{record.mxh,jdbcType=VARCHAR},
+      gsm_goods_id = #{record.gsmGoodsId,jdbcType=INTEGER},
+      quantity = #{record.quantity,jdbcType=SMALLINT},
+      recommend_quantity = #{record.recommendQuantity,jdbcType=SMALLINT},
+      plan_days = #{record.planDays,jdbcType=TINYINT},
+      sys_clinic_id = #{record.sysClinicId,jdbcType=INTEGER},
+      creator_id = #{record.creatorId,jdbcType=INTEGER},
+      creation_date = #{record.creationDate,jdbcType=DATE},
+      approver_id = #{record.approverId,jdbcType=INTEGER},
+      approve_date = #{record.approveDate,jdbcType=DATE},
+      approve_state = #{record.approveState,jdbcType=TINYINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="pers.tandy.chis.modules.purchasemanagement.bean.PurchasePlan">
+    update pem_purchase_plan
+    <set>
+      <if test="lsh != null">
+        lsh = #{lsh,jdbcType=VARCHAR},
+      </if>
+      <if test="mxh != null">
+        mxh = #{mxh,jdbcType=VARCHAR},
+      </if>
+      <if test="gsmGoodsId != null">
+        gsm_goods_id = #{gsmGoodsId,jdbcType=INTEGER},
+      </if>
+      <if test="quantity != null">
+        quantity = #{quantity,jdbcType=SMALLINT},
+      </if>
+      <if test="recommendQuantity != null">
+        recommend_quantity = #{recommendQuantity,jdbcType=SMALLINT},
+      </if>
+      <if test="planDays != null">
+        plan_days = #{planDays,jdbcType=TINYINT},
+      </if>
+      <if test="sysClinicId != null">
+        sys_clinic_id = #{sysClinicId,jdbcType=INTEGER},
+      </if>
+      <if test="creatorId != null">
+        creator_id = #{creatorId,jdbcType=INTEGER},
+      </if>
+      <if test="creationDate != null">
+        creation_date = #{creationDate,jdbcType=DATE},
+      </if>
+      <if test="approverId != null">
+        approver_id = #{approverId,jdbcType=INTEGER},
+      </if>
+      <if test="approveDate != null">
+        approve_date = #{approveDate,jdbcType=DATE},
+      </if>
+      <if test="approveState != null">
+        approve_state = #{approveState,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="pers.tandy.chis.modules.purchasemanagement.bean.PurchasePlan">
+    update pem_purchase_plan
+    set lsh = #{lsh,jdbcType=VARCHAR},
+      mxh = #{mxh,jdbcType=VARCHAR},
+      gsm_goods_id = #{gsmGoodsId,jdbcType=INTEGER},
+      quantity = #{quantity,jdbcType=SMALLINT},
+      recommend_quantity = #{recommendQuantity,jdbcType=SMALLINT},
+      plan_days = #{planDays,jdbcType=TINYINT},
+      sys_clinic_id = #{sysClinicId,jdbcType=INTEGER},
+      creator_id = #{creatorId,jdbcType=INTEGER},
+      creation_date = #{creationDate,jdbcType=DATE},
+      approver_id = #{approverId,jdbcType=INTEGER},
+      approve_date = #{approveDate,jdbcType=DATE},
+      approve_state = #{approveState,jdbcType=TINYINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+
+  <!-- ************************************************************************************************************* -->
+  <insert id="insertList">
+    insert into pem_purchase_plan
+    (
+    id,
+    lsh,
+    mxh,
+    gsm_goods_id,
+    quantity,
+    recommend_quantity,
+    plan_days,
+    sys_clinic_id,
+    creator_id,
+    creation_date,
+    approver_id,
+    approve_date,
+    approve_state
+    )
+    values
+    <foreach collection="ppList" item="plan" separator="," close=";">
+      (
+      #{plan.id,jdbcType=INTEGER},
+      #{plan.lsh,jdbcType=VARCHAR},
+      #{plan.mxh,jdbcType=VARCHAR},
+      #{plan.gsmGoodsId,jdbcType=INTEGER},
+      #{plan.quantity,jdbcType=SMALLINT},
+      #{plan.recommendQuantity,jdbcType=SMALLINT},
+      #{plan.planDays,jdbcType=TINYINT},
+      #{plan.sysClinicId,jdbcType=INTEGER},
+      #{plan.creatorId,jdbcType=INTEGER},
+      #{plan.creationDate,jdbcType=DATE},
+      #{plan.approverId,jdbcType=INTEGER},
+      #{plan.approveDate,jdbcType=DATE},
+      #{plan.approveState,jdbcType=TINYINT}
+      )
+    </foreach>
+  </insert>
+
+  <update id="updateApproveStateByPlanIdList">
+    UPDATE pem_purchase_plan
+    <trim prefix="set" suffixOverrides=",">
+      <if test="approverId != null">
+        approver_id = #{approverId},
+      </if>
+      <if test="approveDate != null">
+        approve_date = #{approveDate},
+      </if>
+      <if test="approveState != null">
+        approve_state = #{approveState}
+      </if>
+    </trim>
+    WHERE
+    <foreach collection="planList" item="plan" open="id in (" separator="," close=")">
+      #{plan.id}
+    </foreach>
+  </update>
+
+  <select id="selectByCriteria" resultType="map">
+    select *
+    from view_pem_purchase_plan
+    <trim prefix="where" suffixOverrides="and">
+      <if test="creationDate != null &amp;&amp; creationDate.length == 2">
+        (creationDate between #{creationDate[0]} and #{creationDate[1]}) and
+      </if>
+      <if test="approveDate != null &amp;&amp; approveDate.length == 2">
+        (approveDate between #{approveDate[0]} and #{approveDate[1]}) and
+      </if>
+      <if test="approverId != null">
+        (approverId = #{approverId}) and
+      </if>
+      <if test="approveState != null">
+        (approveState = #{approveState}) and
+      </if>
+      <if test="sysClinicId != null">
+        (sysClinicId = #{sysClinicId}) and
+      </if>
+      <if test="sysClinicName != null &amp;&amp; sysClinicName.trim() != ''">
+        (sysClinicName like '${sysClinicName}%' or sysClinicCode like '${sysClinicName}%') and
+      </if>
+      <if test="gsmGoodsName != null &amp;&amp; gsmGoodsName.trim() != ''">
+        (gsmGoodsName like '${gsmGoodsName}%' or gsmGoodsCode like '${gsmGoodsName}%') and
+      </if>
+    </trim>
+    order by creationDate desc, sysClinicId, gsmGoodsTypeId, gsmGoodsOid
+  </select>
+
+  <select id="selectByPlanIdList" resultType="map">
+    SELECT *
+    FROM
+      view_pem_purchase_plan
+    WHERE
+    <foreach collection="planIdList" item="planId" index="index" open="id in (" separator="," close=")">
+      #{planId}
+    </foreach>
+    order by sysClinicId, gsmGoodsTypeId, gsmGoodsOid
+  </select>
+
+</mapper>

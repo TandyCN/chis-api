@@ -1,0 +1,392 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pers.tandy.chis.modules.nurseworkstation.dao.PaymentRecordMapper">
+  <resultMap id="BaseResultMap" type="pers.tandy.chis.modules.nurseworkstation.bean.PaymentRecord">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="lsh" jdbcType="VARCHAR" property="lsh" />
+    <result column="cash" jdbcType="REAL" property="cash" />
+    <result column="member_balance" jdbcType="REAL" property="memberBalance" />
+    <result column="unionpay" jdbcType="REAL" property="unionpay" />
+    <result column="alipay" jdbcType="REAL" property="alipay" />
+    <result column="wechatpay" jdbcType="REAL" property="wechatpay" />
+    <result column="sys_payment_way_id" jdbcType="INTEGER" property="sysPaymentWayId" />
+    <result column="sys_payment_way_amount" jdbcType="REAL" property="sysPaymentWayAmount" />
+    <result column="actual_amount" jdbcType="REAL" property="actualAmount" />
+    <result column="disparity_amount" jdbcType="REAL" property="disparityAmount" />
+    <result column="sys_clinic_id" jdbcType="INTEGER" property="sysClinicId" />
+    <result column="creator_id" jdbcType="INTEGER" property="creatorId" />
+    <result column="creation_date" jdbcType="TIMESTAMP" property="creationDate" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, lsh, cash, member_balance, unionpay, alipay, wechatpay, sys_payment_way_id, sys_payment_way_amount,
+    actual_amount, disparity_amount, sys_clinic_id, creator_id, creation_date
+  </sql>
+  <select id="selectByExample" parameterType="pers.tandy.chis.modules.nurseworkstation.bean.PaymentRecordExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from nwt_payment_record
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from nwt_payment_record
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from nwt_payment_record
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="pers.tandy.chis.modules.nurseworkstation.bean.PaymentRecordExample">
+    delete from nwt_payment_record
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="pers.tandy.chis.modules.nurseworkstation.bean.PaymentRecord">
+    insert into nwt_payment_record (id, lsh, cash, member_balance,
+      unionpay, alipay, wechatpay,
+      sys_payment_way_id, sys_payment_way_amount, actual_amount,
+      disparity_amount, sys_clinic_id, creator_id,
+      creation_date)
+    values (#{id,jdbcType=INTEGER}, #{lsh,jdbcType=VARCHAR}, #{cash,jdbcType=REAL}, #{memberBalance,jdbcType=REAL},
+      #{unionpay,jdbcType=REAL}, #{alipay,jdbcType=REAL}, #{wechatpay,jdbcType=REAL},
+      #{sysPaymentWayId,jdbcType=INTEGER}, #{sysPaymentWayAmount,jdbcType=REAL}, #{actualAmount,jdbcType=REAL},
+      #{disparityAmount,jdbcType=REAL}, #{sysClinicId,jdbcType=INTEGER}, #{creatorId,jdbcType=INTEGER},
+      #{creationDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="pers.tandy.chis.modules.nurseworkstation.bean.PaymentRecord">
+    insert into nwt_payment_record
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="lsh != null">
+        lsh,
+      </if>
+      <if test="cash != null">
+        cash,
+      </if>
+      <if test="memberBalance != null">
+        member_balance,
+      </if>
+      <if test="unionpay != null">
+        unionpay,
+      </if>
+      <if test="alipay != null">
+        alipay,
+      </if>
+      <if test="wechatpay != null">
+        wechatpay,
+      </if>
+      <if test="sysPaymentWayId != null">
+        sys_payment_way_id,
+      </if>
+      <if test="sysPaymentWayAmount != null">
+        sys_payment_way_amount,
+      </if>
+      <if test="actualAmount != null">
+        actual_amount,
+      </if>
+      <if test="disparityAmount != null">
+        disparity_amount,
+      </if>
+      <if test="sysClinicId != null">
+        sys_clinic_id,
+      </if>
+      <if test="creatorId != null">
+        creator_id,
+      </if>
+      <if test="creationDate != null">
+        creation_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="lsh != null">
+        #{lsh,jdbcType=VARCHAR},
+      </if>
+      <if test="cash != null">
+        #{cash,jdbcType=REAL},
+      </if>
+      <if test="memberBalance != null">
+        #{memberBalance,jdbcType=REAL},
+      </if>
+      <if test="unionpay != null">
+        #{unionpay,jdbcType=REAL},
+      </if>
+      <if test="alipay != null">
+        #{alipay,jdbcType=REAL},
+      </if>
+      <if test="wechatpay != null">
+        #{wechatpay,jdbcType=REAL},
+      </if>
+      <if test="sysPaymentWayId != null">
+        #{sysPaymentWayId,jdbcType=INTEGER},
+      </if>
+      <if test="sysPaymentWayAmount != null">
+        #{sysPaymentWayAmount,jdbcType=REAL},
+      </if>
+      <if test="actualAmount != null">
+        #{actualAmount,jdbcType=REAL},
+      </if>
+      <if test="disparityAmount != null">
+        #{disparityAmount,jdbcType=REAL},
+      </if>
+      <if test="sysClinicId != null">
+        #{sysClinicId,jdbcType=INTEGER},
+      </if>
+      <if test="creatorId != null">
+        #{creatorId,jdbcType=INTEGER},
+      </if>
+      <if test="creationDate != null">
+        #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="pers.tandy.chis.modules.nurseworkstation.bean.PaymentRecordExample" resultType="java.lang.Long">
+    select count(*) from nwt_payment_record
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update nwt_payment_record
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.lsh != null">
+        lsh = #{record.lsh,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cash != null">
+        cash = #{record.cash,jdbcType=REAL},
+      </if>
+      <if test="record.memberBalance != null">
+        member_balance = #{record.memberBalance,jdbcType=REAL},
+      </if>
+      <if test="record.unionpay != null">
+        unionpay = #{record.unionpay,jdbcType=REAL},
+      </if>
+      <if test="record.alipay != null">
+        alipay = #{record.alipay,jdbcType=REAL},
+      </if>
+      <if test="record.wechatpay != null">
+        wechatpay = #{record.wechatpay,jdbcType=REAL},
+      </if>
+      <if test="record.sysPaymentWayId != null">
+        sys_payment_way_id = #{record.sysPaymentWayId,jdbcType=INTEGER},
+      </if>
+      <if test="record.sysPaymentWayAmount != null">
+        sys_payment_way_amount = #{record.sysPaymentWayAmount,jdbcType=REAL},
+      </if>
+      <if test="record.actualAmount != null">
+        actual_amount = #{record.actualAmount,jdbcType=REAL},
+      </if>
+      <if test="record.disparityAmount != null">
+        disparity_amount = #{record.disparityAmount,jdbcType=REAL},
+      </if>
+      <if test="record.sysClinicId != null">
+        sys_clinic_id = #{record.sysClinicId,jdbcType=INTEGER},
+      </if>
+      <if test="record.creatorId != null">
+        creator_id = #{record.creatorId,jdbcType=INTEGER},
+      </if>
+      <if test="record.creationDate != null">
+        creation_date = #{record.creationDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update nwt_payment_record
+    set id = #{record.id,jdbcType=INTEGER},
+      lsh = #{record.lsh,jdbcType=VARCHAR},
+      cash = #{record.cash,jdbcType=REAL},
+      member_balance = #{record.memberBalance,jdbcType=REAL},
+      unionpay = #{record.unionpay,jdbcType=REAL},
+      alipay = #{record.alipay,jdbcType=REAL},
+      wechatpay = #{record.wechatpay,jdbcType=REAL},
+      sys_payment_way_id = #{record.sysPaymentWayId,jdbcType=INTEGER},
+      sys_payment_way_amount = #{record.sysPaymentWayAmount,jdbcType=REAL},
+      actual_amount = #{record.actualAmount,jdbcType=REAL},
+      disparity_amount = #{record.disparityAmount,jdbcType=REAL},
+      sys_clinic_id = #{record.sysClinicId,jdbcType=INTEGER},
+      creator_id = #{record.creatorId,jdbcType=INTEGER},
+      creation_date = #{record.creationDate,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="pers.tandy.chis.modules.nurseworkstation.bean.PaymentRecord">
+    update nwt_payment_record
+    <set>
+      <if test="lsh != null">
+        lsh = #{lsh,jdbcType=VARCHAR},
+      </if>
+      <if test="cash != null">
+        cash = #{cash,jdbcType=REAL},
+      </if>
+      <if test="memberBalance != null">
+        member_balance = #{memberBalance,jdbcType=REAL},
+      </if>
+      <if test="unionpay != null">
+        unionpay = #{unionpay,jdbcType=REAL},
+      </if>
+      <if test="alipay != null">
+        alipay = #{alipay,jdbcType=REAL},
+      </if>
+      <if test="wechatpay != null">
+        wechatpay = #{wechatpay,jdbcType=REAL},
+      </if>
+      <if test="sysPaymentWayId != null">
+        sys_payment_way_id = #{sysPaymentWayId,jdbcType=INTEGER},
+      </if>
+      <if test="sysPaymentWayAmount != null">
+        sys_payment_way_amount = #{sysPaymentWayAmount,jdbcType=REAL},
+      </if>
+      <if test="actualAmount != null">
+        actual_amount = #{actualAmount,jdbcType=REAL},
+      </if>
+      <if test="disparityAmount != null">
+        disparity_amount = #{disparityAmount,jdbcType=REAL},
+      </if>
+      <if test="sysClinicId != null">
+        sys_clinic_id = #{sysClinicId,jdbcType=INTEGER},
+      </if>
+      <if test="creatorId != null">
+        creator_id = #{creatorId,jdbcType=INTEGER},
+      </if>
+      <if test="creationDate != null">
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="pers.tandy.chis.modules.nurseworkstation.bean.PaymentRecord">
+    update nwt_payment_record
+    set lsh = #{lsh,jdbcType=VARCHAR},
+      cash = #{cash,jdbcType=REAL},
+      member_balance = #{memberBalance,jdbcType=REAL},
+      unionpay = #{unionpay,jdbcType=REAL},
+      alipay = #{alipay,jdbcType=REAL},
+      wechatpay = #{wechatpay,jdbcType=REAL},
+      sys_payment_way_id = #{sysPaymentWayId,jdbcType=INTEGER},
+      sys_payment_way_amount = #{sysPaymentWayAmount,jdbcType=REAL},
+      actual_amount = #{actualAmount,jdbcType=REAL},
+      disparity_amount = #{disparityAmount,jdbcType=REAL},
+      sys_clinic_id = #{sysClinicId,jdbcType=INTEGER},
+      creator_id = #{creatorId,jdbcType=INTEGER},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <!-- ************************************************************************************************************* -->
+
+  <select id="selectClinicListByCriteria" resultType="map">
+    select *
+    from view_nwt_payment_record
+    <trim prefix="where" suffixOverrides="and">
+      <if test="creationDate != null &amp;&amp; creationDate.length == 2">
+        (DATE_FORMAT(creationDate, '%Y-%m-%d') between #{creationDate[0]} and #{creationDate[1]}) and
+      </if>
+      <if test="sysClinicId != null">
+        (sysClinicId = #{sysClinicId}) and
+      </if>
+      <if test="lsh != null &amp;&amp; lsh.trim() != ''">
+        (lsh like '${lsh}%') and
+      </if>
+      <if test="creatorName != null &amp;&amp; creatorName.trim() != ''">
+        (creatorName like '${creatorName}%' or creatorCode like '${creatorName}%') and
+      </if>
+    </trim>
+    order by creationDate desc
+  </select>
+
+  <select id="selectClinicGroupByLsh" resultType="map">
+    SELECT a.*,b.creatorName FROM
+    (
+    SELECT
+      MAX(id) AS id, lsh, SUM(cash) AS cash, SUM(member_balance) AS memberBalance, SUM(unionpay) AS unionpay, SUM(alipay) AS alipay,
+      SUM(wechatpay) AS wechatpay, SUM(sys_payment_way_amount) AS sysPaymentWayAmount, SUM(actual_amount) AS actualAmount,
+      SUM(disparity_amount) AS disparityAmount, sys_clinic_id as sysClinicId
+    FROM nwt_payment_record
+    WHERE sys_clinic_id = #{sysClinicId} and lsh = #{lsh}
+    GROUP BY lsh
+    ) a
+    LEFT JOIN view_nwt_payment_record b ON a.id = b.id
+  </select>
+
+
+
+</mapper>

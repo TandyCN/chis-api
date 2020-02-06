@@ -1,0 +1,796 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pers.tandy.chis.modules.purchasemanagement.dao.SupplierMapper">
+  <resultMap id="BaseResultMap" type="pers.tandy.chis.modules.purchasemanagement.bean.Supplier">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="oid" jdbcType="VARCHAR" property="oid" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="account_licence" jdbcType="VARCHAR" property="accountLicence" />
+    <result column="bank_name" jdbcType="VARCHAR" property="bankName" />
+    <result column="card_no" jdbcType="VARCHAR" property="cardNo" />
+    <result column="invoice_type_id" jdbcType="INTEGER" property="invoiceTypeId" />
+    <result column="payment_type_id" jdbcType="INTEGER" property="paymentTypeId" />
+    <result column="arrearages_limit" jdbcType="REAL" property="arrearagesLimit" />
+    <result column="arrearages_days" jdbcType="TINYINT" property="arrearagesDays" />
+    <result column="legal_person" jdbcType="VARCHAR" property="legalPerson" />
+    <result column="tel" jdbcType="VARCHAR" property="tel" />
+    <result column="fax" jdbcType="VARCHAR" property="fax" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="contacter" jdbcType="VARCHAR" property="contacter" />
+    <result column="contacter_phone" jdbcType="VARCHAR" property="contacterPhone" />
+    <result column="business_scope" jdbcType="VARCHAR" property="businessScope" />
+    <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+    <result column="business_licence" jdbcType="VARCHAR" property="businessLicence" />
+    <result column="bl_expiry_date" jdbcType="DATE" property="blExpiryDate" />
+    <result column="hygienic_license" jdbcType="VARCHAR" property="hygienicLicense" />
+    <result column="hl_expiry_date" jdbcType="DATE" property="hlExpiryDate" />
+    <result column="production_licence" jdbcType="VARCHAR" property="productionLicence" />
+    <result column="pl_expiry_date" jdbcType="DATE" property="plExpiryDate" />
+    <result column="gsp_licence" jdbcType="VARCHAR" property="gspLicence" />
+    <result column="gsp_expiry_date" jdbcType="DATE" property="gspExpiryDate" />
+    <result column="gmp_licence" jdbcType="VARCHAR" property="gmpLicence" />
+    <result column="gmp_expiry_date" jdbcType="DATE" property="gmpExpiryDate" />
+    <result column="instrument_licence" jdbcType="VARCHAR" property="instrumentLicence" />
+    <result column="il_expiry_date" jdbcType="DATE" property="ilExpiryDate" />
+    <result column="food_license" jdbcType="VARCHAR" property="foodLicense" />
+    <result column="fl_expiry_date" jdbcType="DATE" property="flExpiryDate" />
+    <result column="food_production_licence" jdbcType="VARCHAR" property="foodProductionLicence" />
+    <result column="fpl_expiry_date" jdbcType="DATE" property="fplExpiryDate" />
+    <result column="state" jdbcType="BIT" property="state" />
+    <result column="creator_id" jdbcType="INTEGER" property="creatorId" />
+    <result column="creation_date" jdbcType="DATE" property="creationDate" />
+    <result column="last_updater_id" jdbcType="INTEGER" property="lastUpdaterId" />
+    <result column="last_update_date" jdbcType="DATE" property="lastUpdateDate" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, oid, name, code, account_licence, bank_name, card_no, invoice_type_id, payment_type_id,
+    arrearages_limit, arrearages_days, legal_person, tel, fax, address, contacter, contacter_phone,
+    business_scope, remarks, business_licence, bl_expiry_date, hygienic_license, hl_expiry_date,
+    production_licence, pl_expiry_date, gsp_licence, gsp_expiry_date, gmp_licence, gmp_expiry_date,
+    instrument_licence, il_expiry_date, food_license, fl_expiry_date, food_production_licence,
+    fpl_expiry_date, state, creator_id, creation_date, last_updater_id, last_update_date
+  </sql>
+  <select id="selectByExample" parameterType="pers.tandy.chis.modules.purchasemanagement.bean.SupplierExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from pem_supplier
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from pem_supplier
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from pem_supplier
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="pers.tandy.chis.modules.purchasemanagement.bean.SupplierExample">
+    delete from pem_supplier
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="pers.tandy.chis.modules.purchasemanagement.bean.Supplier">
+    insert into pem_supplier (id, oid, name,
+      code, account_licence, bank_name,
+      card_no, invoice_type_id, payment_type_id,
+      arrearages_limit, arrearages_days, legal_person,
+      tel, fax, address,
+      contacter, contacter_phone, business_scope,
+      remarks, business_licence, bl_expiry_date,
+      hygienic_license, hl_expiry_date, production_licence,
+      pl_expiry_date, gsp_licence, gsp_expiry_date,
+      gmp_licence, gmp_expiry_date, instrument_licence,
+      il_expiry_date, food_license, fl_expiry_date,
+      food_production_licence, fpl_expiry_date, state,
+      creator_id, creation_date, last_updater_id,
+      last_update_date)
+    values (#{id,jdbcType=INTEGER}, #{oid,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
+      #{code,jdbcType=VARCHAR}, #{accountLicence,jdbcType=VARCHAR}, #{bankName,jdbcType=VARCHAR},
+      #{cardNo,jdbcType=VARCHAR}, #{invoiceTypeId,jdbcType=INTEGER}, #{paymentTypeId,jdbcType=INTEGER},
+      #{arrearagesLimit,jdbcType=REAL}, #{arrearagesDays,jdbcType=TINYINT}, #{legalPerson,jdbcType=VARCHAR},
+      #{tel,jdbcType=VARCHAR}, #{fax,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR},
+      #{contacter,jdbcType=VARCHAR}, #{contacterPhone,jdbcType=VARCHAR}, #{businessScope,jdbcType=VARCHAR},
+      #{remarks,jdbcType=VARCHAR}, #{businessLicence,jdbcType=VARCHAR}, #{blExpiryDate,jdbcType=DATE},
+      #{hygienicLicense,jdbcType=VARCHAR}, #{hlExpiryDate,jdbcType=DATE}, #{productionLicence,jdbcType=VARCHAR},
+      #{plExpiryDate,jdbcType=DATE}, #{gspLicence,jdbcType=VARCHAR}, #{gspExpiryDate,jdbcType=DATE},
+      #{gmpLicence,jdbcType=VARCHAR}, #{gmpExpiryDate,jdbcType=DATE}, #{instrumentLicence,jdbcType=VARCHAR},
+      #{ilExpiryDate,jdbcType=DATE}, #{foodLicense,jdbcType=VARCHAR}, #{flExpiryDate,jdbcType=DATE},
+      #{foodProductionLicence,jdbcType=VARCHAR}, #{fplExpiryDate,jdbcType=DATE}, #{state,jdbcType=BIT},
+      #{creatorId,jdbcType=INTEGER}, #{creationDate,jdbcType=DATE}, #{lastUpdaterId,jdbcType=INTEGER},
+      #{lastUpdateDate,jdbcType=DATE})
+  </insert>
+  <insert id="insertSelective" parameterType="pers.tandy.chis.modules.purchasemanagement.bean.Supplier">
+    insert into pem_supplier
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="oid != null">
+        oid,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="code != null">
+        code,
+      </if>
+      <if test="accountLicence != null">
+        account_licence,
+      </if>
+      <if test="bankName != null">
+        bank_name,
+      </if>
+      <if test="cardNo != null">
+        card_no,
+      </if>
+      <if test="invoiceTypeId != null">
+        invoice_type_id,
+      </if>
+      <if test="paymentTypeId != null">
+        payment_type_id,
+      </if>
+      <if test="arrearagesLimit != null">
+        arrearages_limit,
+      </if>
+      <if test="arrearagesDays != null">
+        arrearages_days,
+      </if>
+      <if test="legalPerson != null">
+        legal_person,
+      </if>
+      <if test="tel != null">
+        tel,
+      </if>
+      <if test="fax != null">
+        fax,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="contacter != null">
+        contacter,
+      </if>
+      <if test="contacterPhone != null">
+        contacter_phone,
+      </if>
+      <if test="businessScope != null">
+        business_scope,
+      </if>
+      <if test="remarks != null">
+        remarks,
+      </if>
+      <if test="businessLicence != null">
+        business_licence,
+      </if>
+      <if test="blExpiryDate != null">
+        bl_expiry_date,
+      </if>
+      <if test="hygienicLicense != null">
+        hygienic_license,
+      </if>
+      <if test="hlExpiryDate != null">
+        hl_expiry_date,
+      </if>
+      <if test="productionLicence != null">
+        production_licence,
+      </if>
+      <if test="plExpiryDate != null">
+        pl_expiry_date,
+      </if>
+      <if test="gspLicence != null">
+        gsp_licence,
+      </if>
+      <if test="gspExpiryDate != null">
+        gsp_expiry_date,
+      </if>
+      <if test="gmpLicence != null">
+        gmp_licence,
+      </if>
+      <if test="gmpExpiryDate != null">
+        gmp_expiry_date,
+      </if>
+      <if test="instrumentLicence != null">
+        instrument_licence,
+      </if>
+      <if test="ilExpiryDate != null">
+        il_expiry_date,
+      </if>
+      <if test="foodLicense != null">
+        food_license,
+      </if>
+      <if test="flExpiryDate != null">
+        fl_expiry_date,
+      </if>
+      <if test="foodProductionLicence != null">
+        food_production_licence,
+      </if>
+      <if test="fplExpiryDate != null">
+        fpl_expiry_date,
+      </if>
+      <if test="state != null">
+        state,
+      </if>
+      <if test="creatorId != null">
+        creator_id,
+      </if>
+      <if test="creationDate != null">
+        creation_date,
+      </if>
+      <if test="lastUpdaterId != null">
+        last_updater_id,
+      </if>
+      <if test="lastUpdateDate != null">
+        last_update_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="oid != null">
+        #{oid,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null">
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="accountLicence != null">
+        #{accountLicence,jdbcType=VARCHAR},
+      </if>
+      <if test="bankName != null">
+        #{bankName,jdbcType=VARCHAR},
+      </if>
+      <if test="cardNo != null">
+        #{cardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceTypeId != null">
+        #{invoiceTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="paymentTypeId != null">
+        #{paymentTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="arrearagesLimit != null">
+        #{arrearagesLimit,jdbcType=REAL},
+      </if>
+      <if test="arrearagesDays != null">
+        #{arrearagesDays,jdbcType=TINYINT},
+      </if>
+      <if test="legalPerson != null">
+        #{legalPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null">
+        #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="fax != null">
+        #{fax,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="contacter != null">
+        #{contacter,jdbcType=VARCHAR},
+      </if>
+      <if test="contacterPhone != null">
+        #{contacterPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="businessScope != null">
+        #{businessScope,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null">
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="businessLicence != null">
+        #{businessLicence,jdbcType=VARCHAR},
+      </if>
+      <if test="blExpiryDate != null">
+        #{blExpiryDate,jdbcType=DATE},
+      </if>
+      <if test="hygienicLicense != null">
+        #{hygienicLicense,jdbcType=VARCHAR},
+      </if>
+      <if test="hlExpiryDate != null">
+        #{hlExpiryDate,jdbcType=DATE},
+      </if>
+      <if test="productionLicence != null">
+        #{productionLicence,jdbcType=VARCHAR},
+      </if>
+      <if test="plExpiryDate != null">
+        #{plExpiryDate,jdbcType=DATE},
+      </if>
+      <if test="gspLicence != null">
+        #{gspLicence,jdbcType=VARCHAR},
+      </if>
+      <if test="gspExpiryDate != null">
+        #{gspExpiryDate,jdbcType=DATE},
+      </if>
+      <if test="gmpLicence != null">
+        #{gmpLicence,jdbcType=VARCHAR},
+      </if>
+      <if test="gmpExpiryDate != null">
+        #{gmpExpiryDate,jdbcType=DATE},
+      </if>
+      <if test="instrumentLicence != null">
+        #{instrumentLicence,jdbcType=VARCHAR},
+      </if>
+      <if test="ilExpiryDate != null">
+        #{ilExpiryDate,jdbcType=DATE},
+      </if>
+      <if test="foodLicense != null">
+        #{foodLicense,jdbcType=VARCHAR},
+      </if>
+      <if test="flExpiryDate != null">
+        #{flExpiryDate,jdbcType=DATE},
+      </if>
+      <if test="foodProductionLicence != null">
+        #{foodProductionLicence,jdbcType=VARCHAR},
+      </if>
+      <if test="fplExpiryDate != null">
+        #{fplExpiryDate,jdbcType=DATE},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=BIT},
+      </if>
+      <if test="creatorId != null">
+        #{creatorId,jdbcType=INTEGER},
+      </if>
+      <if test="creationDate != null">
+        #{creationDate,jdbcType=DATE},
+      </if>
+      <if test="lastUpdaterId != null">
+        #{lastUpdaterId,jdbcType=INTEGER},
+      </if>
+      <if test="lastUpdateDate != null">
+        #{lastUpdateDate,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="pers.tandy.chis.modules.purchasemanagement.bean.SupplierExample" resultType="java.lang.Long">
+    select count(*) from pem_supplier
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update pem_supplier
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.oid != null">
+        oid = #{record.oid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.code != null">
+        code = #{record.code,jdbcType=VARCHAR},
+      </if>
+      <if test="record.accountLicence != null">
+        account_licence = #{record.accountLicence,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bankName != null">
+        bank_name = #{record.bankName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cardNo != null">
+        card_no = #{record.cardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.invoiceTypeId != null">
+        invoice_type_id = #{record.invoiceTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.paymentTypeId != null">
+        payment_type_id = #{record.paymentTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.arrearagesLimit != null">
+        arrearages_limit = #{record.arrearagesLimit,jdbcType=REAL},
+      </if>
+      <if test="record.arrearagesDays != null">
+        arrearages_days = #{record.arrearagesDays,jdbcType=TINYINT},
+      </if>
+      <if test="record.legalPerson != null">
+        legal_person = #{record.legalPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tel != null">
+        tel = #{record.tel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fax != null">
+        fax = #{record.fax,jdbcType=VARCHAR},
+      </if>
+      <if test="record.address != null">
+        address = #{record.address,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contacter != null">
+        contacter = #{record.contacter,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contacterPhone != null">
+        contacter_phone = #{record.contacterPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.businessScope != null">
+        business_scope = #{record.businessScope,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remarks != null">
+        remarks = #{record.remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="record.businessLicence != null">
+        business_licence = #{record.businessLicence,jdbcType=VARCHAR},
+      </if>
+      <if test="record.blExpiryDate != null">
+        bl_expiry_date = #{record.blExpiryDate,jdbcType=DATE},
+      </if>
+      <if test="record.hygienicLicense != null">
+        hygienic_license = #{record.hygienicLicense,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hlExpiryDate != null">
+        hl_expiry_date = #{record.hlExpiryDate,jdbcType=DATE},
+      </if>
+      <if test="record.productionLicence != null">
+        production_licence = #{record.productionLicence,jdbcType=VARCHAR},
+      </if>
+      <if test="record.plExpiryDate != null">
+        pl_expiry_date = #{record.plExpiryDate,jdbcType=DATE},
+      </if>
+      <if test="record.gspLicence != null">
+        gsp_licence = #{record.gspLicence,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gspExpiryDate != null">
+        gsp_expiry_date = #{record.gspExpiryDate,jdbcType=DATE},
+      </if>
+      <if test="record.gmpLicence != null">
+        gmp_licence = #{record.gmpLicence,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gmpExpiryDate != null">
+        gmp_expiry_date = #{record.gmpExpiryDate,jdbcType=DATE},
+      </if>
+      <if test="record.instrumentLicence != null">
+        instrument_licence = #{record.instrumentLicence,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ilExpiryDate != null">
+        il_expiry_date = #{record.ilExpiryDate,jdbcType=DATE},
+      </if>
+      <if test="record.foodLicense != null">
+        food_license = #{record.foodLicense,jdbcType=VARCHAR},
+      </if>
+      <if test="record.flExpiryDate != null">
+        fl_expiry_date = #{record.flExpiryDate,jdbcType=DATE},
+      </if>
+      <if test="record.foodProductionLicence != null">
+        food_production_licence = #{record.foodProductionLicence,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fplExpiryDate != null">
+        fpl_expiry_date = #{record.fplExpiryDate,jdbcType=DATE},
+      </if>
+      <if test="record.state != null">
+        state = #{record.state,jdbcType=BIT},
+      </if>
+      <if test="record.creatorId != null">
+        creator_id = #{record.creatorId,jdbcType=INTEGER},
+      </if>
+      <if test="record.creationDate != null">
+        creation_date = #{record.creationDate,jdbcType=DATE},
+      </if>
+      <if test="record.lastUpdaterId != null">
+        last_updater_id = #{record.lastUpdaterId,jdbcType=INTEGER},
+      </if>
+      <if test="record.lastUpdateDate != null">
+        last_update_date = #{record.lastUpdateDate,jdbcType=DATE},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update pem_supplier
+    set id = #{record.id,jdbcType=INTEGER},
+      oid = #{record.oid,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      code = #{record.code,jdbcType=VARCHAR},
+      account_licence = #{record.accountLicence,jdbcType=VARCHAR},
+      bank_name = #{record.bankName,jdbcType=VARCHAR},
+      card_no = #{record.cardNo,jdbcType=VARCHAR},
+      invoice_type_id = #{record.invoiceTypeId,jdbcType=INTEGER},
+      payment_type_id = #{record.paymentTypeId,jdbcType=INTEGER},
+      arrearages_limit = #{record.arrearagesLimit,jdbcType=REAL},
+      arrearages_days = #{record.arrearagesDays,jdbcType=TINYINT},
+      legal_person = #{record.legalPerson,jdbcType=VARCHAR},
+      tel = #{record.tel,jdbcType=VARCHAR},
+      fax = #{record.fax,jdbcType=VARCHAR},
+      address = #{record.address,jdbcType=VARCHAR},
+      contacter = #{record.contacter,jdbcType=VARCHAR},
+      contacter_phone = #{record.contacterPhone,jdbcType=VARCHAR},
+      business_scope = #{record.businessScope,jdbcType=VARCHAR},
+      remarks = #{record.remarks,jdbcType=VARCHAR},
+      business_licence = #{record.businessLicence,jdbcType=VARCHAR},
+      bl_expiry_date = #{record.blExpiryDate,jdbcType=DATE},
+      hygienic_license = #{record.hygienicLicense,jdbcType=VARCHAR},
+      hl_expiry_date = #{record.hlExpiryDate,jdbcType=DATE},
+      production_licence = #{record.productionLicence,jdbcType=VARCHAR},
+      pl_expiry_date = #{record.plExpiryDate,jdbcType=DATE},
+      gsp_licence = #{record.gspLicence,jdbcType=VARCHAR},
+      gsp_expiry_date = #{record.gspExpiryDate,jdbcType=DATE},
+      gmp_licence = #{record.gmpLicence,jdbcType=VARCHAR},
+      gmp_expiry_date = #{record.gmpExpiryDate,jdbcType=DATE},
+      instrument_licence = #{record.instrumentLicence,jdbcType=VARCHAR},
+      il_expiry_date = #{record.ilExpiryDate,jdbcType=DATE},
+      food_license = #{record.foodLicense,jdbcType=VARCHAR},
+      fl_expiry_date = #{record.flExpiryDate,jdbcType=DATE},
+      food_production_licence = #{record.foodProductionLicence,jdbcType=VARCHAR},
+      fpl_expiry_date = #{record.fplExpiryDate,jdbcType=DATE},
+      state = #{record.state,jdbcType=BIT},
+      creator_id = #{record.creatorId,jdbcType=INTEGER},
+      creation_date = #{record.creationDate,jdbcType=DATE},
+      last_updater_id = #{record.lastUpdaterId,jdbcType=INTEGER},
+      last_update_date = #{record.lastUpdateDate,jdbcType=DATE}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="pers.tandy.chis.modules.purchasemanagement.bean.Supplier">
+    update pem_supplier
+    <set>
+      <if test="oid != null">
+        oid = #{oid,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null">
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="accountLicence != null">
+        account_licence = #{accountLicence,jdbcType=VARCHAR},
+      </if>
+      <if test="bankName != null">
+        bank_name = #{bankName,jdbcType=VARCHAR},
+      </if>
+      <if test="cardNo != null">
+        card_no = #{cardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceTypeId != null">
+        invoice_type_id = #{invoiceTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="paymentTypeId != null">
+        payment_type_id = #{paymentTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="arrearagesLimit != null">
+        arrearages_limit = #{arrearagesLimit,jdbcType=REAL},
+      </if>
+      <if test="arrearagesDays != null">
+        arrearages_days = #{arrearagesDays,jdbcType=TINYINT},
+      </if>
+      <if test="legalPerson != null">
+        legal_person = #{legalPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null">
+        tel = #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="fax != null">
+        fax = #{fax,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="contacter != null">
+        contacter = #{contacter,jdbcType=VARCHAR},
+      </if>
+      <if test="contacterPhone != null">
+        contacter_phone = #{contacterPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="businessScope != null">
+        business_scope = #{businessScope,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null">
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="businessLicence != null">
+        business_licence = #{businessLicence,jdbcType=VARCHAR},
+      </if>
+      <if test="blExpiryDate != null">
+        bl_expiry_date = #{blExpiryDate,jdbcType=DATE},
+      </if>
+      <if test="hygienicLicense != null">
+        hygienic_license = #{hygienicLicense,jdbcType=VARCHAR},
+      </if>
+      <if test="hlExpiryDate != null">
+        hl_expiry_date = #{hlExpiryDate,jdbcType=DATE},
+      </if>
+      <if test="productionLicence != null">
+        production_licence = #{productionLicence,jdbcType=VARCHAR},
+      </if>
+      <if test="plExpiryDate != null">
+        pl_expiry_date = #{plExpiryDate,jdbcType=DATE},
+      </if>
+      <if test="gspLicence != null">
+        gsp_licence = #{gspLicence,jdbcType=VARCHAR},
+      </if>
+      <if test="gspExpiryDate != null">
+        gsp_expiry_date = #{gspExpiryDate,jdbcType=DATE},
+      </if>
+      <if test="gmpLicence != null">
+        gmp_licence = #{gmpLicence,jdbcType=VARCHAR},
+      </if>
+      <if test="gmpExpiryDate != null">
+        gmp_expiry_date = #{gmpExpiryDate,jdbcType=DATE},
+      </if>
+      <if test="instrumentLicence != null">
+        instrument_licence = #{instrumentLicence,jdbcType=VARCHAR},
+      </if>
+      <if test="ilExpiryDate != null">
+        il_expiry_date = #{ilExpiryDate,jdbcType=DATE},
+      </if>
+      <if test="foodLicense != null">
+        food_license = #{foodLicense,jdbcType=VARCHAR},
+      </if>
+      <if test="flExpiryDate != null">
+        fl_expiry_date = #{flExpiryDate,jdbcType=DATE},
+      </if>
+      <if test="foodProductionLicence != null">
+        food_production_licence = #{foodProductionLicence,jdbcType=VARCHAR},
+      </if>
+      <if test="fplExpiryDate != null">
+        fpl_expiry_date = #{fplExpiryDate,jdbcType=DATE},
+      </if>
+      <if test="state != null">
+        state = #{state,jdbcType=BIT},
+      </if>
+      <if test="creatorId != null">
+        creator_id = #{creatorId,jdbcType=INTEGER},
+      </if>
+      <if test="creationDate != null">
+        creation_date = #{creationDate,jdbcType=DATE},
+      </if>
+      <if test="lastUpdaterId != null">
+        last_updater_id = #{lastUpdaterId,jdbcType=INTEGER},
+      </if>
+      <if test="lastUpdateDate != null">
+        last_update_date = #{lastUpdateDate,jdbcType=DATE},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="pers.tandy.chis.modules.purchasemanagement.bean.Supplier">
+    update pem_supplier
+    set oid = #{oid,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      code = #{code,jdbcType=VARCHAR},
+      account_licence = #{accountLicence,jdbcType=VARCHAR},
+      bank_name = #{bankName,jdbcType=VARCHAR},
+      card_no = #{cardNo,jdbcType=VARCHAR},
+      invoice_type_id = #{invoiceTypeId,jdbcType=INTEGER},
+      payment_type_id = #{paymentTypeId,jdbcType=INTEGER},
+      arrearages_limit = #{arrearagesLimit,jdbcType=REAL},
+      arrearages_days = #{arrearagesDays,jdbcType=TINYINT},
+      legal_person = #{legalPerson,jdbcType=VARCHAR},
+      tel = #{tel,jdbcType=VARCHAR},
+      fax = #{fax,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      contacter = #{contacter,jdbcType=VARCHAR},
+      contacter_phone = #{contacterPhone,jdbcType=VARCHAR},
+      business_scope = #{businessScope,jdbcType=VARCHAR},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      business_licence = #{businessLicence,jdbcType=VARCHAR},
+      bl_expiry_date = #{blExpiryDate,jdbcType=DATE},
+      hygienic_license = #{hygienicLicense,jdbcType=VARCHAR},
+      hl_expiry_date = #{hlExpiryDate,jdbcType=DATE},
+      production_licence = #{productionLicence,jdbcType=VARCHAR},
+      pl_expiry_date = #{plExpiryDate,jdbcType=DATE},
+      gsp_licence = #{gspLicence,jdbcType=VARCHAR},
+      gsp_expiry_date = #{gspExpiryDate,jdbcType=DATE},
+      gmp_licence = #{gmpLicence,jdbcType=VARCHAR},
+      gmp_expiry_date = #{gmpExpiryDate,jdbcType=DATE},
+      instrument_licence = #{instrumentLicence,jdbcType=VARCHAR},
+      il_expiry_date = #{ilExpiryDate,jdbcType=DATE},
+      food_license = #{foodLicense,jdbcType=VARCHAR},
+      fl_expiry_date = #{flExpiryDate,jdbcType=DATE},
+      food_production_licence = #{foodProductionLicence,jdbcType=VARCHAR},
+      fpl_expiry_date = #{fplExpiryDate,jdbcType=DATE},
+      state = #{state,jdbcType=BIT},
+      creator_id = #{creatorId,jdbcType=INTEGER},
+      creation_date = #{creationDate,jdbcType=DATE},
+      last_updater_id = #{lastUpdaterId,jdbcType=INTEGER},
+      last_update_date = #{lastUpdateDate,jdbcType=DATE}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+
+  <!--***************************************************************************************************************-->
+
+  <select id="selectByCriteria" resultType="map">
+    select *
+    from view_pem_supplier
+    <trim prefix="where" suffixOverrides="and">
+      <if test="oid != null">
+        (oid = #{oid}) and
+      </if>
+      <if test="state != null">
+        (state = #{state}) and
+      </if>
+      <if test="name != null &amp;&amp; name.trim() != ''">
+        (name like '${name}%' or code like '${name}%')
+      </if>
+    </trim>
+    order by id desc
+  </select>
+
+  <select id="selectEnabledLikeByName" resultType="map">
+    select *
+    from
+      view_pem_supplier
+    where
+      (name like '${name}%' or code like '${name}%') and
+      (state is true)
+    order by id desc
+    LIMIT 30
+  </select>
+</mapper>

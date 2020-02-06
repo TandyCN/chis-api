@@ -1,0 +1,436 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pers.tandy.chis.modules.chargesitemmanagement.dao.ItemAdjustPriceMapper">
+  <resultMap id="BaseResultMap" type="pers.tandy.chis.modules.chargesitemmanagement.bean.ItemAdjustPrice">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="lsh" jdbcType="VARCHAR" property="lsh" />
+    <result column="mxh" jdbcType="VARCHAR" property="mxh" />
+    <result column="cim_item_id" jdbcType="INTEGER" property="cimItemId" />
+    <result column="original_retail_price" jdbcType="REAL" property="originalRetailPrice" />
+    <result column="new_retail_price" jdbcType="REAL" property="newRetailPrice" />
+    <result column="explains" jdbcType="VARCHAR" property="explains" />
+    <result column="creator_id" jdbcType="INTEGER" property="creatorId" />
+    <result column="creation_date" jdbcType="DATE" property="creationDate" />
+    <result column="expiry_date" jdbcType="DATE" property="expiryDate" />
+    <result column="approver_id" jdbcType="INTEGER" property="approverId" />
+    <result column="approve_date" jdbcType="DATE" property="approveDate" />
+    <result column="approve_state" jdbcType="TINYINT" property="approveState" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, lsh, mxh, cim_item_id, original_retail_price, new_retail_price, explains, creator_id,
+    creation_date, expiry_date, approver_id, approve_date, approve_state
+  </sql>
+  <select id="selectByExample" parameterType="pers.tandy.chis.modules.chargesitemmanagement.bean.ItemAdjustPriceExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from cim_item_adjust_price
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from cim_item_adjust_price
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from cim_item_adjust_price
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="pers.tandy.chis.modules.chargesitemmanagement.bean.ItemAdjustPriceExample">
+    delete from cim_item_adjust_price
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="pers.tandy.chis.modules.chargesitemmanagement.bean.ItemAdjustPrice">
+    insert into cim_item_adjust_price (id, lsh, mxh,
+      cim_item_id, original_retail_price, new_retail_price,
+      explains, creator_id, creation_date,
+      expiry_date, approver_id, approve_date,
+      approve_state)
+    values (#{id,jdbcType=INTEGER}, #{lsh,jdbcType=VARCHAR}, #{mxh,jdbcType=VARCHAR},
+      #{cimItemId,jdbcType=INTEGER}, #{originalRetailPrice,jdbcType=REAL}, #{newRetailPrice,jdbcType=REAL},
+      #{explains,jdbcType=VARCHAR}, #{creatorId,jdbcType=INTEGER}, #{creationDate,jdbcType=DATE},
+      #{expiryDate,jdbcType=DATE}, #{approverId,jdbcType=INTEGER}, #{approveDate,jdbcType=DATE},
+      #{approveState,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="pers.tandy.chis.modules.chargesitemmanagement.bean.ItemAdjustPrice">
+    insert into cim_item_adjust_price
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="lsh != null">
+        lsh,
+      </if>
+      <if test="mxh != null">
+        mxh,
+      </if>
+      <if test="cimItemId != null">
+        cim_item_id,
+      </if>
+      <if test="originalRetailPrice != null">
+        original_retail_price,
+      </if>
+      <if test="newRetailPrice != null">
+        new_retail_price,
+      </if>
+      <if test="explains != null">
+        explains,
+      </if>
+      <if test="creatorId != null">
+        creator_id,
+      </if>
+      <if test="creationDate != null">
+        creation_date,
+      </if>
+      <if test="expiryDate != null">
+        expiry_date,
+      </if>
+      <if test="approverId != null">
+        approver_id,
+      </if>
+      <if test="approveDate != null">
+        approve_date,
+      </if>
+      <if test="approveState != null">
+        approve_state,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="lsh != null">
+        #{lsh,jdbcType=VARCHAR},
+      </if>
+      <if test="mxh != null">
+        #{mxh,jdbcType=VARCHAR},
+      </if>
+      <if test="cimItemId != null">
+        #{cimItemId,jdbcType=INTEGER},
+      </if>
+      <if test="originalRetailPrice != null">
+        #{originalRetailPrice,jdbcType=REAL},
+      </if>
+      <if test="newRetailPrice != null">
+        #{newRetailPrice,jdbcType=REAL},
+      </if>
+      <if test="explains != null">
+        #{explains,jdbcType=VARCHAR},
+      </if>
+      <if test="creatorId != null">
+        #{creatorId,jdbcType=INTEGER},
+      </if>
+      <if test="creationDate != null">
+        #{creationDate,jdbcType=DATE},
+      </if>
+      <if test="expiryDate != null">
+        #{expiryDate,jdbcType=DATE},
+      </if>
+      <if test="approverId != null">
+        #{approverId,jdbcType=INTEGER},
+      </if>
+      <if test="approveDate != null">
+        #{approveDate,jdbcType=DATE},
+      </if>
+      <if test="approveState != null">
+        #{approveState,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="pers.tandy.chis.modules.chargesitemmanagement.bean.ItemAdjustPriceExample" resultType="java.lang.Long">
+    select count(*) from cim_item_adjust_price
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update cim_item_adjust_price
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.lsh != null">
+        lsh = #{record.lsh,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mxh != null">
+        mxh = #{record.mxh,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cimItemId != null">
+        cim_item_id = #{record.cimItemId,jdbcType=INTEGER},
+      </if>
+      <if test="record.originalRetailPrice != null">
+        original_retail_price = #{record.originalRetailPrice,jdbcType=REAL},
+      </if>
+      <if test="record.newRetailPrice != null">
+        new_retail_price = #{record.newRetailPrice,jdbcType=REAL},
+      </if>
+      <if test="record.explains != null">
+        explains = #{record.explains,jdbcType=VARCHAR},
+      </if>
+      <if test="record.creatorId != null">
+        creator_id = #{record.creatorId,jdbcType=INTEGER},
+      </if>
+      <if test="record.creationDate != null">
+        creation_date = #{record.creationDate,jdbcType=DATE},
+      </if>
+      <if test="record.expiryDate != null">
+        expiry_date = #{record.expiryDate,jdbcType=DATE},
+      </if>
+      <if test="record.approverId != null">
+        approver_id = #{record.approverId,jdbcType=INTEGER},
+      </if>
+      <if test="record.approveDate != null">
+        approve_date = #{record.approveDate,jdbcType=DATE},
+      </if>
+      <if test="record.approveState != null">
+        approve_state = #{record.approveState,jdbcType=TINYINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update cim_item_adjust_price
+    set id = #{record.id,jdbcType=INTEGER},
+      lsh = #{record.lsh,jdbcType=VARCHAR},
+      mxh = #{record.mxh,jdbcType=VARCHAR},
+      cim_item_id = #{record.cimItemId,jdbcType=INTEGER},
+      original_retail_price = #{record.originalRetailPrice,jdbcType=REAL},
+      new_retail_price = #{record.newRetailPrice,jdbcType=REAL},
+      explains = #{record.explains,jdbcType=VARCHAR},
+      creator_id = #{record.creatorId,jdbcType=INTEGER},
+      creation_date = #{record.creationDate,jdbcType=DATE},
+      expiry_date = #{record.expiryDate,jdbcType=DATE},
+      approver_id = #{record.approverId,jdbcType=INTEGER},
+      approve_date = #{record.approveDate,jdbcType=DATE},
+      approve_state = #{record.approveState,jdbcType=TINYINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="pers.tandy.chis.modules.chargesitemmanagement.bean.ItemAdjustPrice">
+    update cim_item_adjust_price
+    <set>
+      <if test="lsh != null">
+        lsh = #{lsh,jdbcType=VARCHAR},
+      </if>
+      <if test="mxh != null">
+        mxh = #{mxh,jdbcType=VARCHAR},
+      </if>
+      <if test="cimItemId != null">
+        cim_item_id = #{cimItemId,jdbcType=INTEGER},
+      </if>
+      <if test="originalRetailPrice != null">
+        original_retail_price = #{originalRetailPrice,jdbcType=REAL},
+      </if>
+      <if test="newRetailPrice != null">
+        new_retail_price = #{newRetailPrice,jdbcType=REAL},
+      </if>
+      <if test="explains != null">
+        explains = #{explains,jdbcType=VARCHAR},
+      </if>
+      <if test="creatorId != null">
+        creator_id = #{creatorId,jdbcType=INTEGER},
+      </if>
+      <if test="creationDate != null">
+        creation_date = #{creationDate,jdbcType=DATE},
+      </if>
+      <if test="expiryDate != null">
+        expiry_date = #{expiryDate,jdbcType=DATE},
+      </if>
+      <if test="approverId != null">
+        approver_id = #{approverId,jdbcType=INTEGER},
+      </if>
+      <if test="approveDate != null">
+        approve_date = #{approveDate,jdbcType=DATE},
+      </if>
+      <if test="approveState != null">
+        approve_state = #{approveState,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="pers.tandy.chis.modules.chargesitemmanagement.bean.ItemAdjustPrice">
+    update cim_item_adjust_price
+    set lsh = #{lsh,jdbcType=VARCHAR},
+      mxh = #{mxh,jdbcType=VARCHAR},
+      cim_item_id = #{cimItemId,jdbcType=INTEGER},
+      original_retail_price = #{originalRetailPrice,jdbcType=REAL},
+      new_retail_price = #{newRetailPrice,jdbcType=REAL},
+      explains = #{explains,jdbcType=VARCHAR},
+      creator_id = #{creatorId,jdbcType=INTEGER},
+      creation_date = #{creationDate,jdbcType=DATE},
+      expiry_date = #{expiryDate,jdbcType=DATE},
+      approver_id = #{approverId,jdbcType=INTEGER},
+      approve_date = #{approveDate,jdbcType=DATE},
+      approve_state = #{approveState,jdbcType=TINYINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+
+  <!--***************************************************************************************************************-->
+
+  <insert id="insertList">
+    insert into cim_item_adjust_price
+    (
+    id,
+    lsh,
+    mxh,
+    cim_item_id,
+    original_retail_price,
+    new_retail_price,
+    explains,
+    creator_id,
+    creation_date,
+    expiry_date,
+    approver_id,
+    approve_date,
+    approve_state
+    )
+    values
+    <foreach collection="iapList" item="iap" separator=",">
+      (
+      #{iap.id,jdbcType=INTEGER},
+      #{iap.lsh,jdbcType=VARCHAR},
+      #{iap.mxh,jdbcType=VARCHAR},
+      #{iap.cimItemId,jdbcType=INTEGER},
+      #{iap.originalRetailPrice,jdbcType=REAL},
+      #{iap.newRetailPrice,jdbcType=REAL},
+      #{iap.explains,jdbcType=VARCHAR},
+      #{iap.creatorId,jdbcType=INTEGER},
+      #{iap.creationDate,jdbcType=DATE},
+      #{iap.expiryDate,jdbcType=DATE},
+      #{iap.approverId,jdbcType=INTEGER},
+      #{iap.approveDate,jdbcType=DATE},
+      #{iap.approveState,jdbcType=TINYINT}
+      )
+    </foreach>
+  </insert>
+
+  <select id="selectByLsh" resultType="map">
+    select *
+    from view_cim_item_adjust_price
+    where lsh = #{lsh}
+  </select>
+
+  <update id="updateByLsh">
+    update cim_item_adjust_price
+    <trim prefix="set" suffixOverrides=",">
+      <if test="approverId != null">
+        approver_id=#{approverId},
+      </if>
+      <if test="approveDate != null">
+        approve_date=#{approveDate},
+      </if>
+      <if test="approveState != null">
+        approve_state=#{approveState}
+      </if>
+    </trim>
+    where lsh=#{lsh}
+  </update>
+
+  <select id="selectByCriteria" resultType="map">
+    select *
+    from view_cim_item_adjust_price
+    <trim prefix="where" suffixOverrides="and">
+      <if test="creationDate != null &amp;&amp; creationDate.length == 2">
+        (creationDate between #{creationDate[0]} and #{creationDate[1]}) and
+      </if>
+      <if test="approveState != null">
+        (approveState = #{approveState}) and
+      </if>
+      <if test="name != null &amp;&amp; name.trim() != ''">
+        (cimItemName like '${name}%' or cimItemCode like '${name}%') and
+      </if>
+    </trim>
+    order by id desc
+  </select>
+
+
+  <select id="selectGroupListByCriteria" resultType="map">
+    select *
+    from view_cim_item_adjust_price
+    <trim prefix="where" suffixOverrides="and">
+      <if test="creationDate != null &amp;&amp; creationDate.length == 2">
+        (creationDate between #{creationDate[0]} and #{creationDate[1]}) and
+      </if>
+      <if test="approveState != null">
+        (approveState = #{approveState}) and
+      </if>
+      <if test="lsh != null &amp;&amp; lsh.trim() != ''">
+        (lsh like '${lsh}%') and
+      </if>
+    </trim>
+    group by lsh
+    order by id desc
+  </select>
+</mapper>

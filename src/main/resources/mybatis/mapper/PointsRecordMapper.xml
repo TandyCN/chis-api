@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pers.tandy.chis.modules.membermanagement.dao.PointsRecordMapper">
+  <resultMap id="BaseResultMap" type="pers.tandy.chis.modules.membermanagement.bean.PointsRecord">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="lsh" jdbcType="VARCHAR" property="lsh" />
+    <result column="mrm_member_id" jdbcType="INTEGER" property="mrmMemberId" />
+    <result column="exchange_points" jdbcType="INTEGER" property="exchangePoints" />
+    <result column="given_points" jdbcType="INTEGER" property="givenPoints" />
+    <result column="points" jdbcType="INTEGER" property="points" />
+    <result column="sys_clinic_id" jdbcType="INTEGER" property="sysClinicId" />
+    <result column="creator_id" jdbcType="INTEGER" property="creatorId" />
+    <result column="creation_date" jdbcType="TIMESTAMP" property="creationDate" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, lsh, mrm_member_id, exchange_points, given_points, points, sys_clinic_id, creator_id,
+    creation_date
+  </sql>
+  <select id="selectByExample" parameterType="pers.tandy.chis.modules.membermanagement.bean.PointsRecordExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from mrm_points_record
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from mrm_points_record
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from mrm_points_record
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="pers.tandy.chis.modules.membermanagement.bean.PointsRecordExample">
+    delete from mrm_points_record
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="pers.tandy.chis.modules.membermanagement.bean.PointsRecord">
+    insert into mrm_points_record (id, lsh, mrm_member_id,
+      exchange_points, given_points, points,
+      sys_clinic_id, creator_id, creation_date
+      )
+    values (#{id,jdbcType=INTEGER}, #{lsh,jdbcType=VARCHAR}, #{mrmMemberId,jdbcType=INTEGER},
+      #{exchangePoints,jdbcType=INTEGER}, #{givenPoints,jdbcType=INTEGER}, #{points,jdbcType=INTEGER},
+      #{sysClinicId,jdbcType=INTEGER}, #{creatorId,jdbcType=INTEGER}, #{creationDate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="pers.tandy.chis.modules.membermanagement.bean.PointsRecord">
+    insert into mrm_points_record
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="lsh != null">
+        lsh,
+      </if>
+      <if test="mrmMemberId != null">
+        mrm_member_id,
+      </if>
+      <if test="exchangePoints != null">
+        exchange_points,
+      </if>
+      <if test="givenPoints != null">
+        given_points,
+      </if>
+      <if test="points != null">
+        points,
+      </if>
+      <if test="sysClinicId != null">
+        sys_clinic_id,
+      </if>
+      <if test="creatorId != null">
+        creator_id,
+      </if>
+      <if test="creationDate != null">
+        creation_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="lsh != null">
+        #{lsh,jdbcType=VARCHAR},
+      </if>
+      <if test="mrmMemberId != null">
+        #{mrmMemberId,jdbcType=INTEGER},
+      </if>
+      <if test="exchangePoints != null">
+        #{exchangePoints,jdbcType=INTEGER},
+      </if>
+      <if test="givenPoints != null">
+        #{givenPoints,jdbcType=INTEGER},
+      </if>
+      <if test="points != null">
+        #{points,jdbcType=INTEGER},
+      </if>
+      <if test="sysClinicId != null">
+        #{sysClinicId,jdbcType=INTEGER},
+      </if>
+      <if test="creatorId != null">
+        #{creatorId,jdbcType=INTEGER},
+      </if>
+      <if test="creationDate != null">
+        #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="pers.tandy.chis.modules.membermanagement.bean.PointsRecordExample" resultType="java.lang.Long">
+    select count(*) from mrm_points_record
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update mrm_points_record
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.lsh != null">
+        lsh = #{record.lsh,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mrmMemberId != null">
+        mrm_member_id = #{record.mrmMemberId,jdbcType=INTEGER},
+      </if>
+      <if test="record.exchangePoints != null">
+        exchange_points = #{record.exchangePoints,jdbcType=INTEGER},
+      </if>
+      <if test="record.givenPoints != null">
+        given_points = #{record.givenPoints,jdbcType=INTEGER},
+      </if>
+      <if test="record.points != null">
+        points = #{record.points,jdbcType=INTEGER},
+      </if>
+      <if test="record.sysClinicId != null">
+        sys_clinic_id = #{record.sysClinicId,jdbcType=INTEGER},
+      </if>
+      <if test="record.creatorId != null">
+        creator_id = #{record.creatorId,jdbcType=INTEGER},
+      </if>
+      <if test="record.creationDate != null">
+        creation_date = #{record.creationDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update mrm_points_record
+    set id = #{record.id,jdbcType=INTEGER},
+      lsh = #{record.lsh,jdbcType=VARCHAR},
+      mrm_member_id = #{record.mrmMemberId,jdbcType=INTEGER},
+      exchange_points = #{record.exchangePoints,jdbcType=INTEGER},
+      given_points = #{record.givenPoints,jdbcType=INTEGER},
+      points = #{record.points,jdbcType=INTEGER},
+      sys_clinic_id = #{record.sysClinicId,jdbcType=INTEGER},
+      creator_id = #{record.creatorId,jdbcType=INTEGER},
+      creation_date = #{record.creationDate,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="pers.tandy.chis.modules.membermanagement.bean.PointsRecord">
+    update mrm_points_record
+    <set>
+      <if test="lsh != null">
+        lsh = #{lsh,jdbcType=VARCHAR},
+      </if>
+      <if test="mrmMemberId != null">
+        mrm_member_id = #{mrmMemberId,jdbcType=INTEGER},
+      </if>
+      <if test="exchangePoints != null">
+        exchange_points = #{exchangePoints,jdbcType=INTEGER},
+      </if>
+      <if test="givenPoints != null">
+        given_points = #{givenPoints,jdbcType=INTEGER},
+      </if>
+      <if test="points != null">
+        points = #{points,jdbcType=INTEGER},
+      </if>
+      <if test="sysClinicId != null">
+        sys_clinic_id = #{sysClinicId,jdbcType=INTEGER},
+      </if>
+      <if test="creatorId != null">
+        creator_id = #{creatorId,jdbcType=INTEGER},
+      </if>
+      <if test="creationDate != null">
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="pers.tandy.chis.modules.membermanagement.bean.PointsRecord">
+    update mrm_points_record
+    set lsh = #{lsh,jdbcType=VARCHAR},
+      mrm_member_id = #{mrmMemberId,jdbcType=INTEGER},
+      exchange_points = #{exchangePoints,jdbcType=INTEGER},
+      given_points = #{givenPoints,jdbcType=INTEGER},
+      points = #{points,jdbcType=INTEGER},
+      sys_clinic_id = #{sysClinicId,jdbcType=INTEGER},
+      creator_id = #{creatorId,jdbcType=INTEGER},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+
+
+  <!-- ************************************************************************************************************* -->
+  <select id="selectByCriteria" resultType="map">
+    select *
+    from view_mrm_points_record
+    <trim prefix="where" suffixOverrides="and">
+      <if test="creationDate != null &amp;&amp; creationDate.length == 2">
+        (DATE_FORMAT(creationDate, '%Y-%m-%d') between #{creationDate[0]} and #{creationDate[1]}) and
+      </if>
+      <if test="lsh != null &amp;&amp; lsh.trim() != ''">
+        (lsh like '${lsh}%') and
+      </if>
+      <if test="mrmMemberName != null &amp;&amp; mrmMemberName.trim() != ''">
+        (mrmMemberName like '${mrmMemberName}%' or mrmMemberCode like '${mrmMemberName}%' or phone like '${mrmMemberName}%') and
+      </if>
+    </trim>
+    order by creationDate desc
+  </select>
+
+  <select id="selectSumGivenPointsByLsh" resultType="int">
+    select sum(ifnull(given_points, 0)) as givenPoints
+    from mrm_points_record
+    where lsh = #{lsh}
+  </select>
+
+
+</mapper>
