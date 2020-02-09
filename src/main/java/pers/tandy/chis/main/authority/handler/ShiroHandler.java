@@ -7,6 +7,7 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.UnauthorizedException;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,8 +33,14 @@ import pers.tandy.chis.modules.systemmanagement.bean.User;
 @RestController
 public class ShiroHandler {
 
-    @Autowired
     private ShiroSessionManager shiroSessionManager;
+    @Autowired
+    public void setShiroSessionManager(ShiroSessionManager shiroSessionManager) {
+        this.shiroSessionManager = shiroSessionManager;
+    }
+
+    @Value("${chis-single-login}")
+    private Boolean chisSingleLogin = true;
 
     /**
      * 登录操作
@@ -53,14 +60,14 @@ public class ShiroHandler {
         }
 
         // 开启单点登录
-        shiroSessionManager.singleLogin(currentUser);
+        if (this.chisSingleLogin) {
+            shiroSessionManager.singleLogin(currentUser);
+        }
 
         // 生成 Token 并返回
         User user = (User) SecurityUtils.getSubject().getPrincipal();
         String accessToken = JWTUtils.getInstance().produceToken(user);
-        PageResult pageResult = PageResult.success().code(226).resultSet("Authorization", accessToken);
-
-        return pageResult;
+        return PageResult.success().code(226).resultSet("Authorization", accessToken);
     }
 
     /**

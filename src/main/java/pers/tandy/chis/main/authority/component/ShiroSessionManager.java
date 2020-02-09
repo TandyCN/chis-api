@@ -53,11 +53,7 @@ public class ShiroSessionManager {
 	public Boolean isRepeatLogin (Subject subject) {
 		// 获取当前用户的 session ID
 		String currentSessionId = subject.getSession().getId().toString();
-		if (stringRedisTemplate.opsForSet().isMember(REDIS_SESSION_KEY, currentSessionId)) {
-			return true;
-		} else {
-			return false;
-		}
+		return stringRedisTemplate.opsForSet().isMember(REDIS_SESSION_KEY, currentSessionId);
 	}
 
 	/**
