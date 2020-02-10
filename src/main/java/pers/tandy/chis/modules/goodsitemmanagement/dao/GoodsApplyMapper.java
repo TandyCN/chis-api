@@ -30,7 +30,6 @@ public interface GoodsApplyMapper {
 
     int updateByPrimaryKey(GoodsApply record);
 
-
     /*----------------------------------------------------------------------------------------------------------------*/
 
     List<Map<String, Object>> selectByCriteria(@Param("creationDate") String[] creationDate,

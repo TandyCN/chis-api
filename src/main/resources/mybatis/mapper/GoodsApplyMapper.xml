@@ -12,6 +12,7 @@
     <result column="specs" jdbcType="VARCHAR" property="specs" />
     <result column="goods_units_id" jdbcType="INTEGER" property="goodsUnitsId" />
     <result column="goods_classify_id" jdbcType="INTEGER" property="goodsClassifyId" />
+    <result column="sys_second_classify_id" jdbcType="INTEGER" property="sysSecondClassifyId" />
     <result column="barcode" jdbcType="VARCHAR" property="barcode" />
     <result column="manufacturer_id" jdbcType="INTEGER" property="manufacturerId" />
     <result column="origin_id" jdbcType="INTEGER" property="originId" />
@@ -20,6 +21,7 @@
     <result column="profit_commission_rate" jdbcType="TINYINT" property="profitCommissionRate" />
     <result column="purchase_tax_rate" jdbcType="TINYINT" property="purchaseTaxRate" />
     <result column="sell_tax_rate" jdbcType="TINYINT" property="sellTaxRate" />
+    <result column="min_purchase_quantity" jdbcType="SMALLINT" property="minPurchaseQuantity" />
     <result column="sell_classify_id" jdbcType="INTEGER" property="sellClassifyId" />
     <result column="discountable" jdbcType="BIT" property="discountable" />
     <result column="returnable" jdbcType="BIT" property="returnable" />
@@ -113,12 +115,12 @@
   </sql>
   <sql id="Base_Column_List">
     id, gsm_goods_type_id, oid, name, code, sp_name, sp_code, specs, goods_units_id,
-    goods_classify_id, barcode, manufacturer_id, origin_id, billing_type_id, retail_price,
-    profit_commission_rate, purchase_tax_rate, sell_tax_rate, sell_classify_id, discountable,
-    returnable, free_goods, lossable, state, splitable, split_quantity, split_units_id,
-    split_price, dose_type_id, dose, dose_units_id, special_drug_id, drug_usage_id, odored,
-    storage_temperature_id, conservation_days, prescription, prescription_type_id, yb_drug,
-    yb_oid, yb_price, approval_num, approval_num_expiry_date, creator_id, creation_date,
+    goods_classify_id, sys_second_classify_id, barcode, manufacturer_id, origin_id, billing_type_id,
+    retail_price, profit_commission_rate, purchase_tax_rate, sell_tax_rate, min_purchase_quantity,
+    sell_classify_id, discountable, returnable, free_goods, lossable, state, splitable,
+    split_quantity, split_units_id, split_price, dose_type_id, dose, dose_units_id, special_drug_id,
+    drug_usage_id, odored, storage_temperature_id, conservation_days, prescription, prescription_type_id,
+    yb_drug, yb_oid, yb_price, approval_num, approval_num_expiry_date, creator_id, creation_date,
     pricer_id, pricing_date, approver_id, approve_date, approve_state
   </sql>
   <select id="selectByExample" parameterType="pers.tandy.chis.modules.goodsitemmanagement.bean.GoodsApplyExample" resultMap="BaseResultMap">
@@ -155,12 +157,12 @@
     insert into gsm_goods_apply (id, gsm_goods_type_id, oid,
       name, code, sp_name,
       sp_code, specs, goods_units_id,
-      goods_classify_id, barcode, manufacturer_id,
-      origin_id, billing_type_id, retail_price,
-      profit_commission_rate, purchase_tax_rate,
-      sell_tax_rate, sell_classify_id, discountable,
-      returnable, free_goods, lossable,
-      state, splitable, split_quantity,
+      goods_classify_id, sys_second_classify_id, barcode,
+      manufacturer_id, origin_id, billing_type_id,
+      retail_price, profit_commission_rate, purchase_tax_rate,
+      sell_tax_rate, min_purchase_quantity, sell_classify_id,
+      discountable, returnable, free_goods,
+      lossable, state, splitable, split_quantity,
       split_units_id, split_price, dose_type_id,
       dose, dose_units_id, special_drug_id,
       drug_usage_id, odored, storage_temperature_id,
@@ -172,12 +174,12 @@
     values (#{id,jdbcType=INTEGER}, #{gsmGoodsTypeId,jdbcType=INTEGER}, #{oid,jdbcType=VARCHAR},
       #{name,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, #{spName,jdbcType=VARCHAR},
       #{spCode,jdbcType=VARCHAR}, #{specs,jdbcType=VARCHAR}, #{goodsUnitsId,jdbcType=INTEGER},
-      #{goodsClassifyId,jdbcType=INTEGER}, #{barcode,jdbcType=VARCHAR}, #{manufacturerId,jdbcType=INTEGER},
-      #{originId,jdbcType=INTEGER}, #{billingTypeId,jdbcType=INTEGER}, #{retailPrice,jdbcType=REAL},
-      #{profitCommissionRate,jdbcType=TINYINT}, #{purchaseTaxRate,jdbcType=TINYINT},
-      #{sellTaxRate,jdbcType=TINYINT}, #{sellClassifyId,jdbcType=INTEGER}, #{discountable,jdbcType=BIT},
-      #{returnable,jdbcType=BIT}, #{freeGoods,jdbcType=BIT}, #{lossable,jdbcType=BIT},
-      #{state,jdbcType=BIT}, #{splitable,jdbcType=BIT}, #{splitQuantity,jdbcType=INTEGER},
+      #{goodsClassifyId,jdbcType=INTEGER}, #{sysSecondClassifyId,jdbcType=INTEGER}, #{barcode,jdbcType=VARCHAR},
+      #{manufacturerId,jdbcType=INTEGER}, #{originId,jdbcType=INTEGER}, #{billingTypeId,jdbcType=INTEGER},
+      #{retailPrice,jdbcType=REAL}, #{profitCommissionRate,jdbcType=TINYINT}, #{purchaseTaxRate,jdbcType=TINYINT},
+      #{sellTaxRate,jdbcType=TINYINT}, #{minPurchaseQuantity,jdbcType=SMALLINT}, #{sellClassifyId,jdbcType=INTEGER},
+      #{discountable,jdbcType=BIT}, #{returnable,jdbcType=BIT}, #{freeGoods,jdbcType=BIT},
+      #{lossable,jdbcType=BIT}, #{state,jdbcType=BIT}, #{splitable,jdbcType=BIT}, #{splitQuantity,jdbcType=INTEGER},
       #{splitUnitsId,jdbcType=INTEGER}, #{splitPrice,jdbcType=REAL}, #{doseTypeId,jdbcType=INTEGER},
       #{dose,jdbcType=REAL}, #{doseUnitsId,jdbcType=INTEGER}, #{specialDrugId,jdbcType=INTEGER},
       #{drugUsageId,jdbcType=INTEGER}, #{odored,jdbcType=BIT}, #{storageTemperatureId,jdbcType=INTEGER},
@@ -220,6 +222,9 @@
       <if test="goodsClassifyId != null">
         goods_classify_id,
       </if>
+      <if test="sysSecondClassifyId != null">
+        sys_second_classify_id,
+      </if>
       <if test="barcode != null">
         barcode,
       </if>
@@ -243,6 +248,9 @@
       </if>
       <if test="sellTaxRate != null">
         sell_tax_rate,
+      </if>
+      <if test="minPurchaseQuantity != null">
+        min_purchase_quantity,
       </if>
       <if test="sellClassifyId != null">
         sell_classify_id,
@@ -372,6 +380,9 @@
       <if test="goodsClassifyId != null">
         #{goodsClassifyId,jdbcType=INTEGER},
       </if>
+      <if test="sysSecondClassifyId != null">
+        #{sysSecondClassifyId,jdbcType=INTEGER},
+      </if>
       <if test="barcode != null">
         #{barcode,jdbcType=VARCHAR},
       </if>
@@ -395,6 +406,9 @@
       </if>
       <if test="sellTaxRate != null">
         #{sellTaxRate,jdbcType=TINYINT},
+      </if>
+      <if test="minPurchaseQuantity != null">
+        #{minPurchaseQuantity,jdbcType=SMALLINT},
       </if>
       <if test="sellClassifyId != null">
         #{sellClassifyId,jdbcType=INTEGER},
@@ -533,6 +547,9 @@
       <if test="record.goodsClassifyId != null">
         goods_classify_id = #{record.goodsClassifyId,jdbcType=INTEGER},
       </if>
+      <if test="record.sysSecondClassifyId != null">
+        sys_second_classify_id = #{record.sysSecondClassifyId,jdbcType=INTEGER},
+      </if>
       <if test="record.barcode != null">
         barcode = #{record.barcode,jdbcType=VARCHAR},
       </if>
@@ -556,6 +573,9 @@
       </if>
       <if test="record.sellTaxRate != null">
         sell_tax_rate = #{record.sellTaxRate,jdbcType=TINYINT},
+      </if>
+      <if test="record.minPurchaseQuantity != null">
+        min_purchase_quantity = #{record.minPurchaseQuantity,jdbcType=SMALLINT},
       </if>
       <if test="record.sellClassifyId != null">
         sell_classify_id = #{record.sellClassifyId,jdbcType=INTEGER},
@@ -670,6 +690,7 @@
       specs = #{record.specs,jdbcType=VARCHAR},
       goods_units_id = #{record.goodsUnitsId,jdbcType=INTEGER},
       goods_classify_id = #{record.goodsClassifyId,jdbcType=INTEGER},
+      sys_second_classify_id = #{record.sysSecondClassifyId,jdbcType=INTEGER},
       barcode = #{record.barcode,jdbcType=VARCHAR},
       manufacturer_id = #{record.manufacturerId,jdbcType=INTEGER},
       origin_id = #{record.originId,jdbcType=INTEGER},
@@ -678,6 +699,7 @@
       profit_commission_rate = #{record.profitCommissionRate,jdbcType=TINYINT},
       purchase_tax_rate = #{record.purchaseTaxRate,jdbcType=TINYINT},
       sell_tax_rate = #{record.sellTaxRate,jdbcType=TINYINT},
+      min_purchase_quantity = #{record.minPurchaseQuantity,jdbcType=SMALLINT},
       sell_classify_id = #{record.sellClassifyId,jdbcType=INTEGER},
       discountable = #{record.discountable,jdbcType=BIT},
       returnable = #{record.returnable,jdbcType=BIT},
@@ -744,6 +766,9 @@
       <if test="goodsClassifyId != null">
         goods_classify_id = #{goodsClassifyId,jdbcType=INTEGER},
       </if>
+      <if test="sysSecondClassifyId != null">
+        sys_second_classify_id = #{sysSecondClassifyId,jdbcType=INTEGER},
+      </if>
       <if test="barcode != null">
         barcode = #{barcode,jdbcType=VARCHAR},
       </if>
@@ -767,6 +792,9 @@
       </if>
       <if test="sellTaxRate != null">
         sell_tax_rate = #{sellTaxRate,jdbcType=TINYINT},
+      </if>
+      <if test="minPurchaseQuantity != null">
+        min_purchase_quantity = #{minPurchaseQuantity,jdbcType=SMALLINT},
       </if>
       <if test="sellClassifyId != null">
         sell_classify_id = #{sellClassifyId,jdbcType=INTEGER},
@@ -878,6 +906,7 @@
       specs = #{specs,jdbcType=VARCHAR},
       goods_units_id = #{goodsUnitsId,jdbcType=INTEGER},
       goods_classify_id = #{goodsClassifyId,jdbcType=INTEGER},
+      sys_second_classify_id = #{sysSecondClassifyId,jdbcType=INTEGER},
       barcode = #{barcode,jdbcType=VARCHAR},
       manufacturer_id = #{manufacturerId,jdbcType=INTEGER},
       origin_id = #{originId,jdbcType=INTEGER},
@@ -886,6 +915,7 @@
       profit_commission_rate = #{profitCommissionRate,jdbcType=TINYINT},
       purchase_tax_rate = #{purchaseTaxRate,jdbcType=TINYINT},
       sell_tax_rate = #{sellTaxRate,jdbcType=TINYINT},
+      min_purchase_quantity = #{minPurchaseQuantity,jdbcType=SMALLINT},
       sell_classify_id = #{sellClassifyId,jdbcType=INTEGER},
       discountable = #{discountable,jdbcType=BIT},
       returnable = #{returnable,jdbcType=BIT},
@@ -939,5 +969,6 @@
     </trim>
     order by id desc
   </select>
+
 
 </mapper>

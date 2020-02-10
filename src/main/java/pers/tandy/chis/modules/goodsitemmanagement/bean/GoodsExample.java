@@ -792,6 +792,66 @@ public class GoodsExample {
             return (Criteria) this;
         }
 
+        public Criteria andSysSecondClassifyIdIsNull() {
+            addCriterion("sys_second_classify_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSysSecondClassifyIdIsNotNull() {
+            addCriterion("sys_second_classify_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSysSecondClassifyIdEqualTo(Integer value) {
+            addCriterion("sys_second_classify_id =", value, "sysSecondClassifyId");
+            return (Criteria) this;
+        }
+
+        public Criteria andSysSecondClassifyIdNotEqualTo(Integer value) {
+            addCriterion("sys_second_classify_id <>", value, "sysSecondClassifyId");
+            return (Criteria) this;
+        }
+
+        public Criteria andSysSecondClassifyIdGreaterThan(Integer value) {
+            addCriterion("sys_second_classify_id >", value, "sysSecondClassifyId");
+            return (Criteria) this;
+        }
+
+        public Criteria andSysSecondClassifyIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("sys_second_classify_id >=", value, "sysSecondClassifyId");
+            return (Criteria) this;
+        }
+
+        public Criteria andSysSecondClassifyIdLessThan(Integer value) {
+            addCriterion("sys_second_classify_id <", value, "sysSecondClassifyId");
+            return (Criteria) this;
+        }
+
+        public Criteria andSysSecondClassifyIdLessThanOrEqualTo(Integer value) {
+            addCriterion("sys_second_classify_id <=", value, "sysSecondClassifyId");
+            return (Criteria) this;
+        }
+
+        public Criteria andSysSecondClassifyIdIn(List<Integer> values) {
+            addCriterion("sys_second_classify_id in", values, "sysSecondClassifyId");
+            return (Criteria) this;
+        }
+
+        public Criteria andSysSecondClassifyIdNotIn(List<Integer> values) {
+            addCriterion("sys_second_classify_id not in", values, "sysSecondClassifyId");
+            return (Criteria) this;
+        }
+
+        public Criteria andSysSecondClassifyIdBetween(Integer value1, Integer value2) {
+            addCriterion("sys_second_classify_id between", value1, value2, "sysSecondClassifyId");
+            return (Criteria) this;
+        }
+
+        public Criteria andSysSecondClassifyIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("sys_second_classify_id not between", value1, value2, "sysSecondClassifyId");
+            return (Criteria) this;
+        }
+
         public Criteria andBarcodeIsNull() {
             addCriterion("barcode is null");
             return (Criteria) this;

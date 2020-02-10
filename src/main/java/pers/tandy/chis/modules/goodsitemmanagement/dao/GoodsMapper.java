@@ -47,5 +47,4 @@ public interface GoodsMapper {
     List<Map<String, Object>> selectEnabledLikeByNameForPrescription(@Param("sysClinicId") Integer sysClinicId,
                                                                      @Param("gsmGoodsTypeId") Integer gsmGoodsTypeId,
                                                                      @Param("name") String name);
-
 }

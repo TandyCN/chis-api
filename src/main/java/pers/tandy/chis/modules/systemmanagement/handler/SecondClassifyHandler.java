@@ -109,8 +109,9 @@ public class SecondClassifyHandler {
      * @return
      */
     @GetMapping("/getEnabledByGoodsClassifyId")
-    public List<Map<String, Object>> getEnabledByGoodsClassifyId (@RequestParam Integer goodsClassifyId) {
-        return secondClassifyService.getEnabledByGoodsClassifyId(goodsClassifyId);
+    public PageResult getEnabledByGoodsClassifyId (@RequestParam Integer goodsClassifyId) {
+        List<Map<String, Object>> list = secondClassifyService.getEnabledByGoodsClassifyId(goodsClassifyId);
+        return PageResult.success().resultSet("list", list);
     }
 
 }

@@ -792,6 +792,66 @@ public class GoodsApplyExample {
             return (Criteria) this;
         }
 
+        public Criteria andSysSecondClassifyIdIsNull() {
+            addCriterion("sys_second_classify_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSysSecondClassifyIdIsNotNull() {
+            addCriterion("sys_second_classify_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSysSecondClassifyIdEqualTo(Integer value) {
+            addCriterion("sys_second_classify_id =", value, "sysSecondClassifyId");
+            return (Criteria) this;
+        }
+
+        public Criteria andSysSecondClassifyIdNotEqualTo(Integer value) {
+            addCriterion("sys_second_classify_id <>", value, "sysSecondClassifyId");
+            return (Criteria) this;
+        }
+
+        public Criteria andSysSecondClassifyIdGreaterThan(Integer value) {
+            addCriterion("sys_second_classify_id >", value, "sysSecondClassifyId");
+            return (Criteria) this;
+        }
+
+        public Criteria andSysSecondClassifyIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("sys_second_classify_id >=", value, "sysSecondClassifyId");
+            return (Criteria) this;
+        }
+
+        public Criteria andSysSecondClassifyIdLessThan(Integer value) {
+            addCriterion("sys_second_classify_id <", value, "sysSecondClassifyId");
+            return (Criteria) this;
+        }
+
+        public Criteria andSysSecondClassifyIdLessThanOrEqualTo(Integer value) {
+            addCriterion("sys_second_classify_id <=", value, "sysSecondClassifyId");
+            return (Criteria) this;
+        }
+
+        public Criteria andSysSecondClassifyIdIn(List<Integer> values) {
+            addCriterion("sys_second_classify_id in", values, "sysSecondClassifyId");
+            return (Criteria) this;
+        }
+
+        public Criteria andSysSecondClassifyIdNotIn(List<Integer> values) {
+            addCriterion("sys_second_classify_id not in", values, "sysSecondClassifyId");
+            return (Criteria) this;
+        }
+
+        public Criteria andSysSecondClassifyIdBetween(Integer value1, Integer value2) {
+            addCriterion("sys_second_classify_id between", value1, value2, "sysSecondClassifyId");
+            return (Criteria) this;
+        }
+
+        public Criteria andSysSecondClassifyIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("sys_second_classify_id not between", value1, value2, "sysSecondClassifyId");
+            return (Criteria) this;
+        }
+
         public Criteria andBarcodeIsNull() {
             addCriterion("barcode is null");
             return (Criteria) this;
@@ -1279,6 +1339,66 @@ public class GoodsApplyExample {
 
         public Criteria andSellTaxRateNotBetween(Byte value1, Byte value2) {
             addCriterion("sell_tax_rate not between", value1, value2, "sellTaxRate");
+            return (Criteria) this;
+        }
+
+        public Criteria andMinPurchaseQuantityIsNull() {
+            addCriterion("min_purchase_quantity is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMinPurchaseQuantityIsNotNull() {
+            addCriterion("min_purchase_quantity is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMinPurchaseQuantityEqualTo(Short value) {
+            addCriterion("min_purchase_quantity =", value, "minPurchaseQuantity");
+            return (Criteria) this;
+        }
+
+        public Criteria andMinPurchaseQuantityNotEqualTo(Short value) {
+            addCriterion("min_purchase_quantity <>", value, "minPurchaseQuantity");
+            return (Criteria) this;
+        }
+
+        public Criteria andMinPurchaseQuantityGreaterThan(Short value) {
+            addCriterion("min_purchase_quantity >", value, "minPurchaseQuantity");
+            return (Criteria) this;
+        }
+
+        public Criteria andMinPurchaseQuantityGreaterThanOrEqualTo(Short value) {
+            addCriterion("min_purchase_quantity >=", value, "minPurchaseQuantity");
+            return (Criteria) this;
+        }
+
+        public Criteria andMinPurchaseQuantityLessThan(Short value) {
+            addCriterion("min_purchase_quantity <", value, "minPurchaseQuantity");
+            return (Criteria) this;
+        }
+
+        public Criteria andMinPurchaseQuantityLessThanOrEqualTo(Short value) {
+            addCriterion("min_purchase_quantity <=", value, "minPurchaseQuantity");
+            return (Criteria) this;
+        }
+
+        public Criteria andMinPurchaseQuantityIn(List<Short> values) {
+            addCriterion("min_purchase_quantity in", values, "minPurchaseQuantity");
+            return (Criteria) this;
+        }
+
+        public Criteria andMinPurchaseQuantityNotIn(List<Short> values) {
+            addCriterion("min_purchase_quantity not in", values, "minPurchaseQuantity");
+            return (Criteria) this;
+        }
+
+        public Criteria andMinPurchaseQuantityBetween(Short value1, Short value2) {
+            addCriterion("min_purchase_quantity between", value1, value2, "minPurchaseQuantity");
+            return (Criteria) this;
+        }
+
+        public Criteria andMinPurchaseQuantityNotBetween(Short value1, Short value2) {
+            addCriterion("min_purchase_quantity not between", value1, value2, "minPurchaseQuantity");
             return (Criteria) this;
         }
 

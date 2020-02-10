@@ -40,6 +40,8 @@ public class Goods implements Serializable {
     @NotNull
     private Integer goodsClassifyId;
 
+    private Integer sysSecondClassifyId;
+
     @Length(max = 20)
     private String barcode;
 
@@ -97,7 +99,7 @@ public class Goods implements Serializable {
     @NotNull
     private Boolean splitable = false;
 
-    @Max(30000) // 此处数据类型应和库存数量一致  使用 short 第二个版本更正
+    @Max(30000) // 此处数据类型应和库存数量一致  全部使用 Integer 第二个版本更正
     @Min(1)
     private Integer splitQuantity = 1;
 
@@ -235,6 +237,14 @@ public class Goods implements Serializable {
 
     public void setGoodsClassifyId(Integer goodsClassifyId) {
         this.goodsClassifyId = goodsClassifyId;
+    }
+
+    public Integer getSysSecondClassifyId() {
+        return sysSecondClassifyId;
+    }
+
+    public void setSysSecondClassifyId(Integer sysSecondClassifyId) {
+        this.sysSecondClassifyId = sysSecondClassifyId;
     }
 
     public String getBarcode() {

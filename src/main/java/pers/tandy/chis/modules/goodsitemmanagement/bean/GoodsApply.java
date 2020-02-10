@@ -4,10 +4,9 @@ import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.*;
-import java.io.Serializable;
 import java.util.Date;
 
-public class GoodsApply implements Serializable {
+public class GoodsApply {
     private Integer id;
 
     private Integer gsmGoodsTypeId;
@@ -40,6 +39,8 @@ public class GoodsApply implements Serializable {
     @NotNull
     private Integer goodsClassifyId;
 
+    private Integer sysSecondClassifyId;
+
     @Length(max = 20)
     private String barcode;
 
@@ -71,6 +72,11 @@ public class GoodsApply implements Serializable {
     @Min(0)
     @NotNull
     private Byte sellTaxRate;
+
+    @Max(30000)
+    @Min(1)
+    @NotNull
+    private Short minPurchaseQuantity = 1;
 
     private Integer sellClassifyId;
 
@@ -237,6 +243,14 @@ public class GoodsApply implements Serializable {
         this.goodsClassifyId = goodsClassifyId;
     }
 
+    public Integer getSysSecondClassifyId() {
+        return sysSecondClassifyId;
+    }
+
+    public void setSysSecondClassifyId(Integer sysSecondClassifyId) {
+        this.sysSecondClassifyId = sysSecondClassifyId;
+    }
+
     public String getBarcode() {
         return barcode;
     }
@@ -299,6 +313,14 @@ public class GoodsApply implements Serializable {
 
     public void setSellTaxRate(Byte sellTaxRate) {
         this.sellTaxRate = sellTaxRate;
+    }
+
+    public Short getMinPurchaseQuantity() {
+        return minPurchaseQuantity;
+    }
+
+    public void setMinPurchaseQuantity(Short minPurchaseQuantity) {
+        this.minPurchaseQuantity = minPurchaseQuantity;
     }
 
     public Integer getSellClassifyId() {
