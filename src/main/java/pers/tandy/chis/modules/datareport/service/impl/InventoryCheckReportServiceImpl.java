@@ -46,7 +46,7 @@ public class InventoryCheckReportServiceImpl implements InventoryCheckReportServ
         titleMap.put("originName", "产地");
         titleMap.put("manufacturerName", "生产厂家");
         titleMap.put("goodsClassifyName", "商品分类");
-        titleMap.put("sysSecondClassifyName,", "二级分类");
+        titleMap.put("sysSecondClassifyName", "二级分类");
         titleMap.put("iymShelfPositionName", "货位");
         titleMap.put("ph", "批号");
         titleMap.put("expiryDate", "有效期至");
