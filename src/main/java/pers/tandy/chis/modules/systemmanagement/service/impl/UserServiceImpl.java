@@ -32,6 +32,8 @@ public class UserServiceImpl implements UserService {
     @CacheEvict(key = "'clinicEnabled' + #user.sysClinicId")
     @Override
     public void save(User user) {
+        String password = this.encryption(new User().getPassword(), user.getAccount());
+        user.setPassword(password);
         userMapper.insert(user);
     }
 

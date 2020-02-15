@@ -21,6 +21,16 @@ public interface ChargeFeeService {
     String saveForPrescription(Integer mrmMemberId, String paymentRecordJson, String sellRecordJson);
 
     /**
+     * POS结账操作
+     * @param mrmMemberId
+     * @param paymentRecordJson
+     * @param sellRecordJson
+     * @return
+     */
+    @Transactional
+    String saveForPos(Integer mrmMemberId, String paymentRecordJson, String sellRecordJson);
+
+    /**
      * 退费操作
      * @param mrmMemberId
      * @param neglectQuantity

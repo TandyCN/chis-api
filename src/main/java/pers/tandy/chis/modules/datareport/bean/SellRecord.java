@@ -101,12 +101,12 @@ public class SellRecord extends SellRecordAttach implements Serializable {
 
     private Integer iymInventoryAddId;
 
-    @NotNull
+    // @NotNull
     private Integer mrmMemberId;
 
     @Digits(integer = 1, fraction = 1)
     @Min(0)
-    @NotNull
+    // @NotNull
     private Float memberDiscountRate;
 
     private Integer sysClinicId;

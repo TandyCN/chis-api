@@ -40,6 +40,7 @@ public class InventoryHandler {
 
     /**
      * 获取机构对应库房的 pch 库存
+     * (检索库存)
      * @return
      */
     @GetMapping("/getClinicPchEnabledLikeByCriteria")
@@ -56,6 +57,7 @@ public class InventoryHandler {
 
     /**
      * 获取机构对应库房的 pch 库存
+     * (出库发药)
      * @return
      */
     @GetMapping("/getClinicPchEnabledByCriteriaForOutInventory")
@@ -69,6 +71,7 @@ public class InventoryHandler {
 
     /**
      * 获取机构退货 pch 库存
+     * (采购退货)
      * @return
      */
     @GetMapping("/getClinicSubtractPchLikeByCriteria")

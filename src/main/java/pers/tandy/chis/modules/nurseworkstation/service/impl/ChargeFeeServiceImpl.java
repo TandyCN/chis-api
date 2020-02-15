@@ -150,14 +150,52 @@ public class ChargeFeeServiceImpl implements ChargeFeeService {
     }
 
     @Override
+    public String saveForPos(Integer mrmMemberId, String paymentRecordJson, String sellRecordJson) {
+        // 将 JSON 转成对应的对象
+        PaymentRecord paymentRecord = JSONUtils.parseJsonToObject(paymentRecordJson, new TypeReference<PaymentRecord>() {});
+        List<SellRecord> sellRecordList = JSONUtils.parseJsonToObject(sellRecordJson, new TypeReference<List<SellRecord>>() {});
+
+        // 初始化用户信息、流水号
+        User user = (User) SecurityUtils.getSubject().getPrincipal();
+        String lsh = KeyUtils.getLSH(user.getId());
+
+        // 获取会员信息
+        Member member = null;
+        if (mrmMemberId != null) {
+            member = this.memberService.getById(mrmMemberId);
+        }
+
+        // 1保存付款记录
+        this.savePaymentRecord(user, lsh, member, paymentRecord);
+
+        // 2保存会员消费记录并更新会员余额和积分
+        if (mrmMemberId != null) {
+            this.saveMemberExpendAndPoints(user, lsh, member, paymentRecord);
+        }
+
+        // 3更新商品库存
+        this.updateInventoryQuantity(sellRecordList);
+
+        // 4保存销售记录
+        this.saveSellRecord(user, lsh, sellRecordList);
+
+        return lsh;
+    }
+
+    @Override
     public void saveForReturned(Integer mrmMemberId,  Boolean neglectQuantity, String paymentRecordJson, String sellRecordJson) {
         // 将 JSON 转成对应的对象
         PaymentRecord paymentRecord = JSONUtils.parseJsonToObject(paymentRecordJson, new TypeReference<PaymentRecord>() {});
         List<SellRecord> sellRecordList = JSONUtils.parseJsonToObject(sellRecordJson, new TypeReference<List<SellRecord>>() {});
 
-        // 初始化用户信息、会员信息、流水号
+        // 初始化用户信息
         User user = (User) SecurityUtils.getSubject().getPrincipal();
-        Member member = this.memberService.getById(mrmMemberId);
+        // 获取会员信息
+        Member member = null;
+        if (mrmMemberId != null) {
+            member = this.memberService.getById(mrmMemberId);
+        }
+        // 获取流水号
         String lsh = sellRecordList.get(0).getLsh(); // 获取流水号
         if (lsh == null) {
             throw new RuntimeException("无法从销售记录中获取对应的流水号");
@@ -167,7 +205,9 @@ public class ChargeFeeServiceImpl implements ChargeFeeService {
         this.savePaymentRecord(user, lsh, member, paymentRecord);
 
         // 保存会员消费记录并更新会员余额和积分
-        this.saveMemberExpendAndPoints(user, lsh, member, paymentRecord);
+        if (member != null) {
+            this.saveMemberExpendAndPoints(user, lsh, member, paymentRecord);
+        }
 
         // 更新执行项目剩余次数(数量需为正数)
         this.updatePerformItemResidueQuantity(sellRecordList, neglectQuantity);
@@ -175,7 +215,7 @@ public class ChargeFeeServiceImpl implements ChargeFeeService {
         // 修改销售记录为已退费状态
         this.updateSellRecordReturned(sellRecordList);
 
-        /* 创建退回销售记录 执行该步骤后 sellRecordList 中 id 重置为 null, quantity 改为负数*/
+        /* 创建退回销售记录 执行该步骤后 sellRecordList 中 id 重置为 null, quantity 改为负数 */
         for (SellRecord record : sellRecordList) {
             record.setId(null); // 将 ID 重置为 null
             record.setQuantity(record.getQuantity() * -1); // 将数量修改为负数
@@ -199,10 +239,12 @@ public class ChargeFeeServiceImpl implements ChargeFeeService {
      */
     private void savePaymentRecord(User user, String lsh, Member member, PaymentRecord paymentRecord) {
         // 判断会员余额是否足够
-        float balance = member.getBalance();
-        float memberBalance = paymentRecord.getMemberBalance();
-        if (balance < memberBalance) {
-            throw new RuntimeException("会员卡余额不足");
+        if (member != null) {
+            float balance = member.getBalance();
+            float memberBalance = paymentRecord.getMemberBalance();
+            if (balance < memberBalance) {
+                throw new RuntimeException("会员卡余额不足");
+            }
         }
 
         // 赋值部分属性
@@ -232,18 +274,18 @@ public class ChargeFeeServiceImpl implements ChargeFeeService {
             throw new RuntimeException("获取会员类型失败");
         }
 
-        float expendBalance = paymentRecord.getMemberBalance(); // 计算本次扣减的余额
+        float expendBalance = paymentRecord.getMemberBalance(); // 本次扣减的余额
         float balance = member.getBalance() - expendBalance; // 计算剩余余额
         int givenPoints = (int)(paymentRecord.getActualAmount() / memberType.getPaymentAmount());  // 计算本次积分
         int points = member.getPoints() + givenPoints;  // 计算剩余积分
 
         // 更新会员余额与积分
-        if (expendBalance > 0 || expendBalance < 0 || givenPoints != 0) {
+        if (expendBalance != 0 || givenPoints != 0) {
             this.memberService.updateBalanceAndPoints(member.getId(), expendBalance, givenPoints);
         }
 
         // 创建一条消费记录
-        if (expendBalance > 0 || expendBalance < 0) {
+        if (expendBalance != 0) {
             ExpendRecord expendRecord = new ExpendRecord();
             expendRecord.setLsh(lsh);
             expendRecord.setMrmMemberId(member.getId());
@@ -375,7 +417,7 @@ public class ChargeFeeServiceImpl implements ChargeFeeService {
     }
 
     /**
-     * 保存销售记录并清除销售记录缓存
+     * 保存销售记录
      * @param user
      * @param lsh
      * @param sellRecordList
@@ -387,6 +429,7 @@ public class ChargeFeeServiceImpl implements ChargeFeeService {
             record.setLsh(lsh); // 流水号
             record.setMxh(String.valueOf(mxh++)); // 明细号
             record.setCreationDate(new Date()); // 创建日期
+            record.setSysClinicId(user.getSysClinicId()); // 机构ID
             record.setCashierId(user.getId()); // 收银员ID
             record.setPayState(true); // 结账状态
         }

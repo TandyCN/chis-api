@@ -212,8 +212,7 @@ public class InventoryServiceImpl implements InventoryService {
     public List<Inventory> getByIdList(List<Integer> idList) {
         List<Map<String, Object>> list = inventoryMapper.selectByIdList(idList);
         String inventoryJson = JSONUtils.parseObjectToJson(list);
-        List<Inventory> inventoryList = JSONUtils.parseJsonToObject(inventoryJson, new TypeReference<List<Inventory>>() {});
-        return inventoryList;
+        return JSONUtils.parseJsonToObject(inventoryJson, new TypeReference<List<Inventory>>() {});
     }
 
     @Override

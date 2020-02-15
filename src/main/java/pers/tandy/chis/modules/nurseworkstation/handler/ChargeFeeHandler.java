@@ -50,6 +50,35 @@ public class ChargeFeeHandler {
     }
 
     /**
+     * POS结账操作
+     * @RequestBody 只能接收一个参数
+     * @param mapJson
+     * @return
+     */
+    @PostMapping("/saveForPos")
+    public PageResult saveForPos(@RequestBody String mapJson) {
+        Map<String, Object> map = JSONUtils.parseJsonToObject(mapJson,new TypeReference<Map<String, Object>>() {});
+        Integer mrmMemberId;
+        String paymentRecordJson;
+        String sellRecordJson;
+        try {
+            mrmMemberId = Integer.parseInt(map.get("mrmMemberId").toString());
+        } catch (NullPointerException e) {
+            mrmMemberId = null;
+        }
+
+        try {
+            paymentRecordJson = map.get("paymentRecordJson").toString();
+            sellRecordJson = map.get("sellRecordJson").toString();
+        } catch (NullPointerException e) {
+            return PageResult.fail().msg("缺少请求参数");
+        }
+
+        String lsh = chargeFeeService.saveForPos(mrmMemberId, paymentRecordJson, sellRecordJson);
+        return PageResult.success().resultSet("lsh", lsh);
+    }
+
+    /**
      * 退费操作
      * @RequestBody
      * @param mapJson
@@ -62,8 +91,14 @@ public class ChargeFeeHandler {
         Boolean neglectQuantity;
         String paymentRecordJson;
         String sellRecordJson;
+
         try {
             mrmMemberId = Integer.parseInt(map.get("mrmMemberId").toString());
+        } catch (NullPointerException e) {
+            mrmMemberId = null;
+        }
+
+        try {
             neglectQuantity = Boolean.parseBoolean(map.get("neglectQuantity").toString());
             paymentRecordJson = map.get("paymentRecordJson").toString();
             sellRecordJson = map.get("sellRecordJson").toString();
