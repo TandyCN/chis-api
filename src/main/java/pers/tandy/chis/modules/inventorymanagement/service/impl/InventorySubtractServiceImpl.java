@@ -4,12 +4,14 @@ import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pers.tandy.chis.main.common.enums.ApproveStateEnum;
+import pers.tandy.chis.main.component.DecimalUtils;
 import pers.tandy.chis.main.component.KeyUtils;
 import pers.tandy.chis.modules.inventorymanagement.bean.Inventory;
 import pers.tandy.chis.modules.inventorymanagement.bean.InventorySubtract;
 import pers.tandy.chis.modules.inventorymanagement.dao.InventorySubtractMapper;
 import pers.tandy.chis.modules.inventorymanagement.service.InventoryService;
 import pers.tandy.chis.modules.inventorymanagement.service.InventorySubtractService;
+import pers.tandy.chis.modules.purchasemanagement.service.SupplierService;
 import pers.tandy.chis.modules.systemmanagement.bean.User;
 
 import java.util.*;
@@ -32,6 +34,12 @@ public class InventorySubtractServiceImpl implements InventorySubtractService {
     @Autowired
     public void setInventoryService(InventoryService inventoryService) {
         this.inventoryService = inventoryService;
+    }
+
+    private SupplierService supplierService;
+    @Autowired
+    public void setSupplierService(SupplierService supplierService) {
+        this.supplierService = supplierService;
     }
 
     /*----------------------------------------------------------------------------------------------------------------*/
@@ -118,8 +126,17 @@ public class InventorySubtractServiceImpl implements InventorySubtractService {
         List<Inventory> inventoryList = inventoryService.getByIdList(inventoryIdList);
 
         // 准备提交的数据
+        Integer pemSupplierId = null;
+        float amount = 0;
         for (Inventory inventory : inventoryList) {
             InventorySubtract subtract = subtractMap.get(inventory.getId());
+            // 获取更新供应商欠款数据
+            if (pemSupplierId == null) {
+                pemSupplierId = subtract.getPemSupplierId();
+            }
+            amount += subtract.getQuantity() * subtract.getCostPrice();
+
+            // 判断库存数量是否足够
             if ((inventory.getQuantity() - subtract.getQuantity()) < 0) {
                 throw new RuntimeException("商品编码:【" + inventory.getGsmGoodsOid() + "】" +
                         " 商品名称:【" + inventory.getGsmGoodsName() + "】" +
@@ -129,8 +146,18 @@ public class InventorySubtractServiceImpl implements InventorySubtractService {
             }
             inventory.setQuantity(subtract.getQuantity());
         }
+        // 更新库存数量
         inventoryService.updateQuantityByList(inventoryList);
 
+        // 将金额四舍五入保留两位小数
+        amount = DecimalUtils.roundHalfUp(amount, 2);
+        // 更新供应商欠款
+        this.subtractArrearagesAmount(pemSupplierId, amount);
+
+    }
+
+    private void subtractArrearagesAmount(Integer pemSupplierId, Float amount) {
+        supplierService.subtractArrearagesAmount(pemSupplierId, amount);
     }
 
     @Override

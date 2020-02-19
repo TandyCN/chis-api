@@ -11,6 +11,7 @@
     <result column="card_no" jdbcType="VARCHAR" property="cardNo" />
     <result column="invoice_type_id" jdbcType="INTEGER" property="invoiceTypeId" />
     <result column="payment_type_id" jdbcType="INTEGER" property="paymentTypeId" />
+    <result column="arrearages_amount" jdbcType="REAL" property="arrearagesAmount" />
     <result column="arrearages_limit" jdbcType="REAL" property="arrearagesLimit" />
     <result column="arrearages_days" jdbcType="TINYINT" property="arrearagesDays" />
     <result column="legal_person" jdbcType="VARCHAR" property="legalPerson" />
@@ -103,11 +104,12 @@
   </sql>
   <sql id="Base_Column_List">
     id, oid, name, code, account_licence, bank_name, card_no, invoice_type_id, payment_type_id,
-    arrearages_limit, arrearages_days, legal_person, tel, fax, address, contacter, contacter_phone,
-    business_scope, remarks, business_licence, bl_expiry_date, hygienic_license, hl_expiry_date,
-    production_licence, pl_expiry_date, gsp_licence, gsp_expiry_date, gmp_licence, gmp_expiry_date,
-    instrument_licence, il_expiry_date, food_license, fl_expiry_date, food_production_licence,
-    fpl_expiry_date, state, creator_id, creation_date, last_updater_id, last_update_date
+    arrearages_amount, arrearages_limit, arrearages_days, legal_person, tel, fax, address,
+    contacter, contacter_phone, business_scope, remarks, business_licence, bl_expiry_date,
+    hygienic_license, hl_expiry_date, production_licence, pl_expiry_date, gsp_licence,
+    gsp_expiry_date, gmp_licence, gmp_expiry_date, instrument_licence, il_expiry_date,
+    food_license, fl_expiry_date, food_production_licence, fpl_expiry_date, state, creator_id,
+    creation_date, last_updater_id, last_update_date
   </sql>
   <select id="selectByExample" parameterType="pers.tandy.chis.modules.purchasemanagement.bean.SupplierExample" resultMap="BaseResultMap">
     select
@@ -143,31 +145,31 @@
     insert into pem_supplier (id, oid, name,
       code, account_licence, bank_name,
       card_no, invoice_type_id, payment_type_id,
-      arrearages_limit, arrearages_days, legal_person,
-      tel, fax, address,
-      contacter, contacter_phone, business_scope,
-      remarks, business_licence, bl_expiry_date,
-      hygienic_license, hl_expiry_date, production_licence,
-      pl_expiry_date, gsp_licence, gsp_expiry_date,
-      gmp_licence, gmp_expiry_date, instrument_licence,
-      il_expiry_date, food_license, fl_expiry_date,
-      food_production_licence, fpl_expiry_date, state,
-      creator_id, creation_date, last_updater_id,
-      last_update_date)
+      arrearages_amount, arrearages_limit, arrearages_days,
+      legal_person, tel, fax,
+      address, contacter, contacter_phone,
+      business_scope, remarks, business_licence,
+      bl_expiry_date, hygienic_license, hl_expiry_date,
+      production_licence, pl_expiry_date, gsp_licence,
+      gsp_expiry_date, gmp_licence, gmp_expiry_date,
+      instrument_licence, il_expiry_date, food_license,
+      fl_expiry_date, food_production_licence, fpl_expiry_date,
+      state, creator_id, creation_date,
+      last_updater_id, last_update_date)
     values (#{id,jdbcType=INTEGER}, #{oid,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
       #{code,jdbcType=VARCHAR}, #{accountLicence,jdbcType=VARCHAR}, #{bankName,jdbcType=VARCHAR},
       #{cardNo,jdbcType=VARCHAR}, #{invoiceTypeId,jdbcType=INTEGER}, #{paymentTypeId,jdbcType=INTEGER},
-      #{arrearagesLimit,jdbcType=REAL}, #{arrearagesDays,jdbcType=TINYINT}, #{legalPerson,jdbcType=VARCHAR},
-      #{tel,jdbcType=VARCHAR}, #{fax,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR},
-      #{contacter,jdbcType=VARCHAR}, #{contacterPhone,jdbcType=VARCHAR}, #{businessScope,jdbcType=VARCHAR},
-      #{remarks,jdbcType=VARCHAR}, #{businessLicence,jdbcType=VARCHAR}, #{blExpiryDate,jdbcType=DATE},
-      #{hygienicLicense,jdbcType=VARCHAR}, #{hlExpiryDate,jdbcType=DATE}, #{productionLicence,jdbcType=VARCHAR},
-      #{plExpiryDate,jdbcType=DATE}, #{gspLicence,jdbcType=VARCHAR}, #{gspExpiryDate,jdbcType=DATE},
-      #{gmpLicence,jdbcType=VARCHAR}, #{gmpExpiryDate,jdbcType=DATE}, #{instrumentLicence,jdbcType=VARCHAR},
-      #{ilExpiryDate,jdbcType=DATE}, #{foodLicense,jdbcType=VARCHAR}, #{flExpiryDate,jdbcType=DATE},
-      #{foodProductionLicence,jdbcType=VARCHAR}, #{fplExpiryDate,jdbcType=DATE}, #{state,jdbcType=BIT},
-      #{creatorId,jdbcType=INTEGER}, #{creationDate,jdbcType=DATE}, #{lastUpdaterId,jdbcType=INTEGER},
-      #{lastUpdateDate,jdbcType=DATE})
+      #{arrearagesAmount,jdbcType=REAL}, #{arrearagesLimit,jdbcType=REAL}, #{arrearagesDays,jdbcType=TINYINT},
+      #{legalPerson,jdbcType=VARCHAR}, #{tel,jdbcType=VARCHAR}, #{fax,jdbcType=VARCHAR},
+      #{address,jdbcType=VARCHAR}, #{contacter,jdbcType=VARCHAR}, #{contacterPhone,jdbcType=VARCHAR},
+      #{businessScope,jdbcType=VARCHAR}, #{remarks,jdbcType=VARCHAR}, #{businessLicence,jdbcType=VARCHAR},
+      #{blExpiryDate,jdbcType=DATE}, #{hygienicLicense,jdbcType=VARCHAR}, #{hlExpiryDate,jdbcType=DATE},
+      #{productionLicence,jdbcType=VARCHAR}, #{plExpiryDate,jdbcType=DATE}, #{gspLicence,jdbcType=VARCHAR},
+      #{gspExpiryDate,jdbcType=DATE}, #{gmpLicence,jdbcType=VARCHAR}, #{gmpExpiryDate,jdbcType=DATE},
+      #{instrumentLicence,jdbcType=VARCHAR}, #{ilExpiryDate,jdbcType=DATE}, #{foodLicense,jdbcType=VARCHAR},
+      #{flExpiryDate,jdbcType=DATE}, #{foodProductionLicence,jdbcType=VARCHAR}, #{fplExpiryDate,jdbcType=DATE},
+      #{state,jdbcType=BIT}, #{creatorId,jdbcType=INTEGER}, #{creationDate,jdbcType=DATE},
+      #{lastUpdaterId,jdbcType=INTEGER}, #{lastUpdateDate,jdbcType=DATE})
   </insert>
   <insert id="insertSelective" parameterType="pers.tandy.chis.modules.purchasemanagement.bean.Supplier">
     insert into pem_supplier
@@ -198,6 +200,9 @@
       </if>
       <if test="paymentTypeId != null">
         payment_type_id,
+      </if>
+      <if test="arrearagesAmount != null">
+        arrearages_amount,
       </if>
       <if test="arrearagesLimit != null">
         arrearages_limit,
@@ -320,6 +325,9 @@
       </if>
       <if test="paymentTypeId != null">
         #{paymentTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="arrearagesAmount != null">
+        #{arrearagesAmount,jdbcType=REAL},
       </if>
       <if test="arrearagesLimit != null">
         #{arrearagesLimit,jdbcType=REAL},
@@ -452,6 +460,9 @@
       <if test="record.paymentTypeId != null">
         payment_type_id = #{record.paymentTypeId,jdbcType=INTEGER},
       </if>
+      <if test="record.arrearagesAmount != null">
+        arrearages_amount = #{record.arrearagesAmount,jdbcType=REAL},
+      </if>
       <if test="record.arrearagesLimit != null">
         arrearages_limit = #{record.arrearagesLimit,jdbcType=REAL},
       </if>
@@ -561,6 +572,7 @@
       card_no = #{record.cardNo,jdbcType=VARCHAR},
       invoice_type_id = #{record.invoiceTypeId,jdbcType=INTEGER},
       payment_type_id = #{record.paymentTypeId,jdbcType=INTEGER},
+      arrearages_amount = #{record.arrearagesAmount,jdbcType=REAL},
       arrearages_limit = #{record.arrearagesLimit,jdbcType=REAL},
       arrearages_days = #{record.arrearagesDays,jdbcType=TINYINT},
       legal_person = #{record.legalPerson,jdbcType=VARCHAR},
@@ -622,6 +634,9 @@
       </if>
       <if test="paymentTypeId != null">
         payment_type_id = #{paymentTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="arrearagesAmount != null">
+        arrearages_amount = #{arrearagesAmount,jdbcType=REAL},
       </if>
       <if test="arrearagesLimit != null">
         arrearages_limit = #{arrearagesLimit,jdbcType=REAL},
@@ -729,6 +744,7 @@
       card_no = #{cardNo,jdbcType=VARCHAR},
       invoice_type_id = #{invoiceTypeId,jdbcType=INTEGER},
       payment_type_id = #{paymentTypeId,jdbcType=INTEGER},
+      arrearages_amount = #{arrearagesAmount,jdbcType=REAL},
       arrearages_limit = #{arrearagesLimit,jdbcType=REAL},
       arrearages_days = #{arrearagesDays,jdbcType=TINYINT},
       legal_person = #{legalPerson,jdbcType=VARCHAR},
@@ -764,20 +780,42 @@
   </update>
 
 
+
   <!--***************************************************************************************************************-->
+
+  <update id="addArrearagesAmount">
+    update pem_supplier
+    set arrearages_amount = arrearages_amount + #{amount}
+    where id = #{id}
+  </update>
+
+  <update id="subtractArrearagesAmount">
+    update pem_supplier
+    set arrearages_amount = arrearages_amount - #{amount}
+    where id = #{id}
+  </update>
 
   <select id="selectByCriteria" resultType="map">
     select *
     from view_pem_supplier
     <trim prefix="where" suffixOverrides="and">
-      <if test="oid != null">
-        (oid = #{oid}) and
-      </if>
       <if test="state != null">
         (state = #{state}) and
       </if>
+      <if test="arrearagesAmount != null">
+        (arrearagesAmount >= #{arrearagesAmount}) and
+      </if>
+      <if test="arrearagesLimit != null">
+        (arrearagesLimit >= #{arrearagesLimit}) and
+      </if>
+      <if test="arrearagesDays != null">
+        (arrearagesDays >= #{arrearagesDays}) and
+      </if>
       <if test="name != null &amp;&amp; name.trim() != ''">
-        (name like '${name}%' or code like '${name}%')
+        (name like '${name}%' or code like '${name}%')  and
+      </if>
+      <if test="contacterPhone != null &amp;&amp; contacterPhone.trim() != ''">
+        (contacterPhone like '${contacterPhone}%')  and
       </if>
     </trim>
     order by id desc
@@ -793,4 +831,6 @@
     order by id desc
     LIMIT 30
   </select>
+
+
 </mapper>

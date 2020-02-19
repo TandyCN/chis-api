@@ -49,8 +49,6 @@ public class CommonDiagnoseHandler {
         if (result.hasErrors()) {
             return PageResult.fail().msg(JSRMessageUtils.getFirstMsg(result));
         }
-        commonDiagnose.setShareState(false);
-        commonDiagnose.setNormative(false);
         commonDiagnose.setDwtDiagnoseTypeId(DWT_DIAGNOSE_TYPE_ID);
         commonDiagnoseService.save(commonDiagnose);
         return PageResult.success();

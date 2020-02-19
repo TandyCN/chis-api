@@ -13,25 +13,25 @@ public class Goods implements Serializable {
     private Integer gsmGoodsTypeId;
 
     @NotBlank
-    @Length(max = 20)
+    @Length(max = 50)
     private String oid;
 
     @NotBlank
-    @Length(max = 20)
+    @Length(max = 50)
     private String name;
 
     @NotBlank
-    @Length(max = 20)
+    @Length(max = 50)
     private String code;
 
-    @Length(max = 20)
+    @Length(max = 50)
     private String spName;
 
-    @Length(max = 20)
+    @Length(max = 50)
     private String spCode;
 
     @NotBlank
-    @Length(max = 20)
+    @Length(max = 50)
     private String specs;
 
     @NotNull
@@ -135,13 +135,14 @@ public class Goods implements Serializable {
     @NotNull
     private Boolean ybDrug;
 
+    @Length(max = 50)
     private String ybOid;
 
     @Digits(integer = 8, fraction = 4)
     @Min(0)
     private Float ybPrice;
 
-    @Length(max = 20)
+    @Length(max = 50)
     private String approvalNum;
 
     @DateTimeFormat(pattern="yyyy-MM-dd")

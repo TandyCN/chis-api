@@ -78,4 +78,13 @@ public class ClinicServiceImpl implements ClinicService {
         example.createCriteria().andStateEqualTo(true);
         return clinicMapper.selectByExample(example);
     }
+
+    @Override
+    public List<Clinic> getEnabledLikeByName(String name) {
+        ClinicExample example = new ClinicExample();
+        example.createCriteria().andNameLike(name + "%").andStateEqualTo(true);
+        example.or(example.createCriteria().andCodeLike(name + "%").andStateEqualTo(true));
+        example.setOrderByClause("id");
+        return clinicMapper.selectByExample(example);
+    }
 }

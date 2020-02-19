@@ -30,12 +30,20 @@ public interface SupplierMapper {
 
     int updateByPrimaryKey(Supplier record);
 
-
     /*----------------------------------------------------------------------------------------------------------------*/
 
-    List<Map<String, Object>> selectByCriteria(@Param("oid") Integer oid,
+    void addArrearagesAmount(@Param("id") Integer id,
+                             @Param("amount") Float amount);
+
+    void subtractArrearagesAmount(@Param("id") Integer id,
+                                  @Param("amount") Float amount);
+
+    List<Map<String, Object>> selectByCriteria(@Param("name") String name,
+                                               @Param("contacterPhone") String contacterPhone,
                                                @Param("state") Boolean state,
-                                               @Param("name") String name);
+                                               @Param("arrearagesAmount") Float arrearagesAmount,
+                                               @Param("arrearagesLimit") Float arrearagesLimit,
+                                               @Param("arrearagesDays") Integer arrearagesDays);
 
     List<Map<String, Object>> selectEnabledLikeByName(@Param("name") String name);
 }

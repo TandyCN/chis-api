@@ -54,4 +54,11 @@ public interface ClinicService {
      */
     List<Clinic> getEnabled();
 
+    /**
+     * 根据名称或助记码进行检索查询
+     * @param name
+     * @return
+     */
+    List<Clinic> getEnabledLikeByName(String name);
+
 }

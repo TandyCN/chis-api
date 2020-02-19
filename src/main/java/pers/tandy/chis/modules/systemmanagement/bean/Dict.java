@@ -9,11 +9,11 @@ import java.io.Serializable;
 public class Dict implements Serializable {
     private Integer id;
 
-    @Length(max = 30)
+    @Length(max = 50)
     @NotBlank
     private String name;
 
-    @Length(max = 30)
+    @Length(max = 50)
     @NotBlank
     private String code;
 

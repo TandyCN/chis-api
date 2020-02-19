@@ -111,4 +111,19 @@ public class ClinicHandler {
         return clinicService.getEnabled();
     }
 
+    /**
+     * 根据名称或助记码检索机构
+     * @param name
+     * @return
+     */
+    @GetMapping("/getEnabledLikeByName")
+    public PageResult getEnabledLikeByName (String name) {
+        if (name == null || name.trim().equals("")) {
+            return null;
+        }
+
+        List<Clinic> list = clinicService.getEnabledLikeByName(name);
+        return PageResult.success().resultSet("list", list);
+    }
+
 }

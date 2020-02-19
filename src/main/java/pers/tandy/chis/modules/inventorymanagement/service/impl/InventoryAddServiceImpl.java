@@ -6,12 +6,15 @@ import org.springframework.stereotype.Service;
 import pers.tandy.chis.main.common.enums.ApproveStateEnum;
 import pers.tandy.chis.main.component.DecimalUtils;
 import pers.tandy.chis.main.component.KeyUtils;
+import pers.tandy.chis.modules.financialmanagement.bean.PayableAccount;
+import pers.tandy.chis.modules.financialmanagement.service.PayableAccountService;
 import pers.tandy.chis.modules.inventorymanagement.bean.Inventory;
 import pers.tandy.chis.modules.inventorymanagement.bean.InventoryAdd;
 import pers.tandy.chis.modules.inventorymanagement.dao.InventoryAddMapper;
 import pers.tandy.chis.modules.inventorymanagement.service.InventoryAddService;
 import pers.tandy.chis.modules.inventorymanagement.service.InventoryService;
 import pers.tandy.chis.modules.purchasemanagement.service.PurchaseOrderService;
+import pers.tandy.chis.modules.purchasemanagement.service.SupplierService;
 import pers.tandy.chis.modules.systemmanagement.bean.User;
 
 import java.util.*;
@@ -42,6 +45,17 @@ public class InventoryAddServiceImpl implements InventoryAddService {
         this.inventoryService = inventoryService;
     }
 
+    private PayableAccountService payableAccountService;
+    @Autowired
+    public void setPayableAccountService(PayableAccountService payableAccountService) {
+        this.payableAccountService = payableAccountService;
+    }
+
+    private SupplierService supplierService;
+    @Autowired
+    public void setSupplierService(SupplierService supplierService) {
+        this.supplierService = supplierService;
+    }
     /*----------------------------------------------------------------------------------------------------------------*/
 
     @Override
@@ -124,9 +138,18 @@ public class InventoryAddServiceImpl implements InventoryAddService {
         inventoryAddMapper.updateApproveStateByLsh(user.getId(), new Date(), ApproveStateEnum.APPROVED.getIndex(),
                 lsh, ApproveStateEnum.PENDING.getIndex());
 
-        // 添加库存
+        // 添加库存 并获取部分应付账款数据
+        Integer pemSupplierId = null;
+        float payableAmount = 0;
         List<Inventory> inventoryList = new ArrayList<>();
         for (InventoryAdd inventoryAdd : inventoryAddList) {
+            // 应付账款数据
+            if (pemSupplierId == null) {
+                pemSupplierId = inventoryAdd.getPemSupplierId();
+            }
+            payableAmount += inventoryAdd.getCostPrice() * inventoryAdd.getQuantity();
+
+            // 库存数据
             Inventory inventory = new Inventory();
 
             inventory.setSysClinicId(user.getSysClinicId()); // 机构ID
@@ -146,6 +169,29 @@ public class InventoryAddServiceImpl implements InventoryAddService {
             inventoryList.add(inventory);
         }
         inventoryService.save(inventoryList);
+
+        // 将应付金额四舍五入保留2位小数
+        payableAmount = DecimalUtils.roundHalfUp(payableAmount, 2);
+        // 供应商应付账款记账
+        this.savePayableAccount(lsh, pemSupplierId, payableAmount, user);
+        // 更新供应商欠款
+        this.addArrearagesAmount(pemSupplierId, payableAmount);
+    }
+
+    private void savePayableAccount (String lsh, Integer pemSupplierId, Float payableAmount, User user) {
+        PayableAccount payableAccount = new PayableAccount();
+        payableAccount.setLsh(lsh);
+        payableAccount.setPemSupplierId(pemSupplierId);
+        payableAccount.setPayableAmount(payableAmount);
+        payableAccount.setSysClinicId(user.getSysClinicId());
+        payableAccount.setCreatorId(user.getId());
+        payableAccount.setCreationDate(new Date());
+
+        this.payableAccountService.save(payableAccount);
+    }
+
+    private void addArrearagesAmount(Integer pemSupplierId, Float payableAmount) {
+        this.supplierService.addArrearagesAmount(pemSupplierId, payableAmount);
     }
 
     @Override

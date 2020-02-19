@@ -7,6 +7,7 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import pers.tandy.chis.main.component.DecimalUtils;
 import pers.tandy.chis.modules.purchasemanagement.bean.Supplier;
 import pers.tandy.chis.modules.purchasemanagement.dao.SupplierMapper;
 import pers.tandy.chis.modules.purchasemanagement.service.SupplierService;
@@ -51,6 +52,29 @@ public class SupplierServiceImpl implements SupplierService {
         return supplier;
     }
 
+    @CachePut(key = "#id")
+    @Override
+    public Supplier addArrearagesAmount(Integer id, Float amount) {
+        Supplier supplier = this.getById(id);
+        float arrearagesAmount = supplier.getArrearagesAmount() + amount;
+        supplier.setArrearagesAmount(arrearagesAmount);
+        supplierMapper.addArrearagesAmount(id, amount);
+        return supplier;
+    }
+
+    @CachePut(key = "#id")
+    @Override
+    public Supplier subtractArrearagesAmount(Integer id, Float amount) {
+        Supplier supplier = this.getById(id);
+        float arrearagesAmount = supplier.getArrearagesAmount() - amount;
+        if (arrearagesAmount < 0) {
+            throw new RuntimeException("付款金额不能大于供应商未付总金额");
+        }
+        supplier.setArrearagesAmount(arrearagesAmount);
+        supplierMapper.subtractArrearagesAmount(id, amount);
+        return supplier;
+    }
+
     @CacheEvict(key = "#supplier.id")
     @Override
     public Supplier delete(Supplier supplier) {
@@ -65,8 +89,13 @@ public class SupplierServiceImpl implements SupplierService {
     }
 
     @Override
-    public List<Map<String, Object>> getByCriteria(Integer oid, Boolean state, String name) {
-        return supplierMapper.selectByCriteria(oid, state, name);
+    public List<Map<String, Object>> getByCriteria(String name, String contacterPhone, Boolean state) {
+        return supplierMapper.selectByCriteria(name, contacterPhone, state,null, null, null);
+    }
+
+    @Override
+    public List<Map<String, Object>> getByCriteriaForAccount(String name, Float arrearagesAmount, Float arrearagesLimit, Integer arrearagesDays) {
+        return supplierMapper.selectByCriteria(name, null, null,arrearagesAmount, arrearagesLimit, arrearagesDays);
     }
 
     @Override

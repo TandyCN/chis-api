@@ -732,6 +732,66 @@ public class SupplierExample {
             return (Criteria) this;
         }
 
+        public Criteria andArrearagesAmountIsNull() {
+            addCriterion("arrearages_amount is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andArrearagesAmountIsNotNull() {
+            addCriterion("arrearages_amount is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andArrearagesAmountEqualTo(Float value) {
+            addCriterion("arrearages_amount =", value, "arrearagesAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andArrearagesAmountNotEqualTo(Float value) {
+            addCriterion("arrearages_amount <>", value, "arrearagesAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andArrearagesAmountGreaterThan(Float value) {
+            addCriterion("arrearages_amount >", value, "arrearagesAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andArrearagesAmountGreaterThanOrEqualTo(Float value) {
+            addCriterion("arrearages_amount >=", value, "arrearagesAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andArrearagesAmountLessThan(Float value) {
+            addCriterion("arrearages_amount <", value, "arrearagesAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andArrearagesAmountLessThanOrEqualTo(Float value) {
+            addCriterion("arrearages_amount <=", value, "arrearagesAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andArrearagesAmountIn(List<Float> values) {
+            addCriterion("arrearages_amount in", values, "arrearagesAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andArrearagesAmountNotIn(List<Float> values) {
+            addCriterion("arrearages_amount not in", values, "arrearagesAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andArrearagesAmountBetween(Float value1, Float value2) {
+            addCriterion("arrearages_amount between", value1, value2, "arrearagesAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andArrearagesAmountNotBetween(Float value1, Float value2) {
+            addCriterion("arrearages_amount not between", value1, value2, "arrearagesAmount");
+            return (Criteria) this;
+        }
+
         public Criteria andArrearagesLimitIsNull() {
             addCriterion("arrearages_limit is null");
             return (Criteria) this;

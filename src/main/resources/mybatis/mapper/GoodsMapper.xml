@@ -979,7 +979,7 @@
       (case when ifnull(b.split_quantity, 1) > 1 then a.splitUnitsName else a.goodsUnitsName end) as goodsUnitsName,
       (case when ifnull(b.split_quantity, 1) > 1 then a.splitPrice else a.retailPrice end) as retailPrice,
       a.manufacturerId, a.manufacturerName, a.originId, a.originName, a.doseTypeId, a.doseTypeName, a.dose,
-      a.doseUnitsId, a.doseUnitsName, a.drugUsageId, a.drugUsageName, a.discountable,
+      a.doseUnitsId, a.doseUnitsName, a.drugUsageId, a.drugUsageName, a.discountable, a.goodsClassifyName,
       ifnull(b.split_quantity, 1) as splitQuantity, ifnull(b.quantity, 0) as quantity
     from (
       select *

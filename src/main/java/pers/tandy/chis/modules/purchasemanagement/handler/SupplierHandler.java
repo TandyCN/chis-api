@@ -90,8 +90,8 @@ public class SupplierHandler {
      * 根据查询条件进行分页查询
      * @param pageNum
      * @param pageSize
-     * @param oid
      * @param name
+     * @param contacterPhone
      * @param state
      * @return
      */
@@ -99,12 +99,35 @@ public class SupplierHandler {
     public PageResult getByCriteria (
             @RequestParam(defaultValue="1") Integer pageNum,
             @RequestParam(defaultValue="1") Integer pageSize,
-            @RequestParam(required = false) Integer oid,
             @RequestParam(required = false) String name,
+            @RequestParam(required = false) String contacterPhone,
             @RequestParam(required = false) Boolean state){
 
         PageHelper.startPage(pageNum, pageSize);
-        List<Map<String, Object>> pageList = supplierService.getByCriteria(oid, state, name);
+        List<Map<String, Object>> pageList = supplierService.getByCriteria(name, contacterPhone, state);
+        PageInfo<Map<String, Object>> pageInfo = new PageInfo<Map<String, Object>>(pageList);
+        return PageResult.success().resultSet("page", pageInfo);
+    }
+
+    /**
+     * 根据查询条件进行分页查询
+     * [供应商账款调用]
+     * @param pageNum
+     * @param pageSize
+     * @param name
+     * @return
+     */
+    @GetMapping("/getByCriteriaForAccount")
+    public PageResult getByCriteriaForAccount (
+            @RequestParam(defaultValue="1") Integer pageNum,
+            @RequestParam(defaultValue="1") Integer pageSize,
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) Float arrearagesAmount,
+            @RequestParam(required = false) Float arrearagesLimit,
+            @RequestParam(required = false) Integer arrearagesDays){
+
+        PageHelper.startPage(pageNum, pageSize);
+        List<Map<String, Object>> pageList = supplierService.getByCriteriaForAccount(name, arrearagesAmount, arrearagesLimit, arrearagesDays);
         PageInfo<Map<String, Object>> pageInfo = new PageInfo<Map<String, Object>>(pageList);
         return PageResult.success().resultSet("page", pageInfo);
     }

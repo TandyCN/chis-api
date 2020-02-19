@@ -1,0 +1,639 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pers.tandy.chis.modules.financialmanagement.dao.PaidAccountMapper">
+  <resultMap id="BaseResultMap" type="pers.tandy.chis.modules.financialmanagement.bean.PaidAccount">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="lsh" jdbcType="VARCHAR" property="lsh" />
+    <result column="mxh" jdbcType="VARCHAR" property="mxh" />
+    <result column="iym_inventory_add_id" jdbcType="INTEGER" property="iymInventoryAddId" />
+    <result column="flm_payable_account_id" jdbcType="INTEGER" property="flmPayableAccountId" />
+    <result column="pem_supplier_id" jdbcType="INTEGER" property="pemSupplierId" />
+    <result column="gsm_goods_id" jdbcType="INTEGER" property="gsmGoodsId" />
+    <result column="ph" jdbcType="VARCHAR" property="ph" />
+    <result column="pch" jdbcType="VARCHAR" property="pch" />
+    <result column="cost_price" jdbcType="REAL" property="costPrice" />
+    <result column="paid_quantity" jdbcType="SMALLINT" property="paidQuantity" />
+    <result column="invoice_no" jdbcType="VARCHAR" property="invoiceNo" />
+    <result column="sys_clinic_id" jdbcType="INTEGER" property="sysClinicId" />
+    <result column="creator_id" jdbcType="INTEGER" property="creatorId" />
+    <result column="creation_date" jdbcType="TIMESTAMP" property="creationDate" />
+    <result column="payment_no" jdbcType="VARCHAR" property="paymentNo" />
+    <result column="payer_id" jdbcType="INTEGER" property="payerId" />
+    <result column="pay_date" jdbcType="TIMESTAMP" property="payDate" />
+    <result column="approver_id" jdbcType="INTEGER" property="approverId" />
+    <result column="approve_date" jdbcType="TIMESTAMP" property="approveDate" />
+    <result column="approve_state" jdbcType="TINYINT" property="approveState" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, lsh, mxh, iym_inventory_add_id, flm_payable_account_id, pem_supplier_id, gsm_goods_id,
+    ph, pch, cost_price, paid_quantity, invoice_no, sys_clinic_id, creator_id, creation_date,
+    payment_no, payer_id, pay_date, approver_id, approve_date, approve_state
+  </sql>
+  <select id="selectByExample" parameterType="pers.tandy.chis.modules.financialmanagement.bean.PaidAccountExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from flm_paid_account
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from flm_paid_account
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from flm_paid_account
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="pers.tandy.chis.modules.financialmanagement.bean.PaidAccountExample">
+    delete from flm_paid_account
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="pers.tandy.chis.modules.financialmanagement.bean.PaidAccount">
+    insert into flm_paid_account (id, lsh, mxh,
+      iym_inventory_add_id, flm_payable_account_id,
+      pem_supplier_id, gsm_goods_id, ph,
+      pch, cost_price, paid_quantity,
+      invoice_no, sys_clinic_id, creator_id,
+      creation_date, payment_no, payer_id,
+      pay_date, approver_id, approve_date,
+      approve_state)
+    values (#{id,jdbcType=INTEGER}, #{lsh,jdbcType=VARCHAR}, #{mxh,jdbcType=VARCHAR},
+      #{iymInventoryAddId,jdbcType=INTEGER}, #{flmPayableAccountId,jdbcType=INTEGER},
+      #{pemSupplierId,jdbcType=INTEGER}, #{gsmGoodsId,jdbcType=INTEGER}, #{ph,jdbcType=VARCHAR},
+      #{pch,jdbcType=VARCHAR}, #{costPrice,jdbcType=REAL}, #{paidQuantity,jdbcType=SMALLINT},
+      #{invoiceNo,jdbcType=VARCHAR}, #{sysClinicId,jdbcType=INTEGER}, #{creatorId,jdbcType=INTEGER},
+      #{creationDate,jdbcType=TIMESTAMP}, #{paymentNo,jdbcType=VARCHAR}, #{payerId,jdbcType=INTEGER},
+      #{payDate,jdbcType=TIMESTAMP}, #{approverId,jdbcType=INTEGER}, #{approveDate,jdbcType=TIMESTAMP},
+      #{approveState,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="pers.tandy.chis.modules.financialmanagement.bean.PaidAccount">
+    insert into flm_paid_account
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="lsh != null">
+        lsh,
+      </if>
+      <if test="mxh != null">
+        mxh,
+      </if>
+      <if test="iymInventoryAddId != null">
+        iym_inventory_add_id,
+      </if>
+      <if test="flmPayableAccountId != null">
+        flm_payable_account_id,
+      </if>
+      <if test="pemSupplierId != null">
+        pem_supplier_id,
+      </if>
+      <if test="gsmGoodsId != null">
+        gsm_goods_id,
+      </if>
+      <if test="ph != null">
+        ph,
+      </if>
+      <if test="pch != null">
+        pch,
+      </if>
+      <if test="costPrice != null">
+        cost_price,
+      </if>
+      <if test="paidQuantity != null">
+        paid_quantity,
+      </if>
+      <if test="invoiceNo != null">
+        invoice_no,
+      </if>
+      <if test="sysClinicId != null">
+        sys_clinic_id,
+      </if>
+      <if test="creatorId != null">
+        creator_id,
+      </if>
+      <if test="creationDate != null">
+        creation_date,
+      </if>
+      <if test="paymentNo != null">
+        payment_no,
+      </if>
+      <if test="payerId != null">
+        payer_id,
+      </if>
+      <if test="payDate != null">
+        pay_date,
+      </if>
+      <if test="approverId != null">
+        approver_id,
+      </if>
+      <if test="approveDate != null">
+        approve_date,
+      </if>
+      <if test="approveState != null">
+        approve_state,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="lsh != null">
+        #{lsh,jdbcType=VARCHAR},
+      </if>
+      <if test="mxh != null">
+        #{mxh,jdbcType=VARCHAR},
+      </if>
+      <if test="iymInventoryAddId != null">
+        #{iymInventoryAddId,jdbcType=INTEGER},
+      </if>
+      <if test="flmPayableAccountId != null">
+        #{flmPayableAccountId,jdbcType=INTEGER},
+      </if>
+      <if test="pemSupplierId != null">
+        #{pemSupplierId,jdbcType=INTEGER},
+      </if>
+      <if test="gsmGoodsId != null">
+        #{gsmGoodsId,jdbcType=INTEGER},
+      </if>
+      <if test="ph != null">
+        #{ph,jdbcType=VARCHAR},
+      </if>
+      <if test="pch != null">
+        #{pch,jdbcType=VARCHAR},
+      </if>
+      <if test="costPrice != null">
+        #{costPrice,jdbcType=REAL},
+      </if>
+      <if test="paidQuantity != null">
+        #{paidQuantity,jdbcType=SMALLINT},
+      </if>
+      <if test="invoiceNo != null">
+        #{invoiceNo,jdbcType=VARCHAR},
+      </if>
+      <if test="sysClinicId != null">
+        #{sysClinicId,jdbcType=INTEGER},
+      </if>
+      <if test="creatorId != null">
+        #{creatorId,jdbcType=INTEGER},
+      </if>
+      <if test="creationDate != null">
+        #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="paymentNo != null">
+        #{paymentNo,jdbcType=VARCHAR},
+      </if>
+      <if test="payerId != null">
+        #{payerId,jdbcType=INTEGER},
+      </if>
+      <if test="payDate != null">
+        #{payDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="approverId != null">
+        #{approverId,jdbcType=INTEGER},
+      </if>
+      <if test="approveDate != null">
+        #{approveDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="approveState != null">
+        #{approveState,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="pers.tandy.chis.modules.financialmanagement.bean.PaidAccountExample" resultType="java.lang.Long">
+    select count(*) from flm_paid_account
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update flm_paid_account
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.lsh != null">
+        lsh = #{record.lsh,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mxh != null">
+        mxh = #{record.mxh,jdbcType=VARCHAR},
+      </if>
+      <if test="record.iymInventoryAddId != null">
+        iym_inventory_add_id = #{record.iymInventoryAddId,jdbcType=INTEGER},
+      </if>
+      <if test="record.flmPayableAccountId != null">
+        flm_payable_account_id = #{record.flmPayableAccountId,jdbcType=INTEGER},
+      </if>
+      <if test="record.pemSupplierId != null">
+        pem_supplier_id = #{record.pemSupplierId,jdbcType=INTEGER},
+      </if>
+      <if test="record.gsmGoodsId != null">
+        gsm_goods_id = #{record.gsmGoodsId,jdbcType=INTEGER},
+      </if>
+      <if test="record.ph != null">
+        ph = #{record.ph,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pch != null">
+        pch = #{record.pch,jdbcType=VARCHAR},
+      </if>
+      <if test="record.costPrice != null">
+        cost_price = #{record.costPrice,jdbcType=REAL},
+      </if>
+      <if test="record.paidQuantity != null">
+        paid_quantity = #{record.paidQuantity,jdbcType=SMALLINT},
+      </if>
+      <if test="record.invoiceNo != null">
+        invoice_no = #{record.invoiceNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sysClinicId != null">
+        sys_clinic_id = #{record.sysClinicId,jdbcType=INTEGER},
+      </if>
+      <if test="record.creatorId != null">
+        creator_id = #{record.creatorId,jdbcType=INTEGER},
+      </if>
+      <if test="record.creationDate != null">
+        creation_date = #{record.creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.paymentNo != null">
+        payment_no = #{record.paymentNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.payerId != null">
+        payer_id = #{record.payerId,jdbcType=INTEGER},
+      </if>
+      <if test="record.payDate != null">
+        pay_date = #{record.payDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.approverId != null">
+        approver_id = #{record.approverId,jdbcType=INTEGER},
+      </if>
+      <if test="record.approveDate != null">
+        approve_date = #{record.approveDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.approveState != null">
+        approve_state = #{record.approveState,jdbcType=TINYINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update flm_paid_account
+    set id = #{record.id,jdbcType=INTEGER},
+      lsh = #{record.lsh,jdbcType=VARCHAR},
+      mxh = #{record.mxh,jdbcType=VARCHAR},
+      iym_inventory_add_id = #{record.iymInventoryAddId,jdbcType=INTEGER},
+      flm_payable_account_id = #{record.flmPayableAccountId,jdbcType=INTEGER},
+      pem_supplier_id = #{record.pemSupplierId,jdbcType=INTEGER},
+      gsm_goods_id = #{record.gsmGoodsId,jdbcType=INTEGER},
+      ph = #{record.ph,jdbcType=VARCHAR},
+      pch = #{record.pch,jdbcType=VARCHAR},
+      cost_price = #{record.costPrice,jdbcType=REAL},
+      paid_quantity = #{record.paidQuantity,jdbcType=SMALLINT},
+      invoice_no = #{record.invoiceNo,jdbcType=VARCHAR},
+      sys_clinic_id = #{record.sysClinicId,jdbcType=INTEGER},
+      creator_id = #{record.creatorId,jdbcType=INTEGER},
+      creation_date = #{record.creationDate,jdbcType=TIMESTAMP},
+      payment_no = #{record.paymentNo,jdbcType=VARCHAR},
+      payer_id = #{record.payerId,jdbcType=INTEGER},
+      pay_date = #{record.payDate,jdbcType=TIMESTAMP},
+      approver_id = #{record.approverId,jdbcType=INTEGER},
+      approve_date = #{record.approveDate,jdbcType=TIMESTAMP},
+      approve_state = #{record.approveState,jdbcType=TINYINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="pers.tandy.chis.modules.financialmanagement.bean.PaidAccount">
+    update flm_paid_account
+    <set>
+      <if test="lsh != null">
+        lsh = #{lsh,jdbcType=VARCHAR},
+      </if>
+      <if test="mxh != null">
+        mxh = #{mxh,jdbcType=VARCHAR},
+      </if>
+      <if test="iymInventoryAddId != null">
+        iym_inventory_add_id = #{iymInventoryAddId,jdbcType=INTEGER},
+      </if>
+      <if test="flmPayableAccountId != null">
+        flm_payable_account_id = #{flmPayableAccountId,jdbcType=INTEGER},
+      </if>
+      <if test="pemSupplierId != null">
+        pem_supplier_id = #{pemSupplierId,jdbcType=INTEGER},
+      </if>
+      <if test="gsmGoodsId != null">
+        gsm_goods_id = #{gsmGoodsId,jdbcType=INTEGER},
+      </if>
+      <if test="ph != null">
+        ph = #{ph,jdbcType=VARCHAR},
+      </if>
+      <if test="pch != null">
+        pch = #{pch,jdbcType=VARCHAR},
+      </if>
+      <if test="costPrice != null">
+        cost_price = #{costPrice,jdbcType=REAL},
+      </if>
+      <if test="paidQuantity != null">
+        paid_quantity = #{paidQuantity,jdbcType=SMALLINT},
+      </if>
+      <if test="invoiceNo != null">
+        invoice_no = #{invoiceNo,jdbcType=VARCHAR},
+      </if>
+      <if test="sysClinicId != null">
+        sys_clinic_id = #{sysClinicId,jdbcType=INTEGER},
+      </if>
+      <if test="creatorId != null">
+        creator_id = #{creatorId,jdbcType=INTEGER},
+      </if>
+      <if test="creationDate != null">
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="paymentNo != null">
+        payment_no = #{paymentNo,jdbcType=VARCHAR},
+      </if>
+      <if test="payerId != null">
+        payer_id = #{payerId,jdbcType=INTEGER},
+      </if>
+      <if test="payDate != null">
+        pay_date = #{payDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="approverId != null">
+        approver_id = #{approverId,jdbcType=INTEGER},
+      </if>
+      <if test="approveDate != null">
+        approve_date = #{approveDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="approveState != null">
+        approve_state = #{approveState,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="pers.tandy.chis.modules.financialmanagement.bean.PaidAccount">
+    update flm_paid_account
+    set lsh = #{lsh,jdbcType=VARCHAR},
+      mxh = #{mxh,jdbcType=VARCHAR},
+      iym_inventory_add_id = #{iymInventoryAddId,jdbcType=INTEGER},
+      flm_payable_account_id = #{flmPayableAccountId,jdbcType=INTEGER},
+      pem_supplier_id = #{pemSupplierId,jdbcType=INTEGER},
+      gsm_goods_id = #{gsmGoodsId,jdbcType=INTEGER},
+      ph = #{ph,jdbcType=VARCHAR},
+      pch = #{pch,jdbcType=VARCHAR},
+      cost_price = #{costPrice,jdbcType=REAL},
+      paid_quantity = #{paidQuantity,jdbcType=SMALLINT},
+      invoice_no = #{invoiceNo,jdbcType=VARCHAR},
+      sys_clinic_id = #{sysClinicId,jdbcType=INTEGER},
+      creator_id = #{creatorId,jdbcType=INTEGER},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      payment_no = #{paymentNo,jdbcType=VARCHAR},
+      payer_id = #{payerId,jdbcType=INTEGER},
+      pay_date = #{payDate,jdbcType=TIMESTAMP},
+      approver_id = #{approverId,jdbcType=INTEGER},
+      approve_date = #{approveDate,jdbcType=TIMESTAMP},
+      approve_state = #{approveState,jdbcType=TINYINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+
+
+  <!-- ************************************************************************************************************* -->
+
+  <insert id="insertList">
+    insert into flm_paid_account
+    (
+    id,
+    lsh,
+    mxh,
+    iym_inventory_add_id,
+    flm_payable_account_id,
+    pem_supplier_id,
+    gsm_goods_id,
+    ph,
+    pch,
+    cost_price,
+    paid_quantity,
+    invoice_no,
+    sys_clinic_id,
+    creator_id,
+    creation_date,
+    payment_no,
+    payer_id,
+    pay_date,
+    approver_id,
+    approve_date,
+    approve_state
+    )
+    values
+    <foreach collection="paidAccountList" item="paidAccount" separator="," close=";">
+      (
+      #{paidAccount.id,jdbcType=INTEGER},
+      #{paidAccount.lsh,jdbcType=VARCHAR},
+      #{paidAccount.mxh,jdbcType=VARCHAR},
+      #{paidAccount.iymInventoryAddId,jdbcType=INTEGER},
+      #{paidAccount.flmPayableAccountId,jdbcType=INTEGER},
+      #{paidAccount.pemSupplierId,jdbcType=INTEGER},
+      #{paidAccount.gsmGoodsId,jdbcType=INTEGER},
+      #{paidAccount.ph,jdbcType=VARCHAR},
+      #{paidAccount.pch,jdbcType=VARCHAR},
+      #{paidAccount.costPrice,jdbcType=REAL},
+      #{paidAccount.paidQuantity,jdbcType=SMALLINT},
+      #{paidAccount.invoiceNo,jdbcType=VARCHAR},
+      #{paidAccount.sysClinicId,jdbcType=INTEGER},
+      #{paidAccount.creatorId,jdbcType=INTEGER},
+      #{paidAccount.creationDate,jdbcType=TIMESTAMP},
+      #{paidAccount.paymentNo,jdbcType=VARCHAR},
+      #{paidAccount.payerId,jdbcType=INTEGER},
+      #{paidAccount.payDate,jdbcType=TIMESTAMP},
+      #{paidAccount.approverId,jdbcType=INTEGER},
+      #{paidAccount.approveDate,jdbcType=TIMESTAMP},
+      #{paidAccount.approveState,jdbcType=TINYINT}
+      )
+    </foreach>
+  </insert>
+
+  <update id="updateInvoiceNo">
+    update flm_paid_account
+    set invoice_no = #{invoiceNo}
+    where
+      lsh in
+      <foreach collection="lshList" item="lsh" open="(" separator="," close=")">
+        #{lsh}
+      </foreach>
+  </update>
+
+  <update id="updatePaymentNo">
+    update flm_paid_account
+    set payment_no = #{paymentNo}, payer_id = #{payerId}, pay_date = #{payDate}
+    where
+    lsh in
+    <foreach collection="lshList" item="lsh" open="(" separator="," close=")">
+      #{lsh}
+    </foreach>
+  </update>
+
+  <update id="updateApproveStateByPaymentNo">
+     update flm_paid_account
+     set approver_id = #{approverId}, approve_date = #{approveDate}, approve_state = #{approveState}
+     where payment_no = #{paymentNo}
+  </update>
+
+  <select id="selectInventoryAddListByLsh" resultType="map">
+    select
+      a.*,
+      (a.quantity - ifnull(b.paidQuantity, 0)) as payableQuantity,
+      ifnull(inventoryQuantity, 0) as inventoryQuantity
+    from (
+     select
+      id, lsh, mxh, pemSupplierId, gsmGoodsTypeName, gsmGoodsId, gsmGoodsOid, gsmGoodsName, gsmGoodsCode, gsmGoodsSpecs,
+      goodsUnitsName, originName, manufacturerName, ph, pch, costPrice, quantity
+      from view_iym_inventory_add
+      where lsh = #{lsh}
+      order by mxh
+    ) a
+    left join (
+      select  id, iym_inventory_add_id, sum(ifnull(paid_quantity, 0)) as paidQuantity
+      from flm_paid_account
+      group by iym_inventory_add_id
+    ) b on a.id = b.iym_inventory_add_id
+    left join (
+      select id, iym_inventory_add_id, sum(ifnull(quantity, 0)) as inventoryQuantity
+      from iym_inventory
+      where split_quantity = 1
+      group by iym_inventory_add_id
+    ) c on a.id = c.iym_inventory_add_id
+
+  </select>
+
+  <select id="selectLshGroupListByCriteria" resultType="map">
+    select
+    lsh, pemSupplierId, pemSupplierOid, pemSupplierName, sum(costPrice * paidQuantity) as paidAmount,
+    invoiceNo, sysClinicId, sysClinicName, creatorId, creatorName, creationDate, paymentNo, payerId, payerName, payDate,
+    approverId, approverName, approveDate, approveState
+    from view_flm_paid_account
+    <trim prefix="where" suffixOverrides="and">
+      <if test="creationDate != null &amp;&amp; creationDate.length == 2">
+        (DATE_FORMAT(creationDate, '%Y-%m-%d') between #{creationDate[0]} and #{creationDate[1]}) and
+      </if>
+      <if test="pemSupplierId != null">
+        (pemSupplierId = #{pemSupplierId}) and
+      </if>
+      <if test="sysClinicId != null">
+        (sysClinicId = #{sysClinicId}) and
+      </if>
+      <if test="approveState != null">
+        (approveState = #{approveState}) and
+      </if>
+    </trim>
+    group by lsh
+    order by creationDate desc
+  </select>
+
+  <select id="selectByLsh" resultType="map">
+    select *
+    from view_flm_paid_account
+    where lsh = #{lsh}
+  </select>
+
+  <select id="selectPaymentNoGroupListByCriteria" resultType="map">
+    select
+    lsh, pemSupplierId, pemSupplierOid, pemSupplierName, sum(costPrice * paidQuantity) as paidAmount,
+    invoiceNo, sysClinicId, sysClinicName, creatorId, creatorName, creationDate, paymentNo, payerId, payerName, payDate,
+    approverId, approverName, approveDate, approveState
+    from view_flm_paid_account
+    <trim prefix="where" suffixOverrides="and">
+      <if test="creationDate != null &amp;&amp; creationDate.length == 2">
+        (DATE_FORMAT(creationDate, '%Y-%m-%d') between #{creationDate[0]} and #{creationDate[1]}) and
+      </if>
+      <if test="pemSupplierId != null">
+        (pemSupplierId = #{pemSupplierId}) and
+      </if>
+      <if test="sysClinicId != null">
+        (sysClinicId = #{sysClinicId}) and
+      </if>
+      <if test="approveState != null">
+        (approveState = #{approveState}) and
+      </if>
+      <if test="paymentNo != null &amp;&amp; paymentNo.trim() != ''">
+        (paymentNo like '${paymentNo}%') and
+      </if>
+      (paymentNo is not null) and (paymentNo != '')
+    </trim>
+    group by invoiceNo
+    order by creationDate desc
+  </select>
+
+  <select id="selectByPaymentNo" resultType="map">
+    select *
+    from view_flm_paid_account
+    where paymentNo = #{paymentNo}
+  </select>
+</mapper>

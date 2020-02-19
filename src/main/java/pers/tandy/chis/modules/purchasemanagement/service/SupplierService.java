@@ -29,6 +29,25 @@ public interface SupplierService {
     Supplier update(Supplier supplier);
 
     /**
+     * 增加欠款金额
+     * 不能直接更新, 要使用原欠款金额 + 传入的金额
+     * @param id
+     * @param amount
+     */
+    @Transactional
+    Supplier addArrearagesAmount(Integer id, Float amount);
+
+    /**
+     * 扣减欠款金额
+     * 不能直接更新, 要使用原欠款金额 - 传入的金额
+     * @param id
+     * @param amount
+     * @return
+     */
+    @Transactional
+    Supplier subtractArrearagesAmount(Integer id, Float amount);
+
+    /**
      * 删除操作
      * @param supplier
      * @return
@@ -45,12 +64,23 @@ public interface SupplierService {
 
     /**
      * 根据查询条件 获取对应视图对象的集合
-     * @param oid
-     * @param state
      * @param name
+     * @param contacterPhone
+     * @param state
      * @return
      */
-    List<Map<String, Object>> getByCriteria(Integer oid,  Boolean state, String name);
+    List<Map<String, Object>> getByCriteria(String name, String contacterPhone, Boolean state);
+
+    /**
+     * 根据条件获取供应商集合
+     * [供应商账款调用]
+     * @param name
+     * @param arrearagesAmount
+     * @param arrearagesLimit
+     * @param arrearagesDays
+     * @return
+     */
+    List<Map<String, Object>> getByCriteriaForAccount(String name, Float arrearagesAmount, Float arrearagesLimit, Integer arrearagesDays);
 
     /**
      * 根据 通用名称 或 助记码获取对应集合

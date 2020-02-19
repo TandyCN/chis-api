@@ -39,6 +39,10 @@ public class Supplier implements Serializable {
 
     @Digits(integer = 8, fraction = 2)
     @Min(0)
+    private Float arrearagesAmount = 0f;
+
+    @Digits(integer = 8, fraction = 2)
+    @Min(0)
     private Float arrearagesLimit;
 
     @Min(0)
@@ -47,10 +51,10 @@ public class Supplier implements Serializable {
     @Length(max = 10)
     private String legalPerson;
 
-    @Length(max = 15)
+    @Length(max = 30)
     private String tel;
 
-    @Length(max = 15)
+    @Length(max = 30)
     private String fax;
 
     @Length(max = 50)
@@ -59,7 +63,7 @@ public class Supplier implements Serializable {
     @Length(max = 10)
     private String contacter;
 
-    @Length(max = 15)
+    @Length(max = 30)
     private String contacterPhone;
 
     @Length(max = 100)
@@ -198,6 +202,14 @@ public class Supplier implements Serializable {
 
     public void setPaymentTypeId(Integer paymentTypeId) {
         this.paymentTypeId = paymentTypeId;
+    }
+
+    public Float getArrearagesAmount() {
+        return arrearagesAmount;
+    }
+
+    public void setArrearagesAmount(Float arrearagesAmount) {
+        this.arrearagesAmount = arrearagesAmount;
     }
 
     public Float getArrearagesLimit() {
