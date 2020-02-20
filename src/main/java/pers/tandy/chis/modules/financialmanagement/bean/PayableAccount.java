@@ -1,26 +1,52 @@
 package pers.tandy.chis.modules.financialmanagement.bean;
 
+import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.validation.constraints.Digits;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.*;
+import java.io.Serializable;
 import java.util.Date;
 
-public class PayableAccount {
+public class PayableAccount implements Serializable {
     private Integer id;
 
+    @Length(max = 50)
     @NotBlank
     private String lsh;
+
+    @Length(max = 50)
+    @NotBlank
+    private String mxh;
+
+    @NotNull
+    private Integer gsmGoodsId;
+
+    @NotBlank
+    private String ph;
+
+    @NotBlank
+    private String pch;
+
+    @Min(0)
+    @Digits(integer = 8, fraction = 4)
+    @NotNull
+    private Float costPrice;
+
+    @Max(30000)
+    @NotNull
+    private Short quantity;
+
+    @NotNull
+    private Byte purchaseTaxRate;
+
+    @NotNull
+    private Byte sellTaxRate;
 
     @NotNull
     private Integer pemSupplierId;
 
-    @Min(0)
-    @Digits(integer = 8, fraction = 2)
     @NotNull
-    private Float payableAmount;
+    private Integer iymInventoryAddId;
 
     @NotNull
     private Integer sysClinicId;
@@ -48,6 +74,70 @@ public class PayableAccount {
         this.lsh = lsh == null ? null : lsh.trim();
     }
 
+    public String getMxh() {
+        return mxh;
+    }
+
+    public void setMxh(String mxh) {
+        this.mxh = mxh == null ? null : mxh.trim();
+    }
+
+    public Integer getGsmGoodsId() {
+        return gsmGoodsId;
+    }
+
+    public void setGsmGoodsId(Integer gsmGoodsId) {
+        this.gsmGoodsId = gsmGoodsId;
+    }
+
+    public String getPh() {
+        return ph;
+    }
+
+    public void setPh(String ph) {
+        this.ph = ph == null ? null : ph.trim();
+    }
+
+    public String getPch() {
+        return pch;
+    }
+
+    public void setPch(String pch) {
+        this.pch = pch == null ? null : pch.trim();
+    }
+
+    public Float getCostPrice() {
+        return costPrice;
+    }
+
+    public void setCostPrice(Float costPrice) {
+        this.costPrice = costPrice;
+    }
+
+    public Short getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Short quantity) {
+        this.quantity = quantity;
+    }
+
+    public Byte getPurchaseTaxRate() {
+        return purchaseTaxRate;
+    }
+
+    public void setPurchaseTaxRate(Byte purchaseTaxRate) {
+        this.purchaseTaxRate = purchaseTaxRate;
+    }
+
+    public Byte getSellTaxRate() {
+        return sellTaxRate;
+    }
+
+    public void setSellTaxRate(Byte sellTaxRate) {
+        this.sellTaxRate = sellTaxRate;
+    }
+
     public Integer getPemSupplierId() {
         return pemSupplierId;
     }
@@ -56,12 +146,12 @@ public class PayableAccount {
         this.pemSupplierId = pemSupplierId;
     }
 
-    public Float getPayableAmount() {
-        return payableAmount;
+    public Integer getIymInventoryAddId() {
+        return iymInventoryAddId;
     }
 
-    public void setPayableAmount(Float payableAmount) {
-        this.payableAmount = payableAmount;
+    public void setIymInventoryAddId(Integer iymInventoryAddId) {
+        this.iymInventoryAddId = iymInventoryAddId;
     }
 
     public Integer getSysClinicId() {

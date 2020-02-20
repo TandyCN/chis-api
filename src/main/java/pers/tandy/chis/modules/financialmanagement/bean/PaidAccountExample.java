@@ -305,183 +305,73 @@ public class PaidAccountExample {
             return (Criteria) this;
         }
 
-        public Criteria andIymInventoryAddIdIsNull() {
-            addCriterion("iym_inventory_add_id is null");
+        public Criteria andFlmPayableAccountLshIsNull() {
+            addCriterion("flm_payable_account_lsh is null");
             return (Criteria) this;
         }
 
-        public Criteria andIymInventoryAddIdIsNotNull() {
-            addCriterion("iym_inventory_add_id is not null");
+        public Criteria andFlmPayableAccountLshIsNotNull() {
+            addCriterion("flm_payable_account_lsh is not null");
             return (Criteria) this;
         }
 
-        public Criteria andIymInventoryAddIdEqualTo(Integer value) {
-            addCriterion("iym_inventory_add_id =", value, "iymInventoryAddId");
+        public Criteria andFlmPayableAccountLshEqualTo(String value) {
+            addCriterion("flm_payable_account_lsh =", value, "flmPayableAccountLsh");
             return (Criteria) this;
         }
 
-        public Criteria andIymInventoryAddIdNotEqualTo(Integer value) {
-            addCriterion("iym_inventory_add_id <>", value, "iymInventoryAddId");
+        public Criteria andFlmPayableAccountLshNotEqualTo(String value) {
+            addCriterion("flm_payable_account_lsh <>", value, "flmPayableAccountLsh");
             return (Criteria) this;
         }
 
-        public Criteria andIymInventoryAddIdGreaterThan(Integer value) {
-            addCriterion("iym_inventory_add_id >", value, "iymInventoryAddId");
+        public Criteria andFlmPayableAccountLshGreaterThan(String value) {
+            addCriterion("flm_payable_account_lsh >", value, "flmPayableAccountLsh");
             return (Criteria) this;
         }
 
-        public Criteria andIymInventoryAddIdGreaterThanOrEqualTo(Integer value) {
-            addCriterion("iym_inventory_add_id >=", value, "iymInventoryAddId");
+        public Criteria andFlmPayableAccountLshGreaterThanOrEqualTo(String value) {
+            addCriterion("flm_payable_account_lsh >=", value, "flmPayableAccountLsh");
             return (Criteria) this;
         }
 
-        public Criteria andIymInventoryAddIdLessThan(Integer value) {
-            addCriterion("iym_inventory_add_id <", value, "iymInventoryAddId");
+        public Criteria andFlmPayableAccountLshLessThan(String value) {
+            addCriterion("flm_payable_account_lsh <", value, "flmPayableAccountLsh");
             return (Criteria) this;
         }
 
-        public Criteria andIymInventoryAddIdLessThanOrEqualTo(Integer value) {
-            addCriterion("iym_inventory_add_id <=", value, "iymInventoryAddId");
+        public Criteria andFlmPayableAccountLshLessThanOrEqualTo(String value) {
+            addCriterion("flm_payable_account_lsh <=", value, "flmPayableAccountLsh");
             return (Criteria) this;
         }
 
-        public Criteria andIymInventoryAddIdIn(List<Integer> values) {
-            addCriterion("iym_inventory_add_id in", values, "iymInventoryAddId");
+        public Criteria andFlmPayableAccountLshLike(String value) {
+            addCriterion("flm_payable_account_lsh like", value, "flmPayableAccountLsh");
             return (Criteria) this;
         }
 
-        public Criteria andIymInventoryAddIdNotIn(List<Integer> values) {
-            addCriterion("iym_inventory_add_id not in", values, "iymInventoryAddId");
+        public Criteria andFlmPayableAccountLshNotLike(String value) {
+            addCriterion("flm_payable_account_lsh not like", value, "flmPayableAccountLsh");
             return (Criteria) this;
         }
 
-        public Criteria andIymInventoryAddIdBetween(Integer value1, Integer value2) {
-            addCriterion("iym_inventory_add_id between", value1, value2, "iymInventoryAddId");
+        public Criteria andFlmPayableAccountLshIn(List<String> values) {
+            addCriterion("flm_payable_account_lsh in", values, "flmPayableAccountLsh");
             return (Criteria) this;
         }
 
-        public Criteria andIymInventoryAddIdNotBetween(Integer value1, Integer value2) {
-            addCriterion("iym_inventory_add_id not between", value1, value2, "iymInventoryAddId");
+        public Criteria andFlmPayableAccountLshNotIn(List<String> values) {
+            addCriterion("flm_payable_account_lsh not in", values, "flmPayableAccountLsh");
             return (Criteria) this;
         }
 
-        public Criteria andFlmPayableAccountIdIsNull() {
-            addCriterion("flm_payable_account_id is null");
+        public Criteria andFlmPayableAccountLshBetween(String value1, String value2) {
+            addCriterion("flm_payable_account_lsh between", value1, value2, "flmPayableAccountLsh");
             return (Criteria) this;
         }
 
-        public Criteria andFlmPayableAccountIdIsNotNull() {
-            addCriterion("flm_payable_account_id is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andFlmPayableAccountIdEqualTo(Integer value) {
-            addCriterion("flm_payable_account_id =", value, "flmPayableAccountId");
-            return (Criteria) this;
-        }
-
-        public Criteria andFlmPayableAccountIdNotEqualTo(Integer value) {
-            addCriterion("flm_payable_account_id <>", value, "flmPayableAccountId");
-            return (Criteria) this;
-        }
-
-        public Criteria andFlmPayableAccountIdGreaterThan(Integer value) {
-            addCriterion("flm_payable_account_id >", value, "flmPayableAccountId");
-            return (Criteria) this;
-        }
-
-        public Criteria andFlmPayableAccountIdGreaterThanOrEqualTo(Integer value) {
-            addCriterion("flm_payable_account_id >=", value, "flmPayableAccountId");
-            return (Criteria) this;
-        }
-
-        public Criteria andFlmPayableAccountIdLessThan(Integer value) {
-            addCriterion("flm_payable_account_id <", value, "flmPayableAccountId");
-            return (Criteria) this;
-        }
-
-        public Criteria andFlmPayableAccountIdLessThanOrEqualTo(Integer value) {
-            addCriterion("flm_payable_account_id <=", value, "flmPayableAccountId");
-            return (Criteria) this;
-        }
-
-        public Criteria andFlmPayableAccountIdIn(List<Integer> values) {
-            addCriterion("flm_payable_account_id in", values, "flmPayableAccountId");
-            return (Criteria) this;
-        }
-
-        public Criteria andFlmPayableAccountIdNotIn(List<Integer> values) {
-            addCriterion("flm_payable_account_id not in", values, "flmPayableAccountId");
-            return (Criteria) this;
-        }
-
-        public Criteria andFlmPayableAccountIdBetween(Integer value1, Integer value2) {
-            addCriterion("flm_payable_account_id between", value1, value2, "flmPayableAccountId");
-            return (Criteria) this;
-        }
-
-        public Criteria andFlmPayableAccountIdNotBetween(Integer value1, Integer value2) {
-            addCriterion("flm_payable_account_id not between", value1, value2, "flmPayableAccountId");
-            return (Criteria) this;
-        }
-
-        public Criteria andPemSupplierIdIsNull() {
-            addCriterion("pem_supplier_id is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andPemSupplierIdIsNotNull() {
-            addCriterion("pem_supplier_id is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andPemSupplierIdEqualTo(Integer value) {
-            addCriterion("pem_supplier_id =", value, "pemSupplierId");
-            return (Criteria) this;
-        }
-
-        public Criteria andPemSupplierIdNotEqualTo(Integer value) {
-            addCriterion("pem_supplier_id <>", value, "pemSupplierId");
-            return (Criteria) this;
-        }
-
-        public Criteria andPemSupplierIdGreaterThan(Integer value) {
-            addCriterion("pem_supplier_id >", value, "pemSupplierId");
-            return (Criteria) this;
-        }
-
-        public Criteria andPemSupplierIdGreaterThanOrEqualTo(Integer value) {
-            addCriterion("pem_supplier_id >=", value, "pemSupplierId");
-            return (Criteria) this;
-        }
-
-        public Criteria andPemSupplierIdLessThan(Integer value) {
-            addCriterion("pem_supplier_id <", value, "pemSupplierId");
-            return (Criteria) this;
-        }
-
-        public Criteria andPemSupplierIdLessThanOrEqualTo(Integer value) {
-            addCriterion("pem_supplier_id <=", value, "pemSupplierId");
-            return (Criteria) this;
-        }
-
-        public Criteria andPemSupplierIdIn(List<Integer> values) {
-            addCriterion("pem_supplier_id in", values, "pemSupplierId");
-            return (Criteria) this;
-        }
-
-        public Criteria andPemSupplierIdNotIn(List<Integer> values) {
-            addCriterion("pem_supplier_id not in", values, "pemSupplierId");
-            return (Criteria) this;
-        }
-
-        public Criteria andPemSupplierIdBetween(Integer value1, Integer value2) {
-            addCriterion("pem_supplier_id between", value1, value2, "pemSupplierId");
-            return (Criteria) this;
-        }
-
-        public Criteria andPemSupplierIdNotBetween(Integer value1, Integer value2) {
-            addCriterion("pem_supplier_id not between", value1, value2, "pemSupplierId");
+        public Criteria andFlmPayableAccountLshNotBetween(String value1, String value2) {
+            addCriterion("flm_payable_account_lsh not between", value1, value2, "flmPayableAccountLsh");
             return (Criteria) this;
         }
 
@@ -745,63 +635,243 @@ public class PaidAccountExample {
             return (Criteria) this;
         }
 
-        public Criteria andPaidQuantityIsNull() {
-            addCriterion("paid_quantity is null");
+        public Criteria andQuantityIsNull() {
+            addCriterion("quantity is null");
             return (Criteria) this;
         }
 
-        public Criteria andPaidQuantityIsNotNull() {
-            addCriterion("paid_quantity is not null");
+        public Criteria andQuantityIsNotNull() {
+            addCriterion("quantity is not null");
             return (Criteria) this;
         }
 
-        public Criteria andPaidQuantityEqualTo(Short value) {
-            addCriterion("paid_quantity =", value, "paidQuantity");
+        public Criteria andQuantityEqualTo(Short value) {
+            addCriterion("quantity =", value, "quantity");
             return (Criteria) this;
         }
 
-        public Criteria andPaidQuantityNotEqualTo(Short value) {
-            addCriterion("paid_quantity <>", value, "paidQuantity");
+        public Criteria andQuantityNotEqualTo(Short value) {
+            addCriterion("quantity <>", value, "quantity");
             return (Criteria) this;
         }
 
-        public Criteria andPaidQuantityGreaterThan(Short value) {
-            addCriterion("paid_quantity >", value, "paidQuantity");
+        public Criteria andQuantityGreaterThan(Short value) {
+            addCriterion("quantity >", value, "quantity");
             return (Criteria) this;
         }
 
-        public Criteria andPaidQuantityGreaterThanOrEqualTo(Short value) {
-            addCriterion("paid_quantity >=", value, "paidQuantity");
+        public Criteria andQuantityGreaterThanOrEqualTo(Short value) {
+            addCriterion("quantity >=", value, "quantity");
             return (Criteria) this;
         }
 
-        public Criteria andPaidQuantityLessThan(Short value) {
-            addCriterion("paid_quantity <", value, "paidQuantity");
+        public Criteria andQuantityLessThan(Short value) {
+            addCriterion("quantity <", value, "quantity");
             return (Criteria) this;
         }
 
-        public Criteria andPaidQuantityLessThanOrEqualTo(Short value) {
-            addCriterion("paid_quantity <=", value, "paidQuantity");
+        public Criteria andQuantityLessThanOrEqualTo(Short value) {
+            addCriterion("quantity <=", value, "quantity");
             return (Criteria) this;
         }
 
-        public Criteria andPaidQuantityIn(List<Short> values) {
-            addCriterion("paid_quantity in", values, "paidQuantity");
+        public Criteria andQuantityIn(List<Short> values) {
+            addCriterion("quantity in", values, "quantity");
             return (Criteria) this;
         }
 
-        public Criteria andPaidQuantityNotIn(List<Short> values) {
-            addCriterion("paid_quantity not in", values, "paidQuantity");
+        public Criteria andQuantityNotIn(List<Short> values) {
+            addCriterion("quantity not in", values, "quantity");
             return (Criteria) this;
         }
 
-        public Criteria andPaidQuantityBetween(Short value1, Short value2) {
-            addCriterion("paid_quantity between", value1, value2, "paidQuantity");
+        public Criteria andQuantityBetween(Short value1, Short value2) {
+            addCriterion("quantity between", value1, value2, "quantity");
             return (Criteria) this;
         }
 
-        public Criteria andPaidQuantityNotBetween(Short value1, Short value2) {
-            addCriterion("paid_quantity not between", value1, value2, "paidQuantity");
+        public Criteria andQuantityNotBetween(Short value1, Short value2) {
+            addCriterion("quantity not between", value1, value2, "quantity");
+            return (Criteria) this;
+        }
+
+        public Criteria andPemSupplierIdIsNull() {
+            addCriterion("pem_supplier_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPemSupplierIdIsNotNull() {
+            addCriterion("pem_supplier_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPemSupplierIdEqualTo(Integer value) {
+            addCriterion("pem_supplier_id =", value, "pemSupplierId");
+            return (Criteria) this;
+        }
+
+        public Criteria andPemSupplierIdNotEqualTo(Integer value) {
+            addCriterion("pem_supplier_id <>", value, "pemSupplierId");
+            return (Criteria) this;
+        }
+
+        public Criteria andPemSupplierIdGreaterThan(Integer value) {
+            addCriterion("pem_supplier_id >", value, "pemSupplierId");
+            return (Criteria) this;
+        }
+
+        public Criteria andPemSupplierIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("pem_supplier_id >=", value, "pemSupplierId");
+            return (Criteria) this;
+        }
+
+        public Criteria andPemSupplierIdLessThan(Integer value) {
+            addCriterion("pem_supplier_id <", value, "pemSupplierId");
+            return (Criteria) this;
+        }
+
+        public Criteria andPemSupplierIdLessThanOrEqualTo(Integer value) {
+            addCriterion("pem_supplier_id <=", value, "pemSupplierId");
+            return (Criteria) this;
+        }
+
+        public Criteria andPemSupplierIdIn(List<Integer> values) {
+            addCriterion("pem_supplier_id in", values, "pemSupplierId");
+            return (Criteria) this;
+        }
+
+        public Criteria andPemSupplierIdNotIn(List<Integer> values) {
+            addCriterion("pem_supplier_id not in", values, "pemSupplierId");
+            return (Criteria) this;
+        }
+
+        public Criteria andPemSupplierIdBetween(Integer value1, Integer value2) {
+            addCriterion("pem_supplier_id between", value1, value2, "pemSupplierId");
+            return (Criteria) this;
+        }
+
+        public Criteria andPemSupplierIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("pem_supplier_id not between", value1, value2, "pemSupplierId");
+            return (Criteria) this;
+        }
+
+        public Criteria andIymInventoryAddIdIsNull() {
+            addCriterion("iym_inventory_add_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIymInventoryAddIdIsNotNull() {
+            addCriterion("iym_inventory_add_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIymInventoryAddIdEqualTo(Integer value) {
+            addCriterion("iym_inventory_add_id =", value, "iymInventoryAddId");
+            return (Criteria) this;
+        }
+
+        public Criteria andIymInventoryAddIdNotEqualTo(Integer value) {
+            addCriterion("iym_inventory_add_id <>", value, "iymInventoryAddId");
+            return (Criteria) this;
+        }
+
+        public Criteria andIymInventoryAddIdGreaterThan(Integer value) {
+            addCriterion("iym_inventory_add_id >", value, "iymInventoryAddId");
+            return (Criteria) this;
+        }
+
+        public Criteria andIymInventoryAddIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("iym_inventory_add_id >=", value, "iymInventoryAddId");
+            return (Criteria) this;
+        }
+
+        public Criteria andIymInventoryAddIdLessThan(Integer value) {
+            addCriterion("iym_inventory_add_id <", value, "iymInventoryAddId");
+            return (Criteria) this;
+        }
+
+        public Criteria andIymInventoryAddIdLessThanOrEqualTo(Integer value) {
+            addCriterion("iym_inventory_add_id <=", value, "iymInventoryAddId");
+            return (Criteria) this;
+        }
+
+        public Criteria andIymInventoryAddIdIn(List<Integer> values) {
+            addCriterion("iym_inventory_add_id in", values, "iymInventoryAddId");
+            return (Criteria) this;
+        }
+
+        public Criteria andIymInventoryAddIdNotIn(List<Integer> values) {
+            addCriterion("iym_inventory_add_id not in", values, "iymInventoryAddId");
+            return (Criteria) this;
+        }
+
+        public Criteria andIymInventoryAddIdBetween(Integer value1, Integer value2) {
+            addCriterion("iym_inventory_add_id between", value1, value2, "iymInventoryAddId");
+            return (Criteria) this;
+        }
+
+        public Criteria andIymInventoryAddIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("iym_inventory_add_id not between", value1, value2, "iymInventoryAddId");
+            return (Criteria) this;
+        }
+
+        public Criteria andSysClinicIdIsNull() {
+            addCriterion("sys_clinic_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSysClinicIdIsNotNull() {
+            addCriterion("sys_clinic_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSysClinicIdEqualTo(Integer value) {
+            addCriterion("sys_clinic_id =", value, "sysClinicId");
+            return (Criteria) this;
+        }
+
+        public Criteria andSysClinicIdNotEqualTo(Integer value) {
+            addCriterion("sys_clinic_id <>", value, "sysClinicId");
+            return (Criteria) this;
+        }
+
+        public Criteria andSysClinicIdGreaterThan(Integer value) {
+            addCriterion("sys_clinic_id >", value, "sysClinicId");
+            return (Criteria) this;
+        }
+
+        public Criteria andSysClinicIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("sys_clinic_id >=", value, "sysClinicId");
+            return (Criteria) this;
+        }
+
+        public Criteria andSysClinicIdLessThan(Integer value) {
+            addCriterion("sys_clinic_id <", value, "sysClinicId");
+            return (Criteria) this;
+        }
+
+        public Criteria andSysClinicIdLessThanOrEqualTo(Integer value) {
+            addCriterion("sys_clinic_id <=", value, "sysClinicId");
+            return (Criteria) this;
+        }
+
+        public Criteria andSysClinicIdIn(List<Integer> values) {
+            addCriterion("sys_clinic_id in", values, "sysClinicId");
+            return (Criteria) this;
+        }
+
+        public Criteria andSysClinicIdNotIn(List<Integer> values) {
+            addCriterion("sys_clinic_id not in", values, "sysClinicId");
+            return (Criteria) this;
+        }
+
+        public Criteria andSysClinicIdBetween(Integer value1, Integer value2) {
+            addCriterion("sys_clinic_id between", value1, value2, "sysClinicId");
+            return (Criteria) this;
+        }
+
+        public Criteria andSysClinicIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("sys_clinic_id not between", value1, value2, "sysClinicId");
             return (Criteria) this;
         }
 
@@ -872,66 +942,6 @@ public class PaidAccountExample {
 
         public Criteria andInvoiceNoNotBetween(String value1, String value2) {
             addCriterion("invoice_no not between", value1, value2, "invoiceNo");
-            return (Criteria) this;
-        }
-
-        public Criteria andSysClinicIdIsNull() {
-            addCriterion("sys_clinic_id is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andSysClinicIdIsNotNull() {
-            addCriterion("sys_clinic_id is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andSysClinicIdEqualTo(Integer value) {
-            addCriterion("sys_clinic_id =", value, "sysClinicId");
-            return (Criteria) this;
-        }
-
-        public Criteria andSysClinicIdNotEqualTo(Integer value) {
-            addCriterion("sys_clinic_id <>", value, "sysClinicId");
-            return (Criteria) this;
-        }
-
-        public Criteria andSysClinicIdGreaterThan(Integer value) {
-            addCriterion("sys_clinic_id >", value, "sysClinicId");
-            return (Criteria) this;
-        }
-
-        public Criteria andSysClinicIdGreaterThanOrEqualTo(Integer value) {
-            addCriterion("sys_clinic_id >=", value, "sysClinicId");
-            return (Criteria) this;
-        }
-
-        public Criteria andSysClinicIdLessThan(Integer value) {
-            addCriterion("sys_clinic_id <", value, "sysClinicId");
-            return (Criteria) this;
-        }
-
-        public Criteria andSysClinicIdLessThanOrEqualTo(Integer value) {
-            addCriterion("sys_clinic_id <=", value, "sysClinicId");
-            return (Criteria) this;
-        }
-
-        public Criteria andSysClinicIdIn(List<Integer> values) {
-            addCriterion("sys_clinic_id in", values, "sysClinicId");
-            return (Criteria) this;
-        }
-
-        public Criteria andSysClinicIdNotIn(List<Integer> values) {
-            addCriterion("sys_clinic_id not in", values, "sysClinicId");
-            return (Criteria) this;
-        }
-
-        public Criteria andSysClinicIdBetween(Integer value1, Integer value2) {
-            addCriterion("sys_clinic_id between", value1, value2, "sysClinicId");
-            return (Criteria) this;
-        }
-
-        public Criteria andSysClinicIdNotBetween(Integer value1, Integer value2) {
-            addCriterion("sys_clinic_id not between", value1, value2, "sysClinicId");
             return (Criteria) this;
         }
 

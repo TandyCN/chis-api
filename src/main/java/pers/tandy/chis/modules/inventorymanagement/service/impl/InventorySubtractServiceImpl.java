@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 import pers.tandy.chis.main.common.enums.ApproveStateEnum;
 import pers.tandy.chis.main.component.DecimalUtils;
 import pers.tandy.chis.main.component.KeyUtils;
+import pers.tandy.chis.modules.financialmanagement.bean.PayableAccount;
+import pers.tandy.chis.modules.financialmanagement.service.PayableAccountService;
 import pers.tandy.chis.modules.inventorymanagement.bean.Inventory;
 import pers.tandy.chis.modules.inventorymanagement.bean.InventorySubtract;
 import pers.tandy.chis.modules.inventorymanagement.dao.InventorySubtractMapper;
@@ -34,6 +36,12 @@ public class InventorySubtractServiceImpl implements InventorySubtractService {
     @Autowired
     public void setInventoryService(InventoryService inventoryService) {
         this.inventoryService = inventoryService;
+    }
+
+    private PayableAccountService payableAccountService;
+    @Autowired
+    public void setPayableAccountService(PayableAccountService payableAccountService) {
+        this.payableAccountService = payableAccountService;
     }
 
     private SupplierService supplierService;
@@ -82,6 +90,7 @@ public class InventorySubtractServiceImpl implements InventorySubtractService {
             subtract.setProducedDate(inventory.getProducedDate());
             subtract.setExpiryDate(inventory.getExpiryDate());
             subtract.setPemSupplierId(inventory.getPemSupplierId());
+            subtract.setIymInventoryAddId(inventory.getIymInventoryAddId());
             subtract.setActionType(actionType);
             subtract.setCreatorId(user.getId());
             subtract.setCreationDate(new Date());
@@ -126,16 +135,8 @@ public class InventorySubtractServiceImpl implements InventorySubtractService {
         List<Inventory> inventoryList = inventoryService.getByIdList(inventoryIdList);
 
         // 准备提交的数据
-        Integer pemSupplierId = null;
-        float amount = 0;
         for (Inventory inventory : inventoryList) {
             InventorySubtract subtract = subtractMap.get(inventory.getId());
-            // 获取更新供应商欠款数据
-            if (pemSupplierId == null) {
-                pemSupplierId = subtract.getPemSupplierId();
-            }
-            amount += subtract.getQuantity() * subtract.getCostPrice();
-
             // 判断库存数量是否足够
             if ((inventory.getQuantity() - subtract.getQuantity()) < 0) {
                 throw new RuntimeException("商品编码:【" + inventory.getGsmGoodsOid() + "】" +
@@ -149,15 +150,49 @@ public class InventorySubtractServiceImpl implements InventorySubtractService {
         // 更新库存数量
         inventoryService.updateQuantityByList(inventoryList);
 
-        // 将金额四舍五入保留两位小数
-        amount = DecimalUtils.roundHalfUp(amount, 2);
-        // 更新供应商欠款
-        this.subtractArrearagesAmount(pemSupplierId, amount);
-
+        // 供应商应付账款记账
+        this.savePayableAccount(inventorySubtractList);
     }
 
-    private void subtractArrearagesAmount(Integer pemSupplierId, Float amount) {
-        supplierService.subtractArrearagesAmount(pemSupplierId, amount);
+    private void savePayableAccount(List<InventorySubtract> inventorySubtractList) {
+        Integer pemSupplierId = null;
+        float payableAmount = 0;
+        PayableAccount payableAccount;
+        List<PayableAccount> payableAccountList = new ArrayList<>();
+
+        for (InventorySubtract inventorySubtract : inventorySubtractList) {
+            // 获取本次供应商应付总金额
+            if (pemSupplierId == null) {
+                pemSupplierId = inventorySubtract.getPemSupplierId();
+            }
+            payableAmount += inventorySubtract.getQuantity() * inventorySubtract.getCostPrice();
+
+            // 获取供应商应付账款明细
+            payableAccount = new PayableAccount();
+            payableAccount.setLsh(inventorySubtract.getLsh());
+            payableAccount.setMxh(inventorySubtract.getMxh());
+            payableAccount.setGsmGoodsId(inventorySubtract.getGsmGoodsId());
+            payableAccount.setPh(inventorySubtract.getPh());
+            payableAccount.setPch(inventorySubtract.getPch());
+            payableAccount.setCostPrice(inventorySubtract.getCostPrice());
+            payableAccount.setQuantity((short) (inventorySubtract.getQuantity() * -1)); // 将数量改为负数
+            payableAccount.setPurchaseTaxRate(inventorySubtract.getPurchaseTaxRate());
+            payableAccount.setSellTaxRate(inventorySubtract.getSellTaxRate());
+            payableAccount.setPemSupplierId(inventorySubtract.getPemSupplierId());
+            payableAccount.setIymInventoryAddId(inventorySubtract.getIymInventoryAddId());
+            payableAccount.setSysClinicId(inventorySubtract.getSysClinicId());
+            payableAccount.setCreatorId(inventorySubtract.getCreatorId());
+            payableAccount.setCreationDate(inventorySubtract.getCreationDate());
+
+            payableAccountList.add(payableAccount);
+        }
+
+        // 将应付金额四舍五入保留2位小数
+        payableAmount = DecimalUtils.roundHalfUp(payableAmount, 2);
+        // 扣减供应商应付账款金额
+        supplierService.subtractArrearagesAmount(pemSupplierId, payableAmount);
+        // 保存应付账款记录
+        payableAccountService.saveList(payableAccountList);
     }
 
     @Override

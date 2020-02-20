@@ -15,21 +15,28 @@ public interface PayableAccountService {
 
     /**
      * 保存操作
-     * @param payableAccount
+     * @param payableAccountList
      */
     @Transactional
-    void save(PayableAccount payableAccount);
+    void saveList(List<PayableAccount> payableAccountList);
 
     /**
-     * 根据
+     * 根据查询条件获取应付账款汇总
      * @param creationDate
      * @param pemSupplierId
      * @param sysClinicId
-     * @param payUp
+     * @param arrearagesAmount
      * @return
      */
-    List<Map<String, Object>> getByCriteria(String[] creationDate,
-                                            Integer pemSupplierId,
-                                            Integer sysClinicId,
-                                            Boolean payUp);
+    List<Map<String, Object>> getGroupListByCriteria(String[] creationDate,
+                                                     Integer pemSupplierId,
+                                                     Integer sysClinicId,
+                                                     Float arrearagesAmount);
+
+    /**
+     * 根据 lsh 获取对应的应付账款明细
+     * @param lsh
+     * @return
+     */
+    List<Map<String, Object>> getByLsh(String lsh);
 }

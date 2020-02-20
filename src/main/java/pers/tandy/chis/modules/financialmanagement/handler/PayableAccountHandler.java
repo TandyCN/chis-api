@@ -32,29 +32,39 @@ public class PayableAccountHandler {
     /* -------------------------------------------------------------------------------------------------------------- */
 
     /**
-     * 根据条件获取对应的应付账款明细
+     * 根据条件获取对应的应付账款汇总
      * @param pageNum
      * @param pageSize
      * @param creationDate
      * @param pemSupplierId
      * @param sysClinicId
-     * @param payUp
+     * @param arrearagesAmount
      * @return
      */
-    @GetMapping("/getByCriteria")
-    public PageResult getByCriteria (
+    @GetMapping("/getGroupListByCriteria")
+    public PageResult getGroupListByCriteria (
             @RequestParam(defaultValue="1") Integer pageNum,
             @RequestParam(defaultValue="1") Integer pageSize,
             @RequestParam(value = "creationDate[]",required = false) String[] creationDate, // 创建日期
             @RequestParam(required = false) Integer pemSupplierId,
             @RequestParam(required = false) Integer sysClinicId,
-            @RequestParam(required = false) Boolean payUp){
+            @RequestParam(required = false) Float arrearagesAmount){
 
         PageHelper.startPage(pageNum, pageSize);
-        List<Map<String, Object>> pageList = payableAccountService.getByCriteria(creationDate, pemSupplierId, sysClinicId, payUp);
+        List<Map<String, Object>> pageList = payableAccountService.getGroupListByCriteria(creationDate, pemSupplierId, sysClinicId, arrearagesAmount);
         PageInfo<Map<String, Object>> pageInfo = new PageInfo<Map<String, Object>>(pageList);
         return PageResult.success().resultSet("page", pageInfo);
     }
 
+    /**
+     * 根据 lsh 获取对应的应付账款明细
+     * @param lsh
+     * @return
+     */
+    @GetMapping("/getByLsh")
+    public PageResult getByLsh(String lsh) {
+        List<Map<String, Object>> list = payableAccountService.getByLsh(lsh);
+        return PageResult.success().resultSet("list", list);
+    }
 
 }

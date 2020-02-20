@@ -54,13 +54,6 @@ public interface PaidAccountService {
     void approved(String paymentNo);
 
     /**
-     * 根据 lsh 获取应付记录
-     * @param lsh
-     * @return
-     */
-    List<Map<String, Object>> getInventoryAddListByLsh(String lsh);
-
-    /**
      * 根据条件获取对应的已付汇总
      * @param creationDate
      * @param pemSupplierId

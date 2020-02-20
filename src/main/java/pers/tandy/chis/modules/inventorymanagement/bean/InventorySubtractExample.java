@@ -1272,6 +1272,66 @@ public class InventorySubtractExample {
             return (Criteria) this;
         }
 
+        public Criteria andIymInventoryAddIdIsNull() {
+            addCriterion("iym_inventory_add_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIymInventoryAddIdIsNotNull() {
+            addCriterion("iym_inventory_add_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIymInventoryAddIdEqualTo(Integer value) {
+            addCriterion("iym_inventory_add_id =", value, "iymInventoryAddId");
+            return (Criteria) this;
+        }
+
+        public Criteria andIymInventoryAddIdNotEqualTo(Integer value) {
+            addCriterion("iym_inventory_add_id <>", value, "iymInventoryAddId");
+            return (Criteria) this;
+        }
+
+        public Criteria andIymInventoryAddIdGreaterThan(Integer value) {
+            addCriterion("iym_inventory_add_id >", value, "iymInventoryAddId");
+            return (Criteria) this;
+        }
+
+        public Criteria andIymInventoryAddIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("iym_inventory_add_id >=", value, "iymInventoryAddId");
+            return (Criteria) this;
+        }
+
+        public Criteria andIymInventoryAddIdLessThan(Integer value) {
+            addCriterion("iym_inventory_add_id <", value, "iymInventoryAddId");
+            return (Criteria) this;
+        }
+
+        public Criteria andIymInventoryAddIdLessThanOrEqualTo(Integer value) {
+            addCriterion("iym_inventory_add_id <=", value, "iymInventoryAddId");
+            return (Criteria) this;
+        }
+
+        public Criteria andIymInventoryAddIdIn(List<Integer> values) {
+            addCriterion("iym_inventory_add_id in", values, "iymInventoryAddId");
+            return (Criteria) this;
+        }
+
+        public Criteria andIymInventoryAddIdNotIn(List<Integer> values) {
+            addCriterion("iym_inventory_add_id not in", values, "iymInventoryAddId");
+            return (Criteria) this;
+        }
+
+        public Criteria andIymInventoryAddIdBetween(Integer value1, Integer value2) {
+            addCriterion("iym_inventory_add_id between", value1, value2, "iymInventoryAddId");
+            return (Criteria) this;
+        }
+
+        public Criteria andIymInventoryAddIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("iym_inventory_add_id not between", value1, value2, "iymInventoryAddId");
+            return (Criteria) this;
+        }
+
         public Criteria andActionTypeIsNull() {
             addCriterion("action_type is null");
             return (Criteria) this;

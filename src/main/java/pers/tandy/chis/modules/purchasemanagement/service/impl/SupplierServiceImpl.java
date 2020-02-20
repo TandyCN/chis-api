@@ -55,6 +55,9 @@ public class SupplierServiceImpl implements SupplierService {
     @CachePut(key = "#id")
     @Override
     public Supplier addArrearagesAmount(Integer id, Float amount) {
+        if (amount < 0) {
+            throw new RuntimeException("付款金额不能小于 0");
+        }
         Supplier supplier = this.getById(id);
         float arrearagesAmount = supplier.getArrearagesAmount() + amount;
         supplier.setArrearagesAmount(arrearagesAmount);
@@ -65,6 +68,9 @@ public class SupplierServiceImpl implements SupplierService {
     @CachePut(key = "#id")
     @Override
     public Supplier subtractArrearagesAmount(Integer id, Float amount) {
+        if (amount < 0) {
+            throw new RuntimeException("付款金额不能小于 0");
+        }
         Supplier supplier = this.getById(id);
         float arrearagesAmount = supplier.getArrearagesAmount() - amount;
         if (arrearagesAmount < 0) {

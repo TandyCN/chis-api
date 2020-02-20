@@ -78,6 +78,9 @@ public class InventorySubtract implements Serializable {
     private Integer pemSupplierId;
 
     @NotNull
+    private Integer iymInventoryAddId;
+
+    @NotNull
     private Byte actionType;
 
     @NotNull
@@ -237,6 +240,14 @@ public class InventorySubtract implements Serializable {
 
     public void setPemSupplierId(Integer pemSupplierId) {
         this.pemSupplierId = pemSupplierId;
+    }
+
+    public Integer getIymInventoryAddId() {
+        return iymInventoryAddId;
+    }
+
+    public void setIymInventoryAddId(Integer iymInventoryAddId) {
+        this.iymInventoryAddId = iymInventoryAddId;
     }
 
     public Byte getActionType() {

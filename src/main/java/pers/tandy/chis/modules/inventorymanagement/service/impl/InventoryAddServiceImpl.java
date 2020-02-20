@@ -138,17 +138,9 @@ public class InventoryAddServiceImpl implements InventoryAddService {
         inventoryAddMapper.updateApproveStateByLsh(user.getId(), new Date(), ApproveStateEnum.APPROVED.getIndex(),
                 lsh, ApproveStateEnum.PENDING.getIndex());
 
-        // 添加库存 并获取部分应付账款数据
-        Integer pemSupplierId = null;
-        float payableAmount = 0;
+        // 添加库存
         List<Inventory> inventoryList = new ArrayList<>();
         for (InventoryAdd inventoryAdd : inventoryAddList) {
-            // 应付账款数据
-            if (pemSupplierId == null) {
-                pemSupplierId = inventoryAdd.getPemSupplierId();
-            }
-            payableAmount += inventoryAdd.getCostPrice() * inventoryAdd.getQuantity();
-
             // 库存数据
             Inventory inventory = new Inventory();
 
@@ -170,28 +162,49 @@ public class InventoryAddServiceImpl implements InventoryAddService {
         }
         inventoryService.save(inventoryList);
 
+        // 供应商应付账款记账
+        this.savePayableAccount(inventoryAddList);
+    }
+
+    private void savePayableAccount (List<InventoryAdd> inventoryAddList) {
+        Integer pemSupplierId = null;
+        float payableAmount = 0;
+        PayableAccount payableAccount;
+        List<PayableAccount> payableAccountList = new ArrayList<>();
+
+        for (InventoryAdd inventoryAdd : inventoryAddList) {
+            // 获取本次供应商应付总金额
+            if (pemSupplierId == null) {
+               pemSupplierId = inventoryAdd.getPemSupplierId();
+            }
+            payableAmount += inventoryAdd.getQuantity() * inventoryAdd.getCostPrice();
+
+            // 获取供应商应付账款明细
+            payableAccount = new PayableAccount();
+            payableAccount.setLsh(inventoryAdd.getLsh());
+            payableAccount.setMxh(inventoryAdd.getMxh());
+            payableAccount.setGsmGoodsId(inventoryAdd.getGsmGoodsId());
+            payableAccount.setPh(inventoryAdd.getPh());
+            payableAccount.setPch(inventoryAdd.getPch());
+            payableAccount.setCostPrice(inventoryAdd.getCostPrice());
+            payableAccount.setQuantity(inventoryAdd.getQuantity());
+            payableAccount.setPurchaseTaxRate(inventoryAdd.getPurchaseTaxRate());
+            payableAccount.setSellTaxRate(inventoryAdd.getSellTaxRate());
+            payableAccount.setPemSupplierId(inventoryAdd.getPemSupplierId());
+            payableAccount.setIymInventoryAddId(inventoryAdd.getId());
+            payableAccount.setSysClinicId(inventoryAdd.getSysClinicId());
+            payableAccount.setCreatorId(inventoryAdd.getCreatorId());
+            payableAccount.setCreationDate(inventoryAdd.getCreationDate());
+
+            payableAccountList.add(payableAccount);
+        }
+
         // 将应付金额四舍五入保留2位小数
         payableAmount = DecimalUtils.roundHalfUp(payableAmount, 2);
-        // 供应商应付账款记账
-        this.savePayableAccount(lsh, pemSupplierId, payableAmount, user);
-        // 更新供应商欠款
-        this.addArrearagesAmount(pemSupplierId, payableAmount);
-    }
-
-    private void savePayableAccount (String lsh, Integer pemSupplierId, Float payableAmount, User user) {
-        PayableAccount payableAccount = new PayableAccount();
-        payableAccount.setLsh(lsh);
-        payableAccount.setPemSupplierId(pemSupplierId);
-        payableAccount.setPayableAmount(payableAmount);
-        payableAccount.setSysClinicId(user.getSysClinicId());
-        payableAccount.setCreatorId(user.getId());
-        payableAccount.setCreationDate(new Date());
-
-        this.payableAccountService.save(payableAccount);
-    }
-
-    private void addArrearagesAmount(Integer pemSupplierId, Float payableAmount) {
-        this.supplierService.addArrearagesAmount(pemSupplierId, payableAmount);
+        // 增加供应商应付账款金额
+        supplierService.addArrearagesAmount(pemSupplierId, payableAmount);
+        // 保存应付账款记录
+        payableAccountService.saveList(payableAccountList);
     }
 
     @Override

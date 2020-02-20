@@ -18,14 +18,8 @@ public class PaidAccount implements Serializable {
     @NotBlank
     private String mxh;
 
-    @NotNull
-    private Integer iymInventoryAddId;
-
-    @NotNull
-    private Integer flmPayableAccountId;
-
-    @NotNull
-    private Integer pemSupplierId;
+    @NotBlank
+    private String flmPayableAccountLsh;
 
     @NotNull
     private Integer gsmGoodsId;
@@ -44,15 +38,19 @@ public class PaidAccount implements Serializable {
     private Float costPrice;
 
     @Max(30000)
-    @Min(1)
     @NotNull
-    private Short paidQuantity;
+    private Short quantity;
+
+    @NotNull
+    private Integer pemSupplierId;
+
+    @NotNull
+    private Integer iymInventoryAddId;
+
+    private Integer sysClinicId;
 
     @Length(max = 50)
     private String invoiceNo;
-
-    @NotNull
-    private Integer sysClinicId;
 
     @NotNull
     private Integer creatorId;
@@ -101,28 +99,12 @@ public class PaidAccount implements Serializable {
         this.mxh = mxh == null ? null : mxh.trim();
     }
 
-    public Integer getIymInventoryAddId() {
-        return iymInventoryAddId;
+    public String getFlmPayableAccountLsh() {
+        return flmPayableAccountLsh;
     }
 
-    public void setIymInventoryAddId(Integer iymInventoryAddId) {
-        this.iymInventoryAddId = iymInventoryAddId;
-    }
-
-    public Integer getFlmPayableAccountId() {
-        return flmPayableAccountId;
-    }
-
-    public void setFlmPayableAccountId(Integer flmPayableAccountId) {
-        this.flmPayableAccountId = flmPayableAccountId;
-    }
-
-    public Integer getPemSupplierId() {
-        return pemSupplierId;
-    }
-
-    public void setPemSupplierId(Integer pemSupplierId) {
-        this.pemSupplierId = pemSupplierId;
+    public void setFlmPayableAccountLsh(String flmPayableAccountLsh) {
+        this.flmPayableAccountLsh = flmPayableAccountLsh == null ? null : flmPayableAccountLsh.trim();
     }
 
     public Integer getGsmGoodsId() {
@@ -157,20 +139,28 @@ public class PaidAccount implements Serializable {
         this.costPrice = costPrice;
     }
 
-    public Short getPaidQuantity() {
-        return paidQuantity;
+    public Short getQuantity() {
+        return quantity;
     }
 
-    public void setPaidQuantity(Short paidQuantity) {
-        this.paidQuantity = paidQuantity;
+    public void setQuantity(Short quantity) {
+        this.quantity = quantity;
     }
 
-    public String getInvoiceNo() {
-        return invoiceNo;
+    public Integer getPemSupplierId() {
+        return pemSupplierId;
     }
 
-    public void setInvoiceNo(String invoiceNo) {
-        this.invoiceNo = invoiceNo == null ? null : invoiceNo.trim();
+    public void setPemSupplierId(Integer pemSupplierId) {
+        this.pemSupplierId = pemSupplierId;
+    }
+
+    public Integer getIymInventoryAddId() {
+        return iymInventoryAddId;
+    }
+
+    public void setIymInventoryAddId(Integer iymInventoryAddId) {
+        this.iymInventoryAddId = iymInventoryAddId;
     }
 
     public Integer getSysClinicId() {
@@ -179,6 +169,14 @@ public class PaidAccount implements Serializable {
 
     public void setSysClinicId(Integer sysClinicId) {
         this.sysClinicId = sysClinicId;
+    }
+
+    public String getInvoiceNo() {
+        return invoiceNo;
+    }
+
+    public void setInvoiceNo(String invoiceNo) {
+        this.invoiceNo = invoiceNo == null ? null : invoiceNo.trim();
     }
 
     public Integer getCreatorId() {

@@ -31,11 +31,13 @@ public interface PaidAccountMapper {
 
     int updateByPrimaryKey(PaidAccount record);
 
+
     /* -------------------------------------------------------------------------------------------------------------- */
 
     void insertList(@Param("paidAccountList") List<PaidAccount> paidAccountList);
 
-    void updateInvoiceNo(@Param("lshList") List<String> lshList, @Param("invoiceNo") String invoiceNo);
+    void updateInvoiceNo(@Param("lshList") List<String> lshList,
+                         @Param("invoiceNo") String invoiceNo);
 
     void updatePaymentNo(@Param("lshList") List<String> lshList,
                          @Param("paymentNo") String paymentNo,
@@ -46,9 +48,6 @@ public interface PaidAccountMapper {
                                        @Param("approverId") Integer approverId,
                                        @Param("approveDate") Date approveDate,
                                        @Param("approveState") Byte approveState);
-
-
-    List<Map<String, Object>> selectInventoryAddListByLsh(@Param("lsh") String lsh);
 
     List<Map<String, Object>> selectLshGroupListByCriteria(@Param("creationDate") String[] creationDate,
                                                            @Param("pemSupplierId") Integer pemSupplierId,
@@ -64,4 +63,5 @@ public interface PaidAccountMapper {
                                                                  @Param("paymentNo") String paymentNo);
 
     List<Map<String, Object>> selectByPaymentNo(@Param("paymentNo") String paymentNo);
+
 }

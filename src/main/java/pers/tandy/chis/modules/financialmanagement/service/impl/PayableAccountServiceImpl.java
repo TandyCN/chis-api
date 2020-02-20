@@ -27,12 +27,18 @@ public class PayableAccountServiceImpl implements PayableAccountService {
     /* -------------------------------------------------------------------------------------------------------------- */
 
     @Override
-    public void save(PayableAccount payableAccount) {
-       payableAccountMapper.insert(payableAccount);
+    public void saveList(List<PayableAccount> payableAccountList) {
+        payableAccountMapper.saveList(payableAccountList);
     }
 
     @Override
-    public List<Map<String, Object>> getByCriteria(String[] creationDate, Integer pemSupplierId, Integer sysClinicId, Boolean payUp) {
-        return payableAccountMapper.selectByCriteria(creationDate, pemSupplierId, sysClinicId, payUp);
+    public List<Map<String, Object>> getGroupListByCriteria(String[] creationDate, Integer pemSupplierId, Integer sysClinicId, Float arrearagesAmount) {
+        return payableAccountMapper.selectGroupListByCriteria(creationDate, pemSupplierId, sysClinicId, arrearagesAmount);
     }
+
+    @Override
+    public List<Map<String, Object>> getByLsh(String lsh) {
+        return payableAccountMapper.selectByLsh(lsh);
+    }
+
 }

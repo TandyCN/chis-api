@@ -51,5 +51,4 @@ public interface InventorySubtractMapper {
                                                                  @Param("pemSupplierName") String pemSupplierName);
 
     List<Map<String, Object>> selectByLsh(@Param("lsh") String lsh);
-
 }

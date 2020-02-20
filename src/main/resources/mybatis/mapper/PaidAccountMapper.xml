@@ -5,16 +5,16 @@
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="lsh" jdbcType="VARCHAR" property="lsh" />
     <result column="mxh" jdbcType="VARCHAR" property="mxh" />
-    <result column="iym_inventory_add_id" jdbcType="INTEGER" property="iymInventoryAddId" />
-    <result column="flm_payable_account_id" jdbcType="INTEGER" property="flmPayableAccountId" />
-    <result column="pem_supplier_id" jdbcType="INTEGER" property="pemSupplierId" />
+    <result column="flm_payable_account_lsh" jdbcType="VARCHAR" property="flmPayableAccountLsh" />
     <result column="gsm_goods_id" jdbcType="INTEGER" property="gsmGoodsId" />
     <result column="ph" jdbcType="VARCHAR" property="ph" />
     <result column="pch" jdbcType="VARCHAR" property="pch" />
     <result column="cost_price" jdbcType="REAL" property="costPrice" />
-    <result column="paid_quantity" jdbcType="SMALLINT" property="paidQuantity" />
-    <result column="invoice_no" jdbcType="VARCHAR" property="invoiceNo" />
+    <result column="quantity" jdbcType="SMALLINT" property="quantity" />
+    <result column="pem_supplier_id" jdbcType="INTEGER" property="pemSupplierId" />
+    <result column="iym_inventory_add_id" jdbcType="INTEGER" property="iymInventoryAddId" />
     <result column="sys_clinic_id" jdbcType="INTEGER" property="sysClinicId" />
+    <result column="invoice_no" jdbcType="VARCHAR" property="invoiceNo" />
     <result column="creator_id" jdbcType="INTEGER" property="creatorId" />
     <result column="creation_date" jdbcType="TIMESTAMP" property="creationDate" />
     <result column="payment_no" jdbcType="VARCHAR" property="paymentNo" />
@@ -83,8 +83,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, lsh, mxh, iym_inventory_add_id, flm_payable_account_id, pem_supplier_id, gsm_goods_id,
-    ph, pch, cost_price, paid_quantity, invoice_no, sys_clinic_id, creator_id, creation_date,
+    id, lsh, mxh, flm_payable_account_lsh, gsm_goods_id, ph, pch, cost_price, quantity,
+    pem_supplier_id, iym_inventory_add_id, sys_clinic_id, invoice_no, creator_id, creation_date,
     payment_no, payer_id, pay_date, approver_id, approve_date, approve_state
   </sql>
   <select id="selectByExample" parameterType="pers.tandy.chis.modules.financialmanagement.bean.PaidAccountExample" resultMap="BaseResultMap">
@@ -119,21 +119,21 @@
   </delete>
   <insert id="insert" parameterType="pers.tandy.chis.modules.financialmanagement.bean.PaidAccount">
     insert into flm_paid_account (id, lsh, mxh,
-      iym_inventory_add_id, flm_payable_account_id,
-      pem_supplier_id, gsm_goods_id, ph,
-      pch, cost_price, paid_quantity,
-      invoice_no, sys_clinic_id, creator_id,
-      creation_date, payment_no, payer_id,
-      pay_date, approver_id, approve_date,
-      approve_state)
+      flm_payable_account_lsh, gsm_goods_id, ph,
+      pch, cost_price, quantity,
+      pem_supplier_id, iym_inventory_add_id, sys_clinic_id,
+      invoice_no, creator_id, creation_date,
+      payment_no, payer_id, pay_date,
+      approver_id, approve_date, approve_state
+      )
     values (#{id,jdbcType=INTEGER}, #{lsh,jdbcType=VARCHAR}, #{mxh,jdbcType=VARCHAR},
-      #{iymInventoryAddId,jdbcType=INTEGER}, #{flmPayableAccountId,jdbcType=INTEGER},
-      #{pemSupplierId,jdbcType=INTEGER}, #{gsmGoodsId,jdbcType=INTEGER}, #{ph,jdbcType=VARCHAR},
-      #{pch,jdbcType=VARCHAR}, #{costPrice,jdbcType=REAL}, #{paidQuantity,jdbcType=SMALLINT},
-      #{invoiceNo,jdbcType=VARCHAR}, #{sysClinicId,jdbcType=INTEGER}, #{creatorId,jdbcType=INTEGER},
-      #{creationDate,jdbcType=TIMESTAMP}, #{paymentNo,jdbcType=VARCHAR}, #{payerId,jdbcType=INTEGER},
-      #{payDate,jdbcType=TIMESTAMP}, #{approverId,jdbcType=INTEGER}, #{approveDate,jdbcType=TIMESTAMP},
-      #{approveState,jdbcType=TINYINT})
+      #{flmPayableAccountLsh,jdbcType=VARCHAR}, #{gsmGoodsId,jdbcType=INTEGER}, #{ph,jdbcType=VARCHAR},
+      #{pch,jdbcType=VARCHAR}, #{costPrice,jdbcType=REAL}, #{quantity,jdbcType=SMALLINT},
+      #{pemSupplierId,jdbcType=INTEGER}, #{iymInventoryAddId,jdbcType=INTEGER}, #{sysClinicId,jdbcType=INTEGER},
+      #{invoiceNo,jdbcType=VARCHAR}, #{creatorId,jdbcType=INTEGER}, #{creationDate,jdbcType=TIMESTAMP},
+      #{paymentNo,jdbcType=VARCHAR}, #{payerId,jdbcType=INTEGER}, #{payDate,jdbcType=TIMESTAMP},
+      #{approverId,jdbcType=INTEGER}, #{approveDate,jdbcType=TIMESTAMP}, #{approveState,jdbcType=TINYINT}
+      )
   </insert>
   <insert id="insertSelective" parameterType="pers.tandy.chis.modules.financialmanagement.bean.PaidAccount">
     insert into flm_paid_account
@@ -147,14 +147,8 @@
       <if test="mxh != null">
         mxh,
       </if>
-      <if test="iymInventoryAddId != null">
-        iym_inventory_add_id,
-      </if>
-      <if test="flmPayableAccountId != null">
-        flm_payable_account_id,
-      </if>
-      <if test="pemSupplierId != null">
-        pem_supplier_id,
+      <if test="flmPayableAccountLsh != null">
+        flm_payable_account_lsh,
       </if>
       <if test="gsmGoodsId != null">
         gsm_goods_id,
@@ -168,14 +162,20 @@
       <if test="costPrice != null">
         cost_price,
       </if>
-      <if test="paidQuantity != null">
-        paid_quantity,
+      <if test="quantity != null">
+        quantity,
       </if>
-      <if test="invoiceNo != null">
-        invoice_no,
+      <if test="pemSupplierId != null">
+        pem_supplier_id,
+      </if>
+      <if test="iymInventoryAddId != null">
+        iym_inventory_add_id,
       </if>
       <if test="sysClinicId != null">
         sys_clinic_id,
+      </if>
+      <if test="invoiceNo != null">
+        invoice_no,
       </if>
       <if test="creatorId != null">
         creator_id,
@@ -212,14 +212,8 @@
       <if test="mxh != null">
         #{mxh,jdbcType=VARCHAR},
       </if>
-      <if test="iymInventoryAddId != null">
-        #{iymInventoryAddId,jdbcType=INTEGER},
-      </if>
-      <if test="flmPayableAccountId != null">
-        #{flmPayableAccountId,jdbcType=INTEGER},
-      </if>
-      <if test="pemSupplierId != null">
-        #{pemSupplierId,jdbcType=INTEGER},
+      <if test="flmPayableAccountLsh != null">
+        #{flmPayableAccountLsh,jdbcType=VARCHAR},
       </if>
       <if test="gsmGoodsId != null">
         #{gsmGoodsId,jdbcType=INTEGER},
@@ -233,14 +227,20 @@
       <if test="costPrice != null">
         #{costPrice,jdbcType=REAL},
       </if>
-      <if test="paidQuantity != null">
-        #{paidQuantity,jdbcType=SMALLINT},
+      <if test="quantity != null">
+        #{quantity,jdbcType=SMALLINT},
       </if>
-      <if test="invoiceNo != null">
-        #{invoiceNo,jdbcType=VARCHAR},
+      <if test="pemSupplierId != null">
+        #{pemSupplierId,jdbcType=INTEGER},
+      </if>
+      <if test="iymInventoryAddId != null">
+        #{iymInventoryAddId,jdbcType=INTEGER},
       </if>
       <if test="sysClinicId != null">
         #{sysClinicId,jdbcType=INTEGER},
+      </if>
+      <if test="invoiceNo != null">
+        #{invoiceNo,jdbcType=VARCHAR},
       </if>
       <if test="creatorId != null">
         #{creatorId,jdbcType=INTEGER},
@@ -286,14 +286,8 @@
       <if test="record.mxh != null">
         mxh = #{record.mxh,jdbcType=VARCHAR},
       </if>
-      <if test="record.iymInventoryAddId != null">
-        iym_inventory_add_id = #{record.iymInventoryAddId,jdbcType=INTEGER},
-      </if>
-      <if test="record.flmPayableAccountId != null">
-        flm_payable_account_id = #{record.flmPayableAccountId,jdbcType=INTEGER},
-      </if>
-      <if test="record.pemSupplierId != null">
-        pem_supplier_id = #{record.pemSupplierId,jdbcType=INTEGER},
+      <if test="record.flmPayableAccountLsh != null">
+        flm_payable_account_lsh = #{record.flmPayableAccountLsh,jdbcType=VARCHAR},
       </if>
       <if test="record.gsmGoodsId != null">
         gsm_goods_id = #{record.gsmGoodsId,jdbcType=INTEGER},
@@ -307,14 +301,20 @@
       <if test="record.costPrice != null">
         cost_price = #{record.costPrice,jdbcType=REAL},
       </if>
-      <if test="record.paidQuantity != null">
-        paid_quantity = #{record.paidQuantity,jdbcType=SMALLINT},
+      <if test="record.quantity != null">
+        quantity = #{record.quantity,jdbcType=SMALLINT},
       </if>
-      <if test="record.invoiceNo != null">
-        invoice_no = #{record.invoiceNo,jdbcType=VARCHAR},
+      <if test="record.pemSupplierId != null">
+        pem_supplier_id = #{record.pemSupplierId,jdbcType=INTEGER},
+      </if>
+      <if test="record.iymInventoryAddId != null">
+        iym_inventory_add_id = #{record.iymInventoryAddId,jdbcType=INTEGER},
       </if>
       <if test="record.sysClinicId != null">
         sys_clinic_id = #{record.sysClinicId,jdbcType=INTEGER},
+      </if>
+      <if test="record.invoiceNo != null">
+        invoice_no = #{record.invoiceNo,jdbcType=VARCHAR},
       </if>
       <if test="record.creatorId != null">
         creator_id = #{record.creatorId,jdbcType=INTEGER},
@@ -350,16 +350,16 @@
     set id = #{record.id,jdbcType=INTEGER},
       lsh = #{record.lsh,jdbcType=VARCHAR},
       mxh = #{record.mxh,jdbcType=VARCHAR},
-      iym_inventory_add_id = #{record.iymInventoryAddId,jdbcType=INTEGER},
-      flm_payable_account_id = #{record.flmPayableAccountId,jdbcType=INTEGER},
-      pem_supplier_id = #{record.pemSupplierId,jdbcType=INTEGER},
+      flm_payable_account_lsh = #{record.flmPayableAccountLsh,jdbcType=VARCHAR},
       gsm_goods_id = #{record.gsmGoodsId,jdbcType=INTEGER},
       ph = #{record.ph,jdbcType=VARCHAR},
       pch = #{record.pch,jdbcType=VARCHAR},
       cost_price = #{record.costPrice,jdbcType=REAL},
-      paid_quantity = #{record.paidQuantity,jdbcType=SMALLINT},
-      invoice_no = #{record.invoiceNo,jdbcType=VARCHAR},
+      quantity = #{record.quantity,jdbcType=SMALLINT},
+      pem_supplier_id = #{record.pemSupplierId,jdbcType=INTEGER},
+      iym_inventory_add_id = #{record.iymInventoryAddId,jdbcType=INTEGER},
       sys_clinic_id = #{record.sysClinicId,jdbcType=INTEGER},
+      invoice_no = #{record.invoiceNo,jdbcType=VARCHAR},
       creator_id = #{record.creatorId,jdbcType=INTEGER},
       creation_date = #{record.creationDate,jdbcType=TIMESTAMP},
       payment_no = #{record.paymentNo,jdbcType=VARCHAR},
@@ -381,14 +381,8 @@
       <if test="mxh != null">
         mxh = #{mxh,jdbcType=VARCHAR},
       </if>
-      <if test="iymInventoryAddId != null">
-        iym_inventory_add_id = #{iymInventoryAddId,jdbcType=INTEGER},
-      </if>
-      <if test="flmPayableAccountId != null">
-        flm_payable_account_id = #{flmPayableAccountId,jdbcType=INTEGER},
-      </if>
-      <if test="pemSupplierId != null">
-        pem_supplier_id = #{pemSupplierId,jdbcType=INTEGER},
+      <if test="flmPayableAccountLsh != null">
+        flm_payable_account_lsh = #{flmPayableAccountLsh,jdbcType=VARCHAR},
       </if>
       <if test="gsmGoodsId != null">
         gsm_goods_id = #{gsmGoodsId,jdbcType=INTEGER},
@@ -402,14 +396,20 @@
       <if test="costPrice != null">
         cost_price = #{costPrice,jdbcType=REAL},
       </if>
-      <if test="paidQuantity != null">
-        paid_quantity = #{paidQuantity,jdbcType=SMALLINT},
+      <if test="quantity != null">
+        quantity = #{quantity,jdbcType=SMALLINT},
       </if>
-      <if test="invoiceNo != null">
-        invoice_no = #{invoiceNo,jdbcType=VARCHAR},
+      <if test="pemSupplierId != null">
+        pem_supplier_id = #{pemSupplierId,jdbcType=INTEGER},
+      </if>
+      <if test="iymInventoryAddId != null">
+        iym_inventory_add_id = #{iymInventoryAddId,jdbcType=INTEGER},
       </if>
       <if test="sysClinicId != null">
         sys_clinic_id = #{sysClinicId,jdbcType=INTEGER},
+      </if>
+      <if test="invoiceNo != null">
+        invoice_no = #{invoiceNo,jdbcType=VARCHAR},
       </if>
       <if test="creatorId != null">
         creator_id = #{creatorId,jdbcType=INTEGER},
@@ -442,16 +442,16 @@
     update flm_paid_account
     set lsh = #{lsh,jdbcType=VARCHAR},
       mxh = #{mxh,jdbcType=VARCHAR},
-      iym_inventory_add_id = #{iymInventoryAddId,jdbcType=INTEGER},
-      flm_payable_account_id = #{flmPayableAccountId,jdbcType=INTEGER},
-      pem_supplier_id = #{pemSupplierId,jdbcType=INTEGER},
+      flm_payable_account_lsh = #{flmPayableAccountLsh,jdbcType=VARCHAR},
       gsm_goods_id = #{gsmGoodsId,jdbcType=INTEGER},
       ph = #{ph,jdbcType=VARCHAR},
       pch = #{pch,jdbcType=VARCHAR},
       cost_price = #{costPrice,jdbcType=REAL},
-      paid_quantity = #{paidQuantity,jdbcType=SMALLINT},
-      invoice_no = #{invoiceNo,jdbcType=VARCHAR},
+      quantity = #{quantity,jdbcType=SMALLINT},
+      pem_supplier_id = #{pemSupplierId,jdbcType=INTEGER},
+      iym_inventory_add_id = #{iymInventoryAddId,jdbcType=INTEGER},
       sys_clinic_id = #{sysClinicId,jdbcType=INTEGER},
+      invoice_no = #{invoiceNo,jdbcType=VARCHAR},
       creator_id = #{creatorId,jdbcType=INTEGER},
       creation_date = #{creationDate,jdbcType=TIMESTAMP},
       payment_no = #{paymentNo,jdbcType=VARCHAR},
@@ -473,16 +473,16 @@
     id,
     lsh,
     mxh,
-    iym_inventory_add_id,
-    flm_payable_account_id,
-    pem_supplier_id,
+    flm_payable_account_lsh,
     gsm_goods_id,
     ph,
     pch,
     cost_price,
-    paid_quantity,
-    invoice_no,
+    quantity,
+    pem_supplier_id,
+    iym_inventory_add_id,
     sys_clinic_id,
+    invoice_no,
     creator_id,
     creation_date,
     payment_no,
@@ -498,16 +498,16 @@
       #{paidAccount.id,jdbcType=INTEGER},
       #{paidAccount.lsh,jdbcType=VARCHAR},
       #{paidAccount.mxh,jdbcType=VARCHAR},
-      #{paidAccount.iymInventoryAddId,jdbcType=INTEGER},
-      #{paidAccount.flmPayableAccountId,jdbcType=INTEGER},
-      #{paidAccount.pemSupplierId,jdbcType=INTEGER},
+      #{paidAccount.flmPayableAccountLsh,jdbcType=VARCHAR},
       #{paidAccount.gsmGoodsId,jdbcType=INTEGER},
       #{paidAccount.ph,jdbcType=VARCHAR},
       #{paidAccount.pch,jdbcType=VARCHAR},
       #{paidAccount.costPrice,jdbcType=REAL},
-      #{paidAccount.paidQuantity,jdbcType=SMALLINT},
-      #{paidAccount.invoiceNo,jdbcType=VARCHAR},
+      #{paidAccount.quantity,jdbcType=SMALLINT},
+      #{paidAccount.pemSupplierId,jdbcType=INTEGER},
+      #{paidAccount.iymInventoryAddId,jdbcType=INTEGER},
       #{paidAccount.sysClinicId,jdbcType=INTEGER},
+      #{paidAccount.invoiceNo,jdbcType=VARCHAR},
       #{paidAccount.creatorId,jdbcType=INTEGER},
       #{paidAccount.creationDate,jdbcType=TIMESTAMP},
       #{paidAccount.paymentNo,jdbcType=VARCHAR},
@@ -524,10 +524,10 @@
     update flm_paid_account
     set invoice_no = #{invoiceNo}
     where
-      lsh in
-      <foreach collection="lshList" item="lsh" open="(" separator="," close=")">
-        #{lsh}
-      </foreach>
+    lsh in
+    <foreach collection="lshList" item="lsh" open="(" separator="," close=")">
+      #{lsh}
+    </foreach>
   </update>
 
   <update id="updatePaymentNo">
@@ -546,36 +546,9 @@
      where payment_no = #{paymentNo}
   </update>
 
-  <select id="selectInventoryAddListByLsh" resultType="map">
-    select
-      a.*,
-      (a.quantity - ifnull(b.paidQuantity, 0)) as payableQuantity,
-      ifnull(inventoryQuantity, 0) as inventoryQuantity
-    from (
-     select
-      id, lsh, mxh, pemSupplierId, gsmGoodsTypeName, gsmGoodsId, gsmGoodsOid, gsmGoodsName, gsmGoodsCode, gsmGoodsSpecs,
-      goodsUnitsName, originName, manufacturerName, ph, pch, costPrice, quantity
-      from view_iym_inventory_add
-      where lsh = #{lsh}
-      order by mxh
-    ) a
-    left join (
-      select  id, iym_inventory_add_id, sum(ifnull(paid_quantity, 0)) as paidQuantity
-      from flm_paid_account
-      group by iym_inventory_add_id
-    ) b on a.id = b.iym_inventory_add_id
-    left join (
-      select id, iym_inventory_add_id, sum(ifnull(quantity, 0)) as inventoryQuantity
-      from iym_inventory
-      where split_quantity = 1
-      group by iym_inventory_add_id
-    ) c on a.id = c.iym_inventory_add_id
-
-  </select>
-
   <select id="selectLshGroupListByCriteria" resultType="map">
     select
-    lsh, pemSupplierId, pemSupplierOid, pemSupplierName, sum(costPrice * paidQuantity) as paidAmount,
+    lsh, pemSupplierId, pemSupplierOid, pemSupplierName, sum(costPrice * quantity) as paidAmount,
     invoiceNo, sysClinicId, sysClinicName, creatorId, creatorName, creationDate, paymentNo, payerId, payerName, payDate,
     approverId, approverName, approveDate, approveState
     from view_flm_paid_account
@@ -605,7 +578,7 @@
 
   <select id="selectPaymentNoGroupListByCriteria" resultType="map">
     select
-    lsh, pemSupplierId, pemSupplierOid, pemSupplierName, sum(costPrice * paidQuantity) as paidAmount,
+    lsh, pemSupplierId, pemSupplierOid, pemSupplierName, sum(costPrice * quantity) as paidAmount,
     invoiceNo, sysClinicId, sysClinicName, creatorId, creatorName, creationDate, paymentNo, payerId, payerName, payDate,
     approverId, approverName, approveDate, approveState
     from view_flm_paid_account
@@ -625,9 +598,9 @@
       <if test="paymentNo != null &amp;&amp; paymentNo.trim() != ''">
         (paymentNo like '${paymentNo}%') and
       </if>
-      (paymentNo is not null) and (paymentNo != '')
+      (invoiceNo is not null) and (invoiceNo != '') and (paymentNo is not null) and (paymentNo != '')
     </trim>
-    group by invoiceNo
+    group by paymentNo
     order by creationDate desc
   </select>
 
@@ -636,4 +609,5 @@
     from view_flm_paid_account
     where paymentNo = #{paymentNo}
   </select>
+
 </mapper>

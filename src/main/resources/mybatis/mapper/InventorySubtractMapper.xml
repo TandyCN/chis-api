@@ -20,6 +20,7 @@
     <result column="bill_no" jdbcType="VARCHAR" property="billNo" />
     <result column="notes" jdbcType="VARCHAR" property="notes" />
     <result column="pem_supplier_id" jdbcType="INTEGER" property="pemSupplierId" />
+    <result column="iym_inventory_add_id" jdbcType="INTEGER" property="iymInventoryAddId" />
     <result column="action_type" jdbcType="TINYINT" property="actionType" />
     <result column="creator_id" jdbcType="INTEGER" property="creatorId" />
     <result column="creation_date" jdbcType="TIMESTAMP" property="creationDate" />
@@ -88,8 +89,8 @@
   <sql id="Base_Column_List">
     id, lsh, mxh, sys_clinic_id, iym_inventory_type_id, iym_inventory_id, gsm_goods_id,
     cost_price, purchase_tax_rate, sell_tax_rate, quantity, ph, pch, produced_date, expiry_date,
-    bill_no, notes, pem_supplier_id, action_type, creator_id, creation_date, approver_id,
-    approve_date, approve_state
+    bill_no, notes, pem_supplier_id, iym_inventory_add_id, action_type, creator_id, creation_date,
+    approver_id, approve_date, approve_state
   </sql>
   <select id="selectByExample" parameterType="pers.tandy.chis.modules.inventorymanagement.bean.InventorySubtractExample" resultMap="BaseResultMap">
     select
@@ -128,18 +129,18 @@
       sell_tax_rate, quantity, ph,
       pch, produced_date, expiry_date,
       bill_no, notes, pem_supplier_id,
-      action_type, creator_id, creation_date,
-      approver_id, approve_date, approve_state
-      )
+      iym_inventory_add_id, action_type, creator_id,
+      creation_date, approver_id, approve_date,
+      approve_state)
     values (#{id,jdbcType=INTEGER}, #{lsh,jdbcType=VARCHAR}, #{mxh,jdbcType=VARCHAR},
       #{sysClinicId,jdbcType=INTEGER}, #{iymInventoryTypeId,jdbcType=INTEGER}, #{iymInventoryId,jdbcType=INTEGER},
       #{gsmGoodsId,jdbcType=INTEGER}, #{costPrice,jdbcType=REAL}, #{purchaseTaxRate,jdbcType=TINYINT},
       #{sellTaxRate,jdbcType=TINYINT}, #{quantity,jdbcType=SMALLINT}, #{ph,jdbcType=VARCHAR},
       #{pch,jdbcType=VARCHAR}, #{producedDate,jdbcType=DATE}, #{expiryDate,jdbcType=DATE},
       #{billNo,jdbcType=VARCHAR}, #{notes,jdbcType=VARCHAR}, #{pemSupplierId,jdbcType=INTEGER},
-      #{actionType,jdbcType=TINYINT}, #{creatorId,jdbcType=INTEGER}, #{creationDate,jdbcType=TIMESTAMP},
-      #{approverId,jdbcType=INTEGER}, #{approveDate,jdbcType=TIMESTAMP}, #{approveState,jdbcType=TINYINT}
-      )
+      #{iymInventoryAddId,jdbcType=INTEGER}, #{actionType,jdbcType=TINYINT}, #{creatorId,jdbcType=INTEGER},
+      #{creationDate,jdbcType=TIMESTAMP}, #{approverId,jdbcType=INTEGER}, #{approveDate,jdbcType=TIMESTAMP},
+      #{approveState,jdbcType=TINYINT})
   </insert>
   <insert id="insertSelective" parameterType="pers.tandy.chis.modules.inventorymanagement.bean.InventorySubtract">
     insert into iym_inventory_subtract
@@ -197,6 +198,9 @@
       </if>
       <if test="pemSupplierId != null">
         pem_supplier_id,
+      </if>
+      <if test="iymInventoryAddId != null">
+        iym_inventory_add_id,
       </if>
       <if test="actionType != null">
         action_type,
@@ -271,6 +275,9 @@
       </if>
       <if test="pemSupplierId != null">
         #{pemSupplierId,jdbcType=INTEGER},
+      </if>
+      <if test="iymInventoryAddId != null">
+        #{iymInventoryAddId,jdbcType=INTEGER},
       </if>
       <if test="actionType != null">
         #{actionType,jdbcType=TINYINT},
@@ -355,6 +362,9 @@
       <if test="record.pemSupplierId != null">
         pem_supplier_id = #{record.pemSupplierId,jdbcType=INTEGER},
       </if>
+      <if test="record.iymInventoryAddId != null">
+        iym_inventory_add_id = #{record.iymInventoryAddId,jdbcType=INTEGER},
+      </if>
       <if test="record.actionType != null">
         action_type = #{record.actionType,jdbcType=TINYINT},
       </if>
@@ -398,6 +408,7 @@
       bill_no = #{record.billNo,jdbcType=VARCHAR},
       notes = #{record.notes,jdbcType=VARCHAR},
       pem_supplier_id = #{record.pemSupplierId,jdbcType=INTEGER},
+      iym_inventory_add_id = #{record.iymInventoryAddId,jdbcType=INTEGER},
       action_type = #{record.actionType,jdbcType=TINYINT},
       creator_id = #{record.creatorId,jdbcType=INTEGER},
       creation_date = #{record.creationDate,jdbcType=TIMESTAMP},
@@ -462,6 +473,9 @@
       <if test="pemSupplierId != null">
         pem_supplier_id = #{pemSupplierId,jdbcType=INTEGER},
       </if>
+      <if test="iymInventoryAddId != null">
+        iym_inventory_add_id = #{iymInventoryAddId,jdbcType=INTEGER},
+      </if>
       <if test="actionType != null">
         action_type = #{actionType,jdbcType=TINYINT},
       </if>
@@ -502,6 +516,7 @@
       bill_no = #{billNo,jdbcType=VARCHAR},
       notes = #{notes,jdbcType=VARCHAR},
       pem_supplier_id = #{pemSupplierId,jdbcType=INTEGER},
+      iym_inventory_add_id = #{iymInventoryAddId,jdbcType=INTEGER},
       action_type = #{actionType,jdbcType=TINYINT},
       creator_id = #{creatorId,jdbcType=INTEGER},
       creation_date = #{creationDate,jdbcType=TIMESTAMP},
@@ -510,7 +525,6 @@
       approve_state = #{approveState,jdbcType=TINYINT}
     where id = #{id,jdbcType=INTEGER}
   </update>
-
 
 
   <!-- ************************************************************************************************************* -->
@@ -534,6 +548,7 @@
     bill_no,
     notes,
     pem_supplier_id,
+    iym_inventory_add_id,
     action_type,
     creator_id,
     creation_date,
@@ -562,6 +577,7 @@
       #{subtract.billNo,jdbcType=VARCHAR},
       #{subtract.notes,jdbcType=VARCHAR},
       #{subtract.pemSupplierId,jdbcType=INTEGER},
+      #{subtract.iymInventoryAddId,jdbcType=INTEGER},
       #{subtract.actionType,jdbcType=TINYINT},
       #{subtract.creatorId,jdbcType=INTEGER},
       #{subtract.creationDate,jdbcType=TIMESTAMP},
@@ -629,5 +645,7 @@
     from view_iym_inventory_subtract
     where lsh = #{lsh}
   </select>
+
+
 
 </mapper>

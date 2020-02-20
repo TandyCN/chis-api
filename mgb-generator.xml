@@ -36,7 +36,7 @@
 
 		<!-- 配置javaBean 生成位置 -->
 		<javaModelGenerator
-			targetPackage="pers.tandy.chis.modules.purchasemanagement.bean"
+			targetPackage="pers.tandy.chis.modules.financialmanagement.bean"
 			targetProject=".\src\main\java">
 			<property name="enableSubPackages" value="true" />
 			<property name="trimStrings" value="true" />
@@ -52,14 +52,14 @@
 		<!-- 配置 interface 生成位置 -->
 		<javaClientGenerator
 			type="XMLMAPPER"
-			targetPackage="pers.tandy.chis.modules.purchasemanagement.dao"
+			targetPackage="pers.tandy.chis.modules.financialmanagement.dao"
 			targetProject=".\src\main\java">
 			<property name="enableSubPackages" value="true" />
 		</javaClientGenerator>
 
 		<!-- 配置逆向工程的数据库表 -->
-		<table tableName="pem_supplier"
-			   domainObjectName="Supplier"/>
+		<table tableName="flm_paid_account"
+			   domainObjectName="PaidAccount"/>
 
 	</context>
 </generatorConfiguration>

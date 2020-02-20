@@ -119,17 +119,6 @@ public class PaidAccountHandler {
     }
 
     /**
-     * 根据 lsh 获取应付记录
-     * @param lsh
-     * @return
-     */
-    @GetMapping("/getInventoryAddListByLsh")
-    public PageResult getInventoryAddListByLsh (@RequestParam String lsh){
-        List<Map<String, Object>> list = paidAccountService.getInventoryAddListByLsh(lsh);
-        return PageResult.success().resultSet("list", list);
-    }
-
-    /**
      * 根据条件获取已付汇总
      * [预付明细调用]
      * @param pageNum

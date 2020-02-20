@@ -102,24 +102,20 @@ public class PaidAccountServiceImpl implements PaidAccountService {
     private void subtractArrearagesAmount(List<PaidAccount> paidAccountList) {
         // 获取供应商 和 已付金额
         Integer pemSupplierId = null;
-        float paidAmount = 0;
+        float amount = 0;
         for (PaidAccount paidAccount : paidAccountList) {
            if (pemSupplierId == null) {
                pemSupplierId = paidAccount.getPemSupplierId();
            }
-            paidAmount += paidAccount.getPaidQuantity() * paidAccount.getCostPrice();
+            amount += paidAccount.getQuantity() * paidAccount.getCostPrice();
         }
 
         // 将已付金额四舍五入保留2位小数
-        DecimalUtils.roundHalfUp(paidAmount,2);
+        DecimalUtils.roundHalfUp(amount,2);
         // 扣减供应商应欠款
-        this.supplierService.subtractArrearagesAmount(pemSupplierId, paidAmount);
+        this.supplierService.subtractArrearagesAmount(pemSupplierId, amount);
     }
 
-    @Override
-    public List<Map<String, Object>> getInventoryAddListByLsh(String lsh) {
-        return paidAccountMapper.selectInventoryAddListByLsh(lsh);
-    }
 
     @Override
     public List<Map<String, Object>> getLshGroupListByCriteria(String[] creationDate, Integer pemSupplierId, Integer sysClinicId, Byte approveState) {
