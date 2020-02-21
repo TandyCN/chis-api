@@ -920,9 +920,6 @@
     select *
     from view_gsm_goods
     <trim prefix="where" suffixOverrides="and">
-      <if test="oid != null">
-        (oid = #{oid}) and
-      </if>
       <if test="gsmGoodsTypeId != null">
         (gsmGoodsTypeId = #{gsmGoodsTypeId}) and
       </if>
@@ -932,8 +929,11 @@
       <if test="state != null">
         (state = #{state}) and
       </if>
+      <if test="oid != null &amp;&amp; oid.trim() != ''">
+        (oid like '${oid}%') and
+      </if>
       <if test="name != null &amp;&amp; name.trim() != ''">
-        (name like '${name}%' or code like '${name}%')
+        (name like '${name}%' or code like '${name}%') and
       </if>
     </trim>
     order by oid

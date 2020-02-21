@@ -70,7 +70,7 @@ public interface GoodsService {
      * @param name
      * @return
      */
-    List<Map<String, Object>> getByCriteria(Integer oid, Integer gsmGoodsTypeId, Integer goodsClassifyId, Boolean state, String name);
+    List<Map<String, Object>> getByCriteria(String oid, Integer gsmGoodsTypeId, Integer goodsClassifyId, Boolean state, String name);
 
     /**
      * 根据 通用名称 或 助记码获取对应集合

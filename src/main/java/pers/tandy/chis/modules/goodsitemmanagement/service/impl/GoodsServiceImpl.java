@@ -92,7 +92,7 @@ public class GoodsServiceImpl implements GoodsService {
     }
 
     @Override
-    public List<Map<String, Object>> getByCriteria(Integer oid, Integer gsmGoodsTypeId ,Integer goodsClassifyId, Boolean state, String name) {
+    public List<Map<String, Object>> getByCriteria(String oid, Integer gsmGoodsTypeId ,Integer goodsClassifyId, Boolean state, String name) {
         return goodsMapper.selectByCriteria(oid, gsmGoodsTypeId, goodsClassifyId, state, name);
     }
 

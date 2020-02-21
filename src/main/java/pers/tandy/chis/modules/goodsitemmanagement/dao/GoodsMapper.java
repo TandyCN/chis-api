@@ -33,7 +33,7 @@ public interface GoodsMapper {
     /*---------------------------------------------------------------------------------------------------------------*/
     void updateRetailPriceByList(@Param("goodsList") List<Goods> goodsList);
 
-    List<Map<String, Object>> selectByCriteria(@Param("oid") Integer oid,
+    List<Map<String, Object>> selectByCriteria(@Param("oid") String oid,
                                                @Param("gsmGoodsTypeId") Integer gsmGoodsTypeId,
                                                @Param("goodsClassifyId") Integer goodsClassifyId,
                                                @Param("state") Boolean state,

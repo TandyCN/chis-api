@@ -108,7 +108,7 @@ public class GoodsHandler {
     public PageResult getByCriteria (
             @RequestParam(defaultValue="1") Integer pageNum,
             @RequestParam(defaultValue="1") Integer pageSize,
-            @RequestParam(required = false) Integer oid,
+            @RequestParam(required = false) String oid,
             @RequestParam(required = false) Integer goodsClassifyId,
             @RequestParam(required = false) String name,
             @RequestParam(required = false) Boolean state){
