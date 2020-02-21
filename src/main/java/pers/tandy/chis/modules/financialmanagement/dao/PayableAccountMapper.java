@@ -40,7 +40,7 @@ public interface PayableAccountMapper {
                                                         @Param("sysClinicId") Integer sysClinicId,
                                                         @Param("arrearagesAmount") Float arrearagesAmount);
 
-    List<Map<String, Object>> selectByLsh(String lsh);
+    List<Map<String, Object>> selectByLsh(@Param("lsh") String lsh);
 
 
 
