@@ -111,7 +111,7 @@ public class Goods implements Serializable {
 
     private Integer doseTypeId; // 剂型
 
-    @Digits(integer = 8, fraction = 2)
+    @Digits(integer = 8, fraction = 4)
     private Float dose; // 剂量
 
     private Integer doseUnitsId; // 剂量单位
