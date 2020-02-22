@@ -89,6 +89,16 @@ public class PaidAccountServiceImpl implements PaidAccountService {
         if (!this.examineApproveState(paidAccountList, ApproveStateEnum.PENDING.getIndex())) {
             throw new RuntimeException("操作未被允许, 单据明细需全部为待审批状态");
         }
+        // 判断供应商是否同一个 [除非跳过前端验证, 否则该验证不会触发]
+        Integer pemSupplierId = paidAccountList.get(0).getPemSupplierId();
+        for (PaidAccount paidAccount : paidAccountList) {
+            if (paidAccount.getPemSupplierId() == null) {
+                throw new RuntimeException("供应商不能为空");
+            }
+            if (pemSupplierId.intValue() != paidAccount.getPemSupplierId().intValue()) {
+                throw new RuntimeException("供应商必须一致");
+            }
+        }
 
         // 获取用户信息
         User user = (User) SecurityUtils.getSubject().getPrincipal();
