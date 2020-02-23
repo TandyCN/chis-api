@@ -44,6 +44,7 @@ public interface InventoryAddMapper {
     List<Map<String, Object>> selectClinicListByCriteria(@Param("creationDate") String[] creationDate,
                                                          @Param("sysClinicId") Integer sysClinicId,
                                                          @Param("approveState") Byte approveState,
+                                                         @Param("actionType") Byte actionType,
                                                          @Param("pemSupplierName") String pemSupplierName);
 
     List<Map<String, Object>> selectClinicLshGroupListByCriteria(@Param("creationDate") String[] creationDate,

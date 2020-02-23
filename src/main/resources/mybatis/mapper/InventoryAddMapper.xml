@@ -594,6 +594,9 @@
       <if test="approveState != null">
         (approveState = #{approveState}) and
       </if>
+      <if test="actionType != null">
+        (actionType = #{actionType}) and
+      </if>
       <if test="pemSupplierName != null &amp;&amp; pemSupplierName.trim() != ''">
         (pemSupplierName like '${pemSupplierName}%' or pemSupplierCode like '${pemSupplierName}%') and
       </if>

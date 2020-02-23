@@ -63,9 +63,11 @@ public class InventoryAddServiceImpl implements InventoryAddService {
         // 获取用户信息
         User user = (User) SecurityUtils.getSubject().getPrincipal();
 
-        // 将订单设置为已入库状态(此操作不通过则不继续执行)
-        List<Map<String, Object>> clinicOrderList = purchaseOrderService.getClinicListByLsh(orderLsh, user.getSysClinicId());
-        purchaseOrderService.updateInventoryStateByCriteria(true, purchaseOrderService.convertToObjectList(clinicOrderList));
+        // 如果订单号不为空, 则为采购计划入库, 将订单设置为已入库状态(此操作不通过则不继续执行)
+        if (orderLsh != null) {
+            List<Map<String, Object>> clinicOrderList = purchaseOrderService.getClinicListByLsh(orderLsh, user.getSysClinicId());
+            purchaseOrderService.updateInventoryStateByCriteria(true, purchaseOrderService.convertToObjectList(clinicOrderList));
+        }
 
         // 对同一商品、相同批号、相同成本价、相同有效期进行合并
         Map<String, InventoryAdd> distinctMap = new HashMap<>();
@@ -211,8 +213,9 @@ public class InventoryAddServiceImpl implements InventoryAddService {
     public List<Map<String, Object>> getClinicListByCriteria(String[] creationDate,
                                                              Integer sysClinicId,
                                                              Byte approveState,
+                                                             Byte actionType,
                                                              String pemSupplierName) {
-        return inventoryAddMapper.selectClinicListByCriteria(creationDate, sysClinicId, approveState, pemSupplierName);
+        return inventoryAddMapper.selectClinicListByCriteria(creationDate, sysClinicId, approveState, actionType, pemSupplierName);
     }
 
     @Override

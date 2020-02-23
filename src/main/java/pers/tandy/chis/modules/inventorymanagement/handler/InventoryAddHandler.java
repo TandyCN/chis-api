@@ -32,7 +32,7 @@ public class InventoryAddHandler {
     }
 
     /**
-     * 添加采购入库记录
+     * 计划入库
      * @param mapJson
      * @return
      */
@@ -48,7 +48,28 @@ public class InventoryAddHandler {
 
         List<InventoryAdd> inventoryAddList =
                 JSONUtils.parseJsonToObject(inventoryAddJson, new TypeReference<List<InventoryAdd>>() {});
-        inventoryAddService.save(inventoryAddList, orderLsh, ActionTypeEnum.PURCHASE_ADD.getIndex());
+        inventoryAddService.save(inventoryAddList, orderLsh, ActionTypeEnum.PURCHASE_PLAN_ADD.getIndex());
+        return PageResult.success();
+    }
+
+    /**
+     * 自采入库
+     * @param mapJson
+     * @return
+     */
+    @PostMapping("/saveForAlone")
+    public PageResult saveForAlone (@RequestBody String mapJson) {
+        Map<String, Object> map = JSONUtils.parseJsonToObject(mapJson, new TypeReference<Map<String, Object>>() {});
+        String inventoryAddJson;
+        try {
+            inventoryAddJson = map.get("inventoryAddJson").toString();
+        } catch (NullPointerException e) {
+            throw new RuntimeException("缺少请求参数");
+        }
+
+        List<InventoryAdd> inventoryAddList =
+                JSONUtils.parseJsonToObject(inventoryAddJson, new TypeReference<List<InventoryAdd>>() {});
+        inventoryAddService.save(inventoryAddList, null, ActionTypeEnum.PURCHASE_ALONE_ADD.getIndex());
         return PageResult.success();
     }
 
@@ -76,6 +97,7 @@ public class InventoryAddHandler {
 
     /**
      * 根据查询条件获取机构入库记录明细
+     * [计划入库调用]
      * @param pageNum
      * @param pageSize
      * @param creationDate
@@ -95,13 +117,43 @@ public class InventoryAddHandler {
 
         PageHelper.startPage(pageNum, pageSize);
         List<Map<String, Object>> pageList =
-                inventoryAddService.getClinicListByCriteria(creationDate, user.getSysClinicId(), approveState, pemSupplierName);
+                inventoryAddService.getClinicListByCriteria(creationDate, user.getSysClinicId(), approveState,
+                        ActionTypeEnum.PURCHASE_PLAN_ADD.getIndex(), pemSupplierName);
+        PageInfo<Map<String, Object>> pageInfo = new PageInfo<Map<String, Object>>(pageList);
+        return PageResult.success().resultSet("page", pageInfo);
+    }
+
+    /**
+     * 根据查询条件获取机构入库记录明细
+     * [自采入库调用]
+     * @param pageNum
+     * @param pageSize
+     * @param creationDate
+     * @param approveState
+     * @return
+     */
+    @GetMapping("/getClinicListByCriteriaForAlone")
+    public PageResult getClinicListByCriteriaForAlone (
+            @RequestParam(defaultValue="1") Integer pageNum,
+            @RequestParam(defaultValue="1") Integer pageSize,
+            @RequestParam(value = "creationDate[]",required = false) String[] creationDate, // 创建日期
+            @RequestParam(required = false) Byte approveState,
+            @RequestParam(required = false) String pemSupplierName){
+
+        // 获取创建人信息
+        User user = (User) SecurityUtils.getSubject().getPrincipal();
+
+        PageHelper.startPage(pageNum, pageSize);
+        List<Map<String, Object>> pageList =
+                inventoryAddService.getClinicListByCriteria(creationDate, user.getSysClinicId(), approveState,
+                        ActionTypeEnum.PURCHASE_ALONE_ADD.getIndex(), pemSupplierName);
         PageInfo<Map<String, Object>> pageInfo = new PageInfo<Map<String, Object>>(pageList);
         return PageResult.success().resultSet("page", pageInfo);
     }
 
     /**
      * 根据查询条件获取机构入库汇总记录
+     * [计划入库调用]
      * @param pageNum
      * @param pageSize
      * @param creationDate

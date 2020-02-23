@@ -6,8 +6,9 @@ package pers.tandy.chis.main.common.enums;
  * @Version 1.0
  */
 public enum ActionTypeEnum {
-    PURCHASE_ADD("采购入库", (byte)1),
-    PURCHASE_SUBTRACT("采购退库", (byte)2);
+    PURCHASE_PLAN_ADD("计划入库", (byte)1),
+    PURCHASE_ALONE_ADD("自采入库", (byte)2),
+    PURCHASE_SUBTRACT("采购退库", (byte)3);
 
     private String name;
     private byte index;

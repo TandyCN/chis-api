@@ -71,7 +71,6 @@ public class InventoryAdd implements Serializable {
     @NotNull
     private Integer pemSupplierId;
 
-    @NotNull
     private Integer pemPurchaseOrderId;
 
     @NotNull

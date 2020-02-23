@@ -43,12 +43,14 @@ public interface InventoryAddService {
      * @param creationDate
      * @param sysClinicId
      * @param approveState
+     * @param actionType
      * @param pemSupplierName
      * @return
      */
     List<Map<String, Object>> getClinicListByCriteria(String[] creationDate,
                                                       Integer sysClinicId,
                                                       Byte approveState,
+                                                      Byte actionType,
                                                       String pemSupplierName);
 
     /**
