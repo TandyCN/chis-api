@@ -452,7 +452,7 @@
       (name like '${name}%' or code like '${name}%') and
       (state is true)
     order by id desc
-    LIMIT 20
+    LIMIT 30
   </select>
 
   <select id="selectEnabledLikeByNameForPrescription" resultType="map">
@@ -464,7 +464,7 @@
       (name like '${name}%' or code like '${name}%') and
       (state is true)
     order by id desc
-    LIMIT 20
+    LIMIT 30
   </select>
 
   <update id="updateRetailPriceByList">

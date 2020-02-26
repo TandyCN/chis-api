@@ -254,7 +254,7 @@
       (state is true) and
       (name like '${name}%' or code like '${name}%')
     order by id
-    LIMIT 20
+    LIMIT 30
   </select>
 
 

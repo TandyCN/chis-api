@@ -472,7 +472,7 @@
       (gsmGoodsState is true) and
       (gsmGoodsName like '${gsmGoodsName}%' or gsmGoodsCode like '${gsmGoodsName}%')
     order by gsmGoodsTypeId, gsmGoodsOid, expiryDate
-    LIMIT 20
+    LIMIT 30
   </select>
 
   <select id="selectClinicPchEnabledByCriteriaForOutInventory" resultType="map">
@@ -500,7 +500,7 @@
       (splitQuantity = 1) and
       (gsmGoodsName like '${gsmGoodsName}%' or gsmGoodsCode like '${gsmGoodsName}%')
     order by gsmGoodsTypeId, gsmGoodsOid, expiryDate
-    LIMIT 20
+    LIMIT 30
   </select>
 
   <select id="selectByIdList" resultType="map">
