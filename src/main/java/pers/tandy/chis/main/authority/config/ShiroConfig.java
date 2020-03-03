@@ -65,12 +65,6 @@ public class ShiroConfig {
     @Bean
     public ModularRealmAuthenticator modularRealmAuthenticator () {
         ShiroModularRealmAuthenticator modularRealmAuthenticator = new ShiroModularRealmAuthenticator();
-        // 注册 realms
-        List<Realm> realms = new ArrayList<>();
-        realms.add(shiroRealm());
-        realms.add(weChatRealm());
-        modularRealmAuthenticator.setRealms(realms);
-        // 配置认证策略
         modularRealmAuthenticator.setAuthenticationStrategy(new AtLeastOneSuccessfulStrategy());
         return modularRealmAuthenticator;
     }
@@ -149,10 +143,17 @@ public class ShiroConfig {
     @Bean
     public DefaultWebSecurityManager securityManager() {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
-        // 单 realm 注册
-        // securityManager.setRealm(shiroRealm());
         // realm 认证策略
         securityManager.setAuthenticator(modularRealmAuthenticator());
+
+        // 单 realm 注册
+        // securityManager.setRealm(shiroRealm());
+
+        // 多 realm 注册
+        List<Realm> realms = new ArrayList<>();
+        realms.add(shiroRealm());
+        realms.add(weChatRealm());
+        securityManager.setRealms(realms);
 
         securityManager.setSessionManager(sessionManager());
         securityManager.setCacheManager(redisCacheManager());
