@@ -90,21 +90,6 @@ public class ChisApiApplicationTests {
         Date date = calendar.getTime();
     }
 
-    @Autowired
-    private ItemAdjustPriceService iapService;
-
-    @Test
-    public void testObjectToJson() {
-        List<Map<String, Object>> list = iapService.getByLsh("LSH0000120190825123952108");
-        List<ItemAdjustPrice> itemAdjustPricesList = iapService.parseMapToItemAdjustPrice(list);
-        //iapService.examineCreationDate(itemAdjustPricesList);
-
-        Date creationDate = itemAdjustPricesList.get(0).getCreationDate();
-        for (ItemAdjustPrice iap : itemAdjustPricesList) {
-            System.out.println(creationDate.compareTo(iap.getCreationDate()));
-        }
-    }
-
     @Test
     public void test3() {
         // System.out.println(Math.ceil(10.123412 * 10000) / 10000);

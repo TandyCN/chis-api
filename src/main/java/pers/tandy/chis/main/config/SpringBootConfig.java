@@ -32,9 +32,9 @@ public class SpringBootConfig implements WebMvcConfigurer {
      */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        // 添加 token 拦截器,要排除访问或转发时不携带 token 信息的路径
+        // 添加 token 拦截器 (要排除访问或转发时不携带 token 信息的路径)
         registry.addInterceptor(new AccessTokenInterceptor()).addPathPatterns("/**")
-                .excludePathPatterns("/login/**","/logout/**","/unauthorized/**","/forcedLogout");
+                .excludePathPatterns("/login/**", "/logout/**", "/unauthorized/**", "/forcedLogout");
     }
 
     /**

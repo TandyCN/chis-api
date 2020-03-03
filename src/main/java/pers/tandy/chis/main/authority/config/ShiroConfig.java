@@ -1,5 +1,7 @@
 package pers.tandy.chis.main.authority.config;
 
+import org.apache.shiro.authc.pam.AtLeastOneSuccessfulStrategy;
+import org.apache.shiro.authc.pam.ModularRealmAuthenticator;
 import org.apache.shiro.realm.Realm;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
@@ -14,13 +16,14 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import pers.tandy.chis.main.authority.component.ShiroFilterChainDefinitionMap;
+import pers.tandy.chis.main.authority.component.ShiroModularRealmAuthenticator;
 import pers.tandy.chis.main.authority.filter.ShiroFormAuthenticationFilter;
 import pers.tandy.chis.main.authority.filter.ShiroRolesAuthorizationFilter;
 import pers.tandy.chis.main.authority.realm.ShiroRealm;
+import pers.tandy.chis.main.authority.realm.WeChatRealm;
 
 import javax.servlet.Filter;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Shiro 配置文件
@@ -33,15 +36,6 @@ import java.util.Map;
 public class ShiroConfig {
 
     /**
-     * 配置 Realm
-     * @return
-     */
-    @Bean
-    public Realm realm() {
-        return new ShiroRealm();
-    }
-
-    /**
      * 通过配置文件获取 redis 服务器属性
      */
     @Value("${spring.redis.host}:${spring.redis.port}")
@@ -50,6 +44,37 @@ public class ShiroConfig {
     private String passowrd;
     @Value("${spring.redis.database}")
     private Integer database;
+
+    /**
+     * 配置 Realm
+     * @return
+     */
+    @Bean("shiroRealm")
+    public ShiroRealm shiroRealm() {
+        return new ShiroRealm();
+    }
+
+    @Bean("weChatRealm")
+    public WeChatRealm weChatRealm () {
+        return new WeChatRealm();
+    }
+
+    /**
+     * 配置 Realm 管理器, 主要针对多 Realm 时的认证策略
+     */
+    @Bean
+    public ModularRealmAuthenticator modularRealmAuthenticator () {
+        ShiroModularRealmAuthenticator modularRealmAuthenticator = new ShiroModularRealmAuthenticator();
+        // 注册 realms
+        List<Realm> realms = new ArrayList<>();
+        realms.add(shiroRealm());
+        realms.add(weChatRealm());
+        modularRealmAuthenticator.setRealms(realms);
+        // 配置认证策略
+        modularRealmAuthenticator.setAuthenticationStrategy(new AtLeastOneSuccessfulStrategy());
+        return modularRealmAuthenticator;
+    }
+
 
     /**
      * 配置shiro redisManager
@@ -124,7 +149,11 @@ public class ShiroConfig {
     @Bean
     public DefaultWebSecurityManager securityManager() {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
-        securityManager.setRealm(realm());
+        // 单 realm 注册
+        // securityManager.setRealm(shiroRealm());
+        // realm 认证策略
+        securityManager.setAuthenticator(modularRealmAuthenticator());
+
         securityManager.setSessionManager(sessionManager());
         securityManager.setCacheManager(redisCacheManager());
         return securityManager;

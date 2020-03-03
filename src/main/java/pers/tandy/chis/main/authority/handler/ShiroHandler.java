@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import pers.tandy.chis.main.authority.component.LoginTypeEnum;
 import pers.tandy.chis.main.authority.component.ShiroSessionManager;
+import pers.tandy.chis.main.authority.component.ShiroUsernamePasswordToken;
 import pers.tandy.chis.main.common.PageResult;
 import pers.tandy.chis.main.component.JWTUtils;
 import pers.tandy.chis.modules.systemmanagement.bean.User;
@@ -49,12 +51,18 @@ public class ShiroHandler {
     @PostMapping("/login")
     public PageResult login(
             @RequestParam("username") String username,
-            @RequestParam("password") String password) {
+            @RequestParam("password") String password,
+            @RequestParam(value = "loginType", required = false) String loginType) {
+
+        // 如果未携带登录类型参数则默认为普通登录
+        if (loginType == null) {
+            loginType = LoginTypeEnum.SHIRO.toString();
+        }
 
         // 认证用户
         Subject currentUser = SecurityUtils.getSubject();
         if(!currentUser.isAuthenticated()){
-            UsernamePasswordToken token = new UsernamePasswordToken(username, password);
+            UsernamePasswordToken token = new ShiroUsernamePasswordToken(username, password, loginType);
             token.setRememberMe(false);// 记住我功能 true开启 , false关闭
             currentUser.login(token);
         }

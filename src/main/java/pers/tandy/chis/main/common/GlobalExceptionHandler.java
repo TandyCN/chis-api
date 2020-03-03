@@ -122,6 +122,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler({ShiroException.class})
     public PageResult handleShiroException(Exception e, HttpServletResponse response){
+        e.printStackTrace();
         return PageResult.fail().msg(e.getMessage());
     }
 

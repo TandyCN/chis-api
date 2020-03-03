@@ -60,8 +60,7 @@ public class ShiroRealm extends AuthorizingRealm {
         User user = (User) principalCollection.getPrimaryPrincipal();
         Set<String> roles = new HashSet<>();
         roles.add(user.getSysRoleId().toString());
-        SimpleAuthorizationInfo info = new SimpleAuthorizationInfo(roles);
-        return info;
+        return new SimpleAuthorizationInfo(roles);
     }
 
     /**
@@ -95,16 +94,15 @@ public class ShiroRealm extends AuthorizingRealm {
         user.setRole(role);
         user.setClinic(clinic);
 
-        // 验证用户
+        // 验证用户(可以是对象, 也可以是 username)
         Object principal = user;
-        // 需要对比的密码
+        // 需要对比的密码(从数据库获取到的密码)
         Object credentials = user.getPassword();
         // 盐值
         ByteSource credentialsSalt = ByteSource.Util.bytes(username);
         // 当前 Realm 类名
         String realmName = getName();
 
-        SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(principal, credentials, credentialsSalt, realmName);
-        return info;
+        return new SimpleAuthenticationInfo(principal, credentials, credentialsSalt, realmName);
     }
 }
