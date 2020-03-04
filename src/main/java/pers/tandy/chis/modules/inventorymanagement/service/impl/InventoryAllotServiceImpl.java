@@ -13,6 +13,7 @@ import pers.tandy.chis.modules.inventorymanagement.service.InventoryService;
 import pers.tandy.chis.modules.systemmanagement.bean.User;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @Author: Tandy
@@ -41,23 +42,55 @@ public class InventoryAllotServiceImpl implements InventoryAllotService {
         // 获取用户信息、 流水号、 明细号
         User user = (User) SecurityUtils.getSubject().getPrincipal();
         String lsh = KeyUtils.getLSH(user.getId());
-        Integer mxh = 1;
+        int mxh = 1;
 
         // 填写要保存的数据
-        ListIterator<InventoryAllot> listIterator = allotList.listIterator();
-        while (listIterator.hasNext()) {
-            InventoryAllot allot = listIterator.next();
-
+        for (InventoryAllot allot : allotList) {
             allot.setLsh(lsh);
-            allot.setMxh((mxh++).toString());
+            allot.setMxh(String.valueOf(mxh++));
             allot.setSysClinicId(user.getSysClinicId());
             allot.setCreatorId(user.getId());
             allot.setCreationDate(new Date());
-            allot.setApproveState(ApproveStateEnum.PENDING.getIndex());
+            // 直接设置为审核通过状态
+            allot.setApproveState(ApproveStateEnum.APPROVED.getIndex());
         }
 
-        // 提交保存
+        // 提交保存仓库调拨记录
         inventoryAllotMapper.insertList(allotList);
+
+        // 变更仓库操作
+        this.updateIymInventoryTypeId(allotList);
+
+    }
+
+    // *****************************************************************************************************************
+    // 放弃审核, 直接保存即可审核通过, 同时不再拆分调拨数量, 将操作数据行直接更改为目标仓库类型 Date: 2020-03-03, By: Tandy
+    // *****************************************************************************************************************
+    private void updateIymInventoryTypeId (List<InventoryAllot> allotList) {
+        // 声明要进行提交的集合 key 为仓库ID, value 为 库存记录 ID 集合
+        Map<Integer, List<Integer>> groupMap = new HashMap<>();
+
+        // 对目标仓库进行分组
+        List<Integer> iymInventoryTypeIdList = allotList.stream()
+                .map(InventoryAllot::getToIymInventoryTypeId)
+                .distinct()
+                .collect(Collectors.toList());
+
+        // 根据目标仓库获取对应的库存记录ID集合
+        iymInventoryTypeIdList.forEach(iymInventoryTypeId -> {
+            List<Integer> idList = allotList.stream()
+                    .filter(allot -> allot.getToIymInventoryTypeId().intValue() == iymInventoryTypeId.intValue())
+                    .map(InventoryAllot::getIymInventoryId)
+                    .collect(Collectors.toList());
+
+            groupMap.put(iymInventoryTypeId, idList);
+        });
+
+        // 执行调拨
+        if (!groupMap.isEmpty()) {
+            groupMap.forEach((iymInventoryTypeId, idList) -> this.inventoryService.updateIymInventoryTypeIdByIdList(idList, iymInventoryTypeId));
+        }
+
     }
 
     @Override

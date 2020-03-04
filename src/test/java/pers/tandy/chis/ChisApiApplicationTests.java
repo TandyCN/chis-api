@@ -1,7 +1,12 @@
 package pers.tandy.chis;
 
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mybatis.spring.SqlSessionFactoryBean;
+import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -16,6 +21,7 @@ import pers.tandy.chis.modules.purchasemanagement.service.PurchasePlanService;
 import pers.tandy.chis.modules.systemmanagement.bean.Role;
 import pers.tandy.chis.modules.systemmanagement.bean.User;
 
+import javax.xml.bind.SchemaOutputResolver;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

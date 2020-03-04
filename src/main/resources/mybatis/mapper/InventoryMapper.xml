@@ -444,6 +444,15 @@
       where id = #{id}
   </update>
 
+  <update id="updateIymInventoryTypeIdByIdList">
+    update iym_inventory
+    set iym_inventory_type_id = #{iymInventoryTypeId}
+    where id in
+      <foreach collection="idList" item="id" open="(" separator="," close=")">
+        #{id}
+      </foreach>
+  </update>
+
   <select id="selectLastByGoodsIdList" resultMap="BaseResultMap">
     SELECT *
     FROM iym_inventory

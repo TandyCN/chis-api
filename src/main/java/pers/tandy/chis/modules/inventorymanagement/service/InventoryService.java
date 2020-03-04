@@ -23,11 +23,20 @@ public interface InventoryService {
     /**
      * 减库存数量
      * (不要直接更新库存 要使用原库存减去对应库存 这样可在库存不足时直接抛出异常)
-     * Inventory 只需赋值 id 和 quantity
+     * Inventory主要属性为 id 和 quantity
+     * 辅助属性 gsmGoodsOid, gsmGoodsName, ph, pch
      * @param inventoryList
      */
     @Transactional
     void updateQuantityByList(List<Inventory> inventoryList);
+
+    /**
+     * 变更仓库
+     * @param idList
+     * @param iymInventoryTypeId
+     */
+    @Transactional
+    void updateIymInventoryTypeIdByIdList(List<Integer> idList, Integer iymInventoryTypeId);
 
     /**
      * 拆零操作

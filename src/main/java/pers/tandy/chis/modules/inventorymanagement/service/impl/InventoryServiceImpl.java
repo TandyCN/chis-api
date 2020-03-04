@@ -117,6 +117,11 @@ public class InventoryServiceImpl implements InventoryService {
     }
 
     @Override
+    public void updateIymInventoryTypeIdByIdList(List<Integer> idList, Integer iymInventoryTypeId) {
+        this.inventoryMapper.updateIymInventoryTypeIdByIdList(idList, iymInventoryTypeId);
+    }
+
+    @Override
     public void splitQuantity(Integer id) {
         // 根据 ID 获取对应的库存信息
         Inventory inventory = inventoryMapper.selectByPrimaryKey(id);

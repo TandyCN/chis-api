@@ -38,6 +38,9 @@ public interface InventoryMapper {
 
     void updateQuantityById(@Param("id") Integer id, @Param("quantity") Short quantity);
 
+    void updateIymInventoryTypeIdByIdList(@Param("idList") List<Integer> idList,
+                                          @Param("iymInventoryTypeId") Integer iymInventoryTypeId);
+
     List<Inventory> selectLastByGoodsIdList(@Param("goodsIdList") List<Integer> goodsIdList);
 
     List<Map<String, Object>> selectClinicPchEnabledLikeByCriteria(@Param("sysClinicId") Integer sysClinicId,
