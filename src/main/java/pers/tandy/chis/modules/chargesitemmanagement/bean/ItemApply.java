@@ -28,6 +28,8 @@ public class ItemApply implements Serializable {
     @NotNull
     private Integer billingTypeId; // 计费类型ID
 
+    private Integer itemClassifyId; // 项目分类
+
     @Max(100)
     @Min(1)
     @NotNull
@@ -115,6 +117,14 @@ public class ItemApply implements Serializable {
 
     public void setBillingTypeId(Integer billingTypeId) {
         this.billingTypeId = billingTypeId;
+    }
+
+    public Integer getItemClassifyId() {
+        return itemClassifyId;
+    }
+
+    public void setItemClassifyId(Integer itemClassifyId) {
+        this.itemClassifyId = itemClassifyId;
     }
 
     public Byte getQuantity() {

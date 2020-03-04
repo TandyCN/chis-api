@@ -57,11 +57,6 @@ public class ItemApplyHandler {
             return PageResult.fail().msg(JSRMessageUtils.getFirstMsg(result));
         }
 
-        // 如果适用性别为 0 则将其赋值为 null 表示适用全部性别
-        if (itemApply.getBefitGenderId() == 0) {
-            itemApply.setBefitGenderId(null);
-        }
-
         itemApplyService.save(itemApply);
         return PageResult.success();
     }

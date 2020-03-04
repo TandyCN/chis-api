@@ -9,6 +9,7 @@
     <result column="item_units_id" jdbcType="INTEGER" property="itemUnitsId" />
     <result column="befit_gender_id" jdbcType="INTEGER" property="befitGenderId" />
     <result column="billing_type_id" jdbcType="INTEGER" property="billingTypeId" />
+    <result column="item_classify_id" jdbcType="INTEGER" property="itemClassifyId" />
     <result column="quantity" jdbcType="TINYINT" property="quantity" />
     <result column="retail_price" jdbcType="REAL" property="retailPrice" />
     <result column="explains" jdbcType="VARCHAR" property="explains" />
@@ -81,8 +82,8 @@
   </sql>
   <sql id="Base_Column_List">
     id, name, code, cim_item_type_id, item_units_id, befit_gender_id, billing_type_id,
-    quantity, retail_price, explains, discountable, returnable, state, required, creator_id,
-    creation_date, last_updater_id, last_update_date
+    item_classify_id, quantity, retail_price, explains, discountable, returnable, state,
+    required, creator_id, creation_date, last_updater_id, last_update_date
   </sql>
   <select id="selectByExample" parameterType="pers.tandy.chis.modules.chargesitemmanagement.bean.ItemExample" resultMap="BaseResultMap">
     select
@@ -117,16 +118,16 @@
   <insert id="insert" parameterType="pers.tandy.chis.modules.chargesitemmanagement.bean.Item">
     insert into cim_item (id, name, code,
       cim_item_type_id, item_units_id, befit_gender_id,
-      billing_type_id, quantity, retail_price,
-      explains, discountable, returnable,
-      state, required, creator_id,
+      billing_type_id, item_classify_id, quantity,
+      retail_price, explains, discountable,
+      returnable, state, required, creator_id,
       creation_date, last_updater_id, last_update_date
       )
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR},
       #{cimItemTypeId,jdbcType=INTEGER}, #{itemUnitsId,jdbcType=INTEGER}, #{befitGenderId,jdbcType=INTEGER},
-      #{billingTypeId,jdbcType=INTEGER}, #{quantity,jdbcType=TINYINT}, #{retailPrice,jdbcType=REAL},
-      #{explains,jdbcType=VARCHAR}, #{discountable,jdbcType=BIT}, #{returnable,jdbcType=BIT},
-      #{state,jdbcType=BIT}, #{required,jdbcType=BIT}, #{creatorId,jdbcType=INTEGER},
+      #{billingTypeId,jdbcType=INTEGER}, #{itemClassifyId,jdbcType=INTEGER}, #{quantity,jdbcType=TINYINT},
+      #{retailPrice,jdbcType=REAL}, #{explains,jdbcType=VARCHAR}, #{discountable,jdbcType=BIT},
+      #{returnable,jdbcType=BIT}, #{state,jdbcType=BIT}, #{required,jdbcType=BIT}, #{creatorId,jdbcType=INTEGER},
       #{creationDate,jdbcType=DATE}, #{lastUpdaterId,jdbcType=INTEGER}, #{lastUpdateDate,jdbcType=DATE}
       )
   </insert>
@@ -153,6 +154,9 @@
       </if>
       <if test="billingTypeId != null">
         billing_type_id,
+      </if>
+      <if test="itemClassifyId != null">
+        item_classify_id,
       </if>
       <if test="quantity != null">
         quantity,
@@ -209,6 +213,9 @@
       </if>
       <if test="billingTypeId != null">
         #{billingTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="itemClassifyId != null">
+        #{itemClassifyId,jdbcType=INTEGER},
       </if>
       <if test="quantity != null">
         #{quantity,jdbcType=TINYINT},
@@ -275,6 +282,9 @@
       <if test="record.billingTypeId != null">
         billing_type_id = #{record.billingTypeId,jdbcType=INTEGER},
       </if>
+      <if test="record.itemClassifyId != null">
+        item_classify_id = #{record.itemClassifyId,jdbcType=INTEGER},
+      </if>
       <if test="record.quantity != null">
         quantity = #{record.quantity,jdbcType=TINYINT},
       </if>
@@ -322,6 +332,7 @@
       item_units_id = #{record.itemUnitsId,jdbcType=INTEGER},
       befit_gender_id = #{record.befitGenderId,jdbcType=INTEGER},
       billing_type_id = #{record.billingTypeId,jdbcType=INTEGER},
+      item_classify_id = #{record.itemClassifyId,jdbcType=INTEGER},
       quantity = #{record.quantity,jdbcType=TINYINT},
       retail_price = #{record.retailPrice,jdbcType=REAL},
       explains = #{record.explains,jdbcType=VARCHAR},
@@ -357,6 +368,9 @@
       </if>
       <if test="billingTypeId != null">
         billing_type_id = #{billingTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="itemClassifyId != null">
+        item_classify_id = #{itemClassifyId,jdbcType=INTEGER},
       </if>
       <if test="quantity != null">
         quantity = #{quantity,jdbcType=TINYINT},
@@ -402,6 +416,7 @@
       item_units_id = #{itemUnitsId,jdbcType=INTEGER},
       befit_gender_id = #{befitGenderId,jdbcType=INTEGER},
       billing_type_id = #{billingTypeId,jdbcType=INTEGER},
+      item_classify_id = #{itemClassifyId,jdbcType=INTEGER},
       quantity = #{quantity,jdbcType=TINYINT},
       retail_price = #{retailPrice,jdbcType=REAL},
       explains = #{explains,jdbcType=VARCHAR},
@@ -418,7 +433,6 @@
 
 
 
-
   <!--***************************************************************************************************************-->
 
   <select id="selectByCriteria" resultType="map">
@@ -431,8 +445,8 @@
       <if test="state != null">
         (state = #{state}) and
       </if>
-      <if test="billingTypeId != null">
-        (billingTypeId = #{billingTypeId}) and
+      <if test="itemClassifyId != null">
+        (itemClassifyId = #{itemClassifyId}) and
       </if>
       <if test="discountable != null">
         (discountable = #{discountable}) and
@@ -473,8 +487,5 @@
       where id = #{item.id}
     </foreach>
   </update>
-
-
-
 
 </mapper>

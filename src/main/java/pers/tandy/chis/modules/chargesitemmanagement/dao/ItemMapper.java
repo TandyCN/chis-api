@@ -30,13 +30,14 @@ public interface ItemMapper {
 
     int updateByPrimaryKey(Item record);
 
+
     /*----------------------------------------------------------------------------------------------------------------*/
 
     void updateRetailPriceByList(@Param("itemList") List<Item> itemList);
 
     List<Map<String, Object>> selectByCriteria(@Param("cimItemTypeId") Integer cimItemTypeId,
                                                @Param("state") Boolean state,
-                                               @Param("billingTypeId") Integer billingTypeId,
+                                               @Param("itemClassifyId") Integer itemClassifyId,
                                                @Param("discountable") Boolean discountable,
                                                @Param("name") String name);
 

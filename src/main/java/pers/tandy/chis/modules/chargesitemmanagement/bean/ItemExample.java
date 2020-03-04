@@ -572,6 +572,66 @@ public class ItemExample {
             return (Criteria) this;
         }
 
+        public Criteria andItemClassifyIdIsNull() {
+            addCriterion("item_classify_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andItemClassifyIdIsNotNull() {
+            addCriterion("item_classify_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andItemClassifyIdEqualTo(Integer value) {
+            addCriterion("item_classify_id =", value, "itemClassifyId");
+            return (Criteria) this;
+        }
+
+        public Criteria andItemClassifyIdNotEqualTo(Integer value) {
+            addCriterion("item_classify_id <>", value, "itemClassifyId");
+            return (Criteria) this;
+        }
+
+        public Criteria andItemClassifyIdGreaterThan(Integer value) {
+            addCriterion("item_classify_id >", value, "itemClassifyId");
+            return (Criteria) this;
+        }
+
+        public Criteria andItemClassifyIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("item_classify_id >=", value, "itemClassifyId");
+            return (Criteria) this;
+        }
+
+        public Criteria andItemClassifyIdLessThan(Integer value) {
+            addCriterion("item_classify_id <", value, "itemClassifyId");
+            return (Criteria) this;
+        }
+
+        public Criteria andItemClassifyIdLessThanOrEqualTo(Integer value) {
+            addCriterion("item_classify_id <=", value, "itemClassifyId");
+            return (Criteria) this;
+        }
+
+        public Criteria andItemClassifyIdIn(List<Integer> values) {
+            addCriterion("item_classify_id in", values, "itemClassifyId");
+            return (Criteria) this;
+        }
+
+        public Criteria andItemClassifyIdNotIn(List<Integer> values) {
+            addCriterion("item_classify_id not in", values, "itemClassifyId");
+            return (Criteria) this;
+        }
+
+        public Criteria andItemClassifyIdBetween(Integer value1, Integer value2) {
+            addCriterion("item_classify_id between", value1, value2, "itemClassifyId");
+            return (Criteria) this;
+        }
+
+        public Criteria andItemClassifyIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("item_classify_id not between", value1, value2, "itemClassifyId");
+            return (Criteria) this;
+        }
+
         public Criteria andQuantityIsNull() {
             addCriterion("quantity is null");
             return (Criteria) this;

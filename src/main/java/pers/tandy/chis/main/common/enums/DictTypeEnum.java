@@ -13,6 +13,7 @@ public enum DictTypeEnum {
      * 400 商品字典
      */
     ITEM_UNITS("项目单位", 101),
+    ITEM_CLASSIFY("项目分类", 102),
 
     BILLING_TYPE("计费类型", 201),
     INVOICE_TYPE("发票类型", 202),

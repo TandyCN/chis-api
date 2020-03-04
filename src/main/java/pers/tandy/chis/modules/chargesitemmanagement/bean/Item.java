@@ -20,13 +20,14 @@ public class Item implements Serializable {
 
     private Integer cimItemTypeId; // 项目类型ID
 
-    @NotNull
     private Integer itemUnitsId; // 项目单位ID
 
     private Integer befitGenderId; // 适用性别ID
 
     @NotNull
     private Integer billingTypeId; // 计费类型ID
+
+    private Integer itemClassifyId; // 项目分类
 
     @Max(100)
     @Min(1)
@@ -116,6 +117,14 @@ public class Item implements Serializable {
 
     public void setBillingTypeId(Integer billingTypeId) {
         this.billingTypeId = billingTypeId;
+    }
+
+    public Integer getItemClassifyId() {
+        return itemClassifyId;
+    }
+
+    public void setItemClassifyId(Integer itemClassifyId) {
+        this.itemClassifyId = itemClassifyId;
     }
 
     public Byte getQuantity() {

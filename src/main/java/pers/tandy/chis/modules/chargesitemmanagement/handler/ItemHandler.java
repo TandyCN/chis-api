@@ -62,11 +62,6 @@ public class ItemHandler {
             return PageResult.fail().msg(JSRMessageUtils.getFirstMsg(result));
         }
 
-        // 如果适用性别为 0 则将其赋值为 null 表示适用全部性别
-        if (item.getBefitGenderId() == 0) {
-            item.setBefitGenderId(null);
-        }
-
         // 设置对应的项目分类
         if (CIM_ITEM_TYPE_ID != null) {
             item.setCimItemTypeId(CIM_ITEM_TYPE_ID); // 设置对应的分类 ID
@@ -86,11 +81,6 @@ public class ItemHandler {
     public PageResult update (@Valid Item item, BindingResult result) {
         if (result.hasErrors()) {
             return PageResult.fail().msg(JSRMessageUtils.getFirstMsg(result));
-        }
-
-        // 如果适用性别为 0 则将其赋值为 null 表示适用全部性别
-        if (item.getBefitGenderId() == 0) {
-            item.setBefitGenderId(null);
         }
 
         itemService.update(item);
@@ -113,7 +103,7 @@ public class ItemHandler {
      * @param pageNum
      * @param pageSize
      * @param state
-     * @param billingTypeId
+     * @param itemClassifyId
      * @param discountable
      * @param name
      * @return
@@ -123,12 +113,12 @@ public class ItemHandler {
             @RequestParam(defaultValue="1") Integer pageNum,
             @RequestParam(defaultValue="1") Integer pageSize,
             @RequestParam(required = false) Boolean state, // 启用状态
-            @RequestParam(required = false) Integer billingTypeId, // 计费类型ID
+            @RequestParam(required = false) Integer itemClassifyId, // 项目分类ID
             @RequestParam(required = false) Boolean discountable, // 是否参与折扣
             @RequestParam(required = false) String name){ // 项目名称或助记码
 
         PageHelper.startPage(pageNum, pageSize);
-        List<Map<String, Object>> pageList = itemService.getByCriteria(CIM_ITEM_TYPE_ID, state, billingTypeId, discountable, name);
+        List<Map<String, Object>> pageList = itemService.getByCriteria(CIM_ITEM_TYPE_ID, state, itemClassifyId, discountable, name);
         PageInfo<Map<String, Object>> pageInfo = new PageInfo<Map<String, Object>>(pageList);
         return PageResult.success().resultSet("page", pageInfo);
     }
