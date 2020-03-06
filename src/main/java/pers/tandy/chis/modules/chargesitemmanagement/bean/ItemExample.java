@@ -882,6 +882,66 @@ public class ItemExample {
             return (Criteria) this;
         }
 
+        public Criteria andYbItemIsNull() {
+            addCriterion("yb_item is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andYbItemIsNotNull() {
+            addCriterion("yb_item is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andYbItemEqualTo(Boolean value) {
+            addCriterion("yb_item =", value, "ybItem");
+            return (Criteria) this;
+        }
+
+        public Criteria andYbItemNotEqualTo(Boolean value) {
+            addCriterion("yb_item <>", value, "ybItem");
+            return (Criteria) this;
+        }
+
+        public Criteria andYbItemGreaterThan(Boolean value) {
+            addCriterion("yb_item >", value, "ybItem");
+            return (Criteria) this;
+        }
+
+        public Criteria andYbItemGreaterThanOrEqualTo(Boolean value) {
+            addCriterion("yb_item >=", value, "ybItem");
+            return (Criteria) this;
+        }
+
+        public Criteria andYbItemLessThan(Boolean value) {
+            addCriterion("yb_item <", value, "ybItem");
+            return (Criteria) this;
+        }
+
+        public Criteria andYbItemLessThanOrEqualTo(Boolean value) {
+            addCriterion("yb_item <=", value, "ybItem");
+            return (Criteria) this;
+        }
+
+        public Criteria andYbItemIn(List<Boolean> values) {
+            addCriterion("yb_item in", values, "ybItem");
+            return (Criteria) this;
+        }
+
+        public Criteria andYbItemNotIn(List<Boolean> values) {
+            addCriterion("yb_item not in", values, "ybItem");
+            return (Criteria) this;
+        }
+
+        public Criteria andYbItemBetween(Boolean value1, Boolean value2) {
+            addCriterion("yb_item between", value1, value2, "ybItem");
+            return (Criteria) this;
+        }
+
+        public Criteria andYbItemNotBetween(Boolean value1, Boolean value2) {
+            addCriterion("yb_item not between", value1, value2, "ybItem");
+            return (Criteria) this;
+        }
+
         public Criteria andReturnableIsNull() {
             addCriterion("returnable is null");
             return (Criteria) this;

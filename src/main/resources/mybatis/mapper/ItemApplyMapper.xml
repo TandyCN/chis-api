@@ -14,6 +14,8 @@
     <result column="retail_price" jdbcType="REAL" property="retailPrice" />
     <result column="explains" jdbcType="VARCHAR" property="explains" />
     <result column="discountable" jdbcType="BIT" property="discountable" />
+    <result column="returnable" jdbcType="BIT" property="returnable" />
+    <result column="yb_item" jdbcType="BIT" property="ybItem" />
     <result column="creator_id" jdbcType="INTEGER" property="creatorId" />
     <result column="creation_date" jdbcType="DATE" property="creationDate" />
     <result column="pricer_id" jdbcType="INTEGER" property="pricerId" />
@@ -82,8 +84,8 @@
   </sql>
   <sql id="Base_Column_List">
     id, name, code, cim_item_type_id, item_units_id, befit_gender_id, billing_type_id,
-    item_classify_id, quantity, retail_price, explains, discountable, creator_id, creation_date,
-    pricer_id, pricing_date, approver_id, approve_date, approve_state
+    item_classify_id, quantity, retail_price, explains, discountable, returnable, yb_item,
+    creator_id, creation_date, pricer_id, pricing_date, approver_id, approve_date, approve_state
   </sql>
   <select id="selectByExample" parameterType="pers.tandy.chis.modules.chargesitemmanagement.bean.ItemApplyExample" resultMap="BaseResultMap">
     select
@@ -120,16 +122,18 @@
       cim_item_type_id, item_units_id, befit_gender_id,
       billing_type_id, item_classify_id, quantity,
       retail_price, explains, discountable,
-      creator_id, creation_date, pricer_id,
-      pricing_date, approver_id, approve_date,
-      approve_state)
+      returnable, yb_item, creator_id,
+      creation_date, pricer_id, pricing_date,
+      approver_id, approve_date, approve_state
+      )
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR},
       #{cimItemTypeId,jdbcType=INTEGER}, #{itemUnitsId,jdbcType=INTEGER}, #{befitGenderId,jdbcType=INTEGER},
       #{billingTypeId,jdbcType=INTEGER}, #{itemClassifyId,jdbcType=INTEGER}, #{quantity,jdbcType=TINYINT},
       #{retailPrice,jdbcType=REAL}, #{explains,jdbcType=VARCHAR}, #{discountable,jdbcType=BIT},
-      #{creatorId,jdbcType=INTEGER}, #{creationDate,jdbcType=DATE}, #{pricerId,jdbcType=INTEGER},
-      #{pricingDate,jdbcType=DATE}, #{approverId,jdbcType=INTEGER}, #{approveDate,jdbcType=DATE},
-      #{approveState,jdbcType=TINYINT})
+      #{returnable,jdbcType=BIT}, #{ybItem,jdbcType=BIT}, #{creatorId,jdbcType=INTEGER},
+      #{creationDate,jdbcType=DATE}, #{pricerId,jdbcType=INTEGER}, #{pricingDate,jdbcType=DATE},
+      #{approverId,jdbcType=INTEGER}, #{approveDate,jdbcType=DATE}, #{approveState,jdbcType=TINYINT}
+      )
   </insert>
   <insert id="insertSelective" parameterType="pers.tandy.chis.modules.chargesitemmanagement.bean.ItemApply">
     insert into cim_item_apply
@@ -169,6 +173,12 @@
       </if>
       <if test="discountable != null">
         discountable,
+      </if>
+      <if test="returnable != null">
+        returnable,
+      </if>
+      <if test="ybItem != null">
+        yb_item,
       </if>
       <if test="creatorId != null">
         creator_id,
@@ -228,6 +238,12 @@
       </if>
       <if test="discountable != null">
         #{discountable,jdbcType=BIT},
+      </if>
+      <if test="returnable != null">
+        #{returnable,jdbcType=BIT},
+      </if>
+      <if test="ybItem != null">
+        #{ybItem,jdbcType=BIT},
       </if>
       <if test="creatorId != null">
         #{creatorId,jdbcType=INTEGER},
@@ -297,6 +313,12 @@
       <if test="record.discountable != null">
         discountable = #{record.discountable,jdbcType=BIT},
       </if>
+      <if test="record.returnable != null">
+        returnable = #{record.returnable,jdbcType=BIT},
+      </if>
+      <if test="record.ybItem != null">
+        yb_item = #{record.ybItem,jdbcType=BIT},
+      </if>
       <if test="record.creatorId != null">
         creator_id = #{record.creatorId,jdbcType=INTEGER},
       </if>
@@ -337,6 +359,8 @@
       retail_price = #{record.retailPrice,jdbcType=REAL},
       explains = #{record.explains,jdbcType=VARCHAR},
       discountable = #{record.discountable,jdbcType=BIT},
+      returnable = #{record.returnable,jdbcType=BIT},
+      yb_item = #{record.ybItem,jdbcType=BIT},
       creator_id = #{record.creatorId,jdbcType=INTEGER},
       creation_date = #{record.creationDate,jdbcType=DATE},
       pricer_id = #{record.pricerId,jdbcType=INTEGER},
@@ -384,6 +408,12 @@
       <if test="discountable != null">
         discountable = #{discountable,jdbcType=BIT},
       </if>
+      <if test="returnable != null">
+        returnable = #{returnable,jdbcType=BIT},
+      </if>
+      <if test="ybItem != null">
+        yb_item = #{ybItem,jdbcType=BIT},
+      </if>
       <if test="creatorId != null">
         creator_id = #{creatorId,jdbcType=INTEGER},
       </if>
@@ -421,6 +451,8 @@
       retail_price = #{retailPrice,jdbcType=REAL},
       explains = #{explains,jdbcType=VARCHAR},
       discountable = #{discountable,jdbcType=BIT},
+      returnable = #{returnable,jdbcType=BIT},
+      yb_item = #{ybItem,jdbcType=BIT},
       creator_id = #{creatorId,jdbcType=INTEGER},
       creation_date = #{creationDate,jdbcType=DATE},
       pricer_id = #{pricerId,jdbcType=INTEGER},
@@ -449,5 +481,6 @@
     </trim>
     order by id desc
   </select>
+
 
 </mapper>

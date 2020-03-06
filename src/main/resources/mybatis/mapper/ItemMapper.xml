@@ -14,6 +14,7 @@
     <result column="retail_price" jdbcType="REAL" property="retailPrice" />
     <result column="explains" jdbcType="VARCHAR" property="explains" />
     <result column="discountable" jdbcType="BIT" property="discountable" />
+    <result column="yb_item" jdbcType="BIT" property="ybItem" />
     <result column="returnable" jdbcType="BIT" property="returnable" />
     <result column="state" jdbcType="BIT" property="state" />
     <result column="required" jdbcType="BIT" property="required" />
@@ -82,8 +83,8 @@
   </sql>
   <sql id="Base_Column_List">
     id, name, code, cim_item_type_id, item_units_id, befit_gender_id, billing_type_id,
-    item_classify_id, quantity, retail_price, explains, discountable, returnable, state,
-    required, creator_id, creation_date, last_updater_id, last_update_date
+    item_classify_id, quantity, retail_price, explains, discountable, yb_item, returnable,
+    state, required, creator_id, creation_date, last_updater_id, last_update_date
   </sql>
   <select id="selectByExample" parameterType="pers.tandy.chis.modules.chargesitemmanagement.bean.ItemExample" resultMap="BaseResultMap">
     select
@@ -120,16 +121,16 @@
       cim_item_type_id, item_units_id, befit_gender_id,
       billing_type_id, item_classify_id, quantity,
       retail_price, explains, discountable,
-      returnable, state, required, creator_id,
-      creation_date, last_updater_id, last_update_date
-      )
+      yb_item, returnable, state, required,
+      creator_id, creation_date, last_updater_id,
+      last_update_date)
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR},
       #{cimItemTypeId,jdbcType=INTEGER}, #{itemUnitsId,jdbcType=INTEGER}, #{befitGenderId,jdbcType=INTEGER},
       #{billingTypeId,jdbcType=INTEGER}, #{itemClassifyId,jdbcType=INTEGER}, #{quantity,jdbcType=TINYINT},
       #{retailPrice,jdbcType=REAL}, #{explains,jdbcType=VARCHAR}, #{discountable,jdbcType=BIT},
-      #{returnable,jdbcType=BIT}, #{state,jdbcType=BIT}, #{required,jdbcType=BIT}, #{creatorId,jdbcType=INTEGER},
-      #{creationDate,jdbcType=DATE}, #{lastUpdaterId,jdbcType=INTEGER}, #{lastUpdateDate,jdbcType=DATE}
-      )
+      #{ybItem,jdbcType=BIT}, #{returnable,jdbcType=BIT}, #{state,jdbcType=BIT}, #{required,jdbcType=BIT},
+      #{creatorId,jdbcType=INTEGER}, #{creationDate,jdbcType=DATE}, #{lastUpdaterId,jdbcType=INTEGER},
+      #{lastUpdateDate,jdbcType=DATE})
   </insert>
   <insert id="insertSelective" parameterType="pers.tandy.chis.modules.chargesitemmanagement.bean.Item">
     insert into cim_item
@@ -169,6 +170,9 @@
       </if>
       <if test="discountable != null">
         discountable,
+      </if>
+      <if test="ybItem != null">
+        yb_item,
       </if>
       <if test="returnable != null">
         returnable,
@@ -228,6 +232,9 @@
       </if>
       <if test="discountable != null">
         #{discountable,jdbcType=BIT},
+      </if>
+      <if test="ybItem != null">
+        #{ybItem,jdbcType=BIT},
       </if>
       <if test="returnable != null">
         #{returnable,jdbcType=BIT},
@@ -297,6 +304,9 @@
       <if test="record.discountable != null">
         discountable = #{record.discountable,jdbcType=BIT},
       </if>
+      <if test="record.ybItem != null">
+        yb_item = #{record.ybItem,jdbcType=BIT},
+      </if>
       <if test="record.returnable != null">
         returnable = #{record.returnable,jdbcType=BIT},
       </if>
@@ -337,6 +347,7 @@
       retail_price = #{record.retailPrice,jdbcType=REAL},
       explains = #{record.explains,jdbcType=VARCHAR},
       discountable = #{record.discountable,jdbcType=BIT},
+      yb_item = #{record.ybItem,jdbcType=BIT},
       returnable = #{record.returnable,jdbcType=BIT},
       state = #{record.state,jdbcType=BIT},
       required = #{record.required,jdbcType=BIT},
@@ -384,6 +395,9 @@
       <if test="discountable != null">
         discountable = #{discountable,jdbcType=BIT},
       </if>
+      <if test="ybItem != null">
+        yb_item = #{ybItem,jdbcType=BIT},
+      </if>
       <if test="returnable != null">
         returnable = #{returnable,jdbcType=BIT},
       </if>
@@ -421,6 +435,7 @@
       retail_price = #{retailPrice,jdbcType=REAL},
       explains = #{explains,jdbcType=VARCHAR},
       discountable = #{discountable,jdbcType=BIT},
+      yb_item = #{ybItem,jdbcType=BIT},
       returnable = #{returnable,jdbcType=BIT},
       state = #{state,jdbcType=BIT},
       required = #{required,jdbcType=BIT},
@@ -452,8 +467,8 @@
       <if test="itemClassifyId != null">
         (itemClassifyId = #{itemClassifyId}) and
       </if>
-      <if test="discountable != null">
-        (discountable = #{discountable}) and
+      <if test="ybItem != null">
+        (ybItem = #{ybItem}) and
       </if>
       <if test="name != null &amp;&amp; name.trim() != ''">
         (name like '${name}%' or code like '${name}%')
@@ -484,5 +499,8 @@
     order by id desc
     LIMIT 30
   </select>
+
+
+
 
 </mapper>

@@ -38,12 +38,13 @@ public interface ItemMapper {
     List<Map<String, Object>> selectByCriteria(@Param("cimItemTypeId") Integer cimItemTypeId,
                                                @Param("state") Boolean state,
                                                @Param("itemClassifyId") Integer itemClassifyId,
-                                               @Param("discountable") Boolean discountable,
+                                               @Param("ybItem") Boolean ybItem,
                                                @Param("name") String name);
 
     List<Map<String, Object>> selectEnabledLikeByName(@Param("name") String name);
 
     List<Map<String, Object>> selectEnabledLikeByNameForPrescription(@Param("cimItemTypeId") Integer cimItemTypeId,
                                                                      @Param("name") String name);
+
 
 }

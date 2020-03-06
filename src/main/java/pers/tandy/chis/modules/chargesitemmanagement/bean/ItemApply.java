@@ -46,6 +46,12 @@ public class ItemApply implements Serializable {
     @NotNull
     private Boolean discountable; // 是否可打折
 
+    @NotNull
+    private Boolean returnable; // 是否可退
+
+    @NotNull
+    private Boolean ybItem; // 是否医保项目
+
     private Integer creatorId; // 创建人/申请人ID
 
     @DateTimeFormat(pattern="yyyy-MM-dd")
@@ -157,6 +163,22 @@ public class ItemApply implements Serializable {
 
     public void setDiscountable(Boolean discountable) {
         this.discountable = discountable;
+    }
+
+    public Boolean getReturnable() {
+        return returnable;
+    }
+
+    public void setReturnable(Boolean returnable) {
+        this.returnable = returnable;
+    }
+
+    public Boolean getYbItem() {
+        return ybItem;
+    }
+
+    public void setYbItem(Boolean ybItem) {
+        this.ybItem = ybItem;
     }
 
     public Integer getCreatorId() {

@@ -104,7 +104,7 @@ public class ItemHandler {
      * @param pageSize
      * @param state
      * @param itemClassifyId
-     * @param discountable
+     * @param ybItem
      * @param name
      * @return
      */
@@ -114,11 +114,11 @@ public class ItemHandler {
             @RequestParam(defaultValue="1") Integer pageSize,
             @RequestParam(required = false) Boolean state, // 启用状态
             @RequestParam(required = false) Integer itemClassifyId, // 项目分类ID
-            @RequestParam(required = false) Boolean discountable, // 是否参与折扣
+            @RequestParam(required = false) Boolean ybItem, // 是否医保项目
             @RequestParam(required = false) String name){ // 项目名称或助记码
 
         PageHelper.startPage(pageNum, pageSize);
-        List<Map<String, Object>> pageList = itemService.getByCriteria(CIM_ITEM_TYPE_ID, state, itemClassifyId, discountable, name);
+        List<Map<String, Object>> pageList = itemService.getByCriteria(CIM_ITEM_TYPE_ID, state, itemClassifyId, ybItem, name);
         PageInfo<Map<String, Object>> pageInfo = new PageInfo<Map<String, Object>>(pageList);
         return PageResult.success().resultSet("page", pageInfo);
     }

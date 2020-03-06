@@ -111,8 +111,8 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public List<Map<String, Object>> getByCriteria(Integer cimItemTypeId, Boolean state, Integer itemClassifyId, Boolean discountable, String name) {
-        return itemMapper.selectByCriteria(cimItemTypeId, state, itemClassifyId, discountable, name);
+    public List<Map<String, Object>> getByCriteria(Integer cimItemTypeId, Boolean state, Integer itemClassifyId, Boolean ybItem, String name) {
+        return itemMapper.selectByCriteria(cimItemTypeId, state, itemClassifyId, ybItem, name);
     }
 
     @Override

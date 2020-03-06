@@ -63,14 +63,14 @@ public interface ItemService {
      * @param cimItemTypeId
      * @param state
      * @param itemClassifyId
-     * @param discountable
+     * @param ybItem
      * @param name
      * @return
      */
     List<Map<String, Object>> getByCriteria (Integer cimItemTypeId, // 项目分类ID
                                              Boolean state, // 启用状态
                                              Integer itemClassifyId, // 项目分类ID
-                                             Boolean discountable, // 是否参与打折
+                                             Boolean ybItem, // 是否医保项目
                                              String name // 项目名称或助记码
     );
 

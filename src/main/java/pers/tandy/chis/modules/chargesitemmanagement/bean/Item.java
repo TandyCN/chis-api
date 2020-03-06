@@ -46,6 +46,9 @@ public class Item implements Serializable {
     private Boolean discountable; // 是否可打折
 
     @NotNull
+    private Boolean ybItem; // 是否医保项目
+
+    @NotNull
     private Boolean returnable = true; // 是否可退费
 
     @NotNull
@@ -157,6 +160,14 @@ public class Item implements Serializable {
 
     public void setDiscountable(Boolean discountable) {
         this.discountable = discountable;
+    }
+
+    public Boolean getYbItem() {
+        return ybItem;
+    }
+
+    public void setYbItem(Boolean ybItem) {
+        this.ybItem = ybItem;
     }
 
     public Boolean getReturnable() {
