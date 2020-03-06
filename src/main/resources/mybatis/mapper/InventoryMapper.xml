@@ -386,7 +386,7 @@
 
 
   <!-- ************************************************************************************************************* -->
-
+  <!--
   <insert id="insertList">
     insert into iym_inventory
     (
@@ -429,7 +429,9 @@
       )
     </foreach>
   </insert>
+  -->
 
+  <!--
   <update id="updateQuantityByList">
     <foreach collection="inventoryList" item="inventory" separator=";" close=";">
       update iym_inventory
@@ -437,6 +439,7 @@
       where id = #{inventory.id}
     </foreach>
   </update>
+  -->
 
   <update id="updateQuantityById">
      update iym_inventory
@@ -444,13 +447,10 @@
       where id = #{id}
   </update>
 
-  <update id="updateIymInventoryTypeIdByIdList">
+  <update id="updateIymInventoryTypeIdById">
     update iym_inventory
     set iym_inventory_type_id = #{iymInventoryTypeId}
-    where id in
-      <foreach collection="idList" item="id" open="(" separator="," close=")">
-        #{id}
-      </foreach>
+    where id = #{id}
   </update>
 
   <select id="selectLastByGoodsIdList" resultMap="BaseResultMap">

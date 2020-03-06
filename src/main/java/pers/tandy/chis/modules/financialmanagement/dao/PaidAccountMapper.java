@@ -34,7 +34,7 @@ public interface PaidAccountMapper {
 
     /* -------------------------------------------------------------------------------------------------------------- */
 
-    void insertList(@Param("paidAccountList") List<PaidAccount> paidAccountList);
+    // void insertList(@Param("paidAccountList") List<PaidAccount> paidAccountList);
 
     void updateInvoiceNo(@Param("lshList") List<String> lshList,
                          @Param("invoiceNo") String invoiceNo);

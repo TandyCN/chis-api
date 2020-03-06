@@ -33,9 +33,9 @@ public interface PurchasePlanMapper {
 
     /*---------------------------------------------------------------------------------------------------------------*/
 
-    void insertList(@Param("ppList") List<PurchasePlan> purchasePlanList);
+    // void insertList(@Param("ppList") List<PurchasePlan> purchasePlanList);
 
-    int updateApproveStateByPlanIdList(@Param("approveState") Byte approveState,
+    void updateApproveStateByPlanIdList(@Param("approveState") Byte approveState,
                                        @Param("approverId") Integer approverId,
                                        @Param("approveDate") Date approveDate,
                                        @Param("planList") List<PurchasePlan> planList);

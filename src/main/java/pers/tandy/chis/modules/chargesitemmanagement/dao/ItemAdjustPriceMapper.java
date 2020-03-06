@@ -32,14 +32,14 @@ public interface ItemAdjustPriceMapper {
     int updateByPrimaryKey(ItemAdjustPrice record);
 
     /*----------------------------------------------------------------------------------------------------------------*/
-    int insertList(@Param("iapList") List<ItemAdjustPrice> itemAdjustPriceList);
+    // int insertList(@Param("iapList") List<ItemAdjustPrice> itemAdjustPriceList);
 
     List<Map<String, Object>> selectByLsh(@Param("lsh") String lsh);
 
-    int updateByLsh(@Param("lsh") String lsh,
-                    @Param("approverId") Integer approverId,
-                    @Param("approveDate") Date approveDate,
-                    @Param("approveState") Byte approveState);
+    void updateByLsh(@Param("lsh") String lsh,
+                     @Param("approverId") Integer approverId,
+                     @Param("approveDate") Date approveDate,
+                     @Param("approveState") Byte approveState);
 
     List<Map<String, Object>> selectByCriteria(@Param("creationDate") String[] creationDate,
                                                @Param("name") String name,

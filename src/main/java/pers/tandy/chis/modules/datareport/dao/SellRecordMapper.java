@@ -32,7 +32,7 @@ public interface SellRecordMapper {
 
     /******************************************************************************************************************/
 
-    void insertList(@Param("sellRecordList") List<SellRecord> sellRecordList);
+    // void insertList(@Param("sellRecordList") List<SellRecord> sellRecordList);
 
     void updateReturnedByIdList(@Param("idList") List<Integer> idList);
 

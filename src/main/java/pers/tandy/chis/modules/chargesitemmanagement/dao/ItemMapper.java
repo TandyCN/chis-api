@@ -33,7 +33,7 @@ public interface ItemMapper {
 
     /*----------------------------------------------------------------------------------------------------------------*/
 
-    void updateRetailPriceByList(@Param("itemList") List<Item> itemList);
+    void updateRetailPriceById(@Param("retailPrice") Float retailPrice, @Param("id") Integer id);
 
     List<Map<String, Object>> selectByCriteria(@Param("cimItemTypeId") Integer cimItemTypeId,
                                                @Param("state") Boolean state,

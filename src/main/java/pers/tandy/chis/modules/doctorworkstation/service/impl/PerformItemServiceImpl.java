@@ -1,5 +1,8 @@
 package pers.tandy.chis.modules.doctorworkstation.service.impl;
 
+import org.apache.ibatis.session.ExecutorType;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -24,6 +27,12 @@ import java.util.Map;
 @Service
 public class PerformItemServiceImpl implements PerformItemService {
 
+    private SqlSessionFactory sqlSessionFactory;
+    @Autowired
+    public void setSqlSessionFactory(SqlSessionFactory sqlSessionFactory) {
+        this.sqlSessionFactory = sqlSessionFactory;
+    }
+
     private PerformItemMapper performItemMapper;
     @Autowired
     public void setPerformItemMapper(PerformItemMapper performItemMapper) {
@@ -40,7 +49,16 @@ public class PerformItemServiceImpl implements PerformItemService {
 
     @Override
     public void saveList(List<PerformItem> performItemList) {
-        performItemMapper.insertList(performItemList);
+        SqlSession batchSqlSession = sqlSessionFactory.openSession(ExecutorType.BATCH);
+        PerformItemMapper mapper = batchSqlSession.getMapper(PerformItemMapper.class);
+        try {
+            for (PerformItem performItem : performItemList) {
+                mapper.insert(performItem);
+            }
+            batchSqlSession.commit();
+        } finally {
+            batchSqlSession.close();
+        }
     }
 
     @Override

@@ -372,7 +372,7 @@
 
 
   <!--***************************************************************************************************************-->
-
+  <!--
   <insert id="insertList">
     insert into gsm_goods_adjust_price
     (
@@ -413,6 +413,7 @@
       )
     </foreach>
   </insert>
+  -->
 
   <update id="updateByLsh">
     update gsm_goods_adjust_price

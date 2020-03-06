@@ -32,8 +32,6 @@ public interface PerformItemMapper {
 
     /******************************************************************************************************************/
 
-    void insertList(@Param("performItemList") List<PerformItem> performItemList);
-
     void updateResidueQuantityById(@Param("id") Integer id, @Param("performQuantity") Integer performQuantity);
 
     void updateResidueQuantityByList(@Param("performItemList") List<PerformItem> performItemList);

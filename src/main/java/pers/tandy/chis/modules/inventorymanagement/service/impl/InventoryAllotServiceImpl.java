@@ -1,5 +1,8 @@
 package pers.tandy.chis.modules.inventorymanagement.service.impl;
 
+import org.apache.ibatis.session.ExecutorType;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,6 +38,12 @@ public class InventoryAllotServiceImpl implements InventoryAllotService {
         this.inventoryService = inventoryService;
     }
 
+    private SqlSessionFactory sqlSessionFactory;
+    @Autowired
+    public void setSqlSessionFactory(SqlSessionFactory sqlSessionFactory) {
+        this.sqlSessionFactory = sqlSessionFactory;
+    }
+
     /*----------------------------------------------------------------------------------------------------------------*/
 
     @Override
@@ -44,19 +53,25 @@ public class InventoryAllotServiceImpl implements InventoryAllotService {
         String lsh = KeyUtils.getLSH(user.getId());
         int mxh = 1;
 
-        // 填写要保存的数据
-        for (InventoryAllot allot : allotList) {
-            allot.setLsh(lsh);
-            allot.setMxh(String.valueOf(mxh++));
-            allot.setSysClinicId(user.getSysClinicId());
-            allot.setCreatorId(user.getId());
-            allot.setCreationDate(new Date());
-            // 直接设置为审核通过状态
-            allot.setApproveState(ApproveStateEnum.APPROVED.getIndex());
-        }
-
         // 提交保存仓库调拨记录
-        inventoryAllotMapper.insertList(allotList);
+        SqlSession batchSqlSession = sqlSessionFactory.openSession(ExecutorType.BATCH);
+        InventoryAllotMapper mapper = batchSqlSession.getMapper(InventoryAllotMapper.class);
+        try {
+            for (InventoryAllot allot : allotList) {
+                allot.setLsh(lsh);
+                allot.setMxh(String.valueOf(mxh++));
+                allot.setSysClinicId(user.getSysClinicId());
+                allot.setCreatorId(user.getId());
+                allot.setCreationDate(new Date());
+                // 直接设置为审核通过状态
+                allot.setApproveState(ApproveStateEnum.APPROVED.getIndex());
+
+                mapper.insert(allot);
+            }
+            batchSqlSession.commit();
+        } finally {
+            batchSqlSession.close();
+        }
 
         // 变更仓库操作
         this.updateIymInventoryTypeId(allotList);
@@ -67,6 +82,7 @@ public class InventoryAllotServiceImpl implements InventoryAllotService {
     // 放弃审核, 直接保存即可审核通过, 同时不再拆分调拨数量, 将操作数据行直接更改为目标仓库类型 Date: 2020-03-03, By: Tandy
     // *****************************************************************************************************************
     private void updateIymInventoryTypeId (List<InventoryAllot> allotList) {
+        /*
         // 声明要进行提交的集合 key 为仓库ID, value 为 库存记录 ID 集合
         Map<Integer, List<Integer>> groupMap = new HashMap<>();
 
@@ -85,11 +101,16 @@ public class InventoryAllotServiceImpl implements InventoryAllotService {
 
             groupMap.put(iymInventoryTypeId, idList);
         });
+        */
+        List<Inventory> inventoryList = new ArrayList<>();
+        for (InventoryAllot inventoryAllot : allotList) {
+            Inventory inventory = new Inventory();
+            inventory.setId(inventoryAllot.getIymInventoryId());
+            inventory.setIymInventoryTypeId(inventoryAllot.getToIymInventoryTypeId());
 
-        // 执行调拨
-        if (!groupMap.isEmpty()) {
-            groupMap.forEach((iymInventoryTypeId, idList) -> this.inventoryService.updateIymInventoryTypeIdByIdList(idList, iymInventoryTypeId));
+            inventoryList.add(inventory);
         }
+        this.inventoryService.updateIymInventoryTypeIdByList(inventoryList);
 
     }
 

@@ -31,7 +31,11 @@ public interface GoodsMapper {
     int updateByPrimaryKey(Goods record);
 
     /*---------------------------------------------------------------------------------------------------------------*/
-    void updateRetailPriceByList(@Param("goodsList") List<Goods> goodsList);
+    // void updateRetailPriceByList(@Param("goodsList") List<Goods> goodsList);
+
+    void updateRetailPriceById(@Param("retailPrice") Float retailPrice,
+                               @Param("splitPrice") Float splitPrice,
+                               @Param("id") Integer id);
 
     List<Map<String, Object>> selectByCriteria(@Param("oid") String oid,
                                                @Param("gsmGoodsTypeId") Integer gsmGoodsTypeId,

@@ -36,7 +36,7 @@
 
 		<!-- 配置javaBean 生成位置 -->
 		<javaModelGenerator
-			targetPackage="pers.tandy.chis.modules.chargesitemmanagement.bean"
+			targetPackage="pers.tandy.chis.modules.mytest.bean"
 			targetProject=".\src\main\java">
 			<property name="enableSubPackages" value="true" />
 			<property name="trimStrings" value="true" />
@@ -52,14 +52,14 @@
 		<!-- 配置 interface 生成位置 -->
 		<javaClientGenerator
 			type="XMLMAPPER"
-			targetPackage="pers.tandy.chis.modules.chargesitemmanagement.dao"
+			targetPackage="pers.tandy.chis.modules.mytest.dao"
 			targetProject=".\src\main\java">
 			<property name="enableSubPackages" value="true" />
 		</javaClientGenerator>
 
 		<!-- 配置逆向工程的数据库表 -->
-		<table tableName="cim_item_apply"
-			   domainObjectName="ItemApply"/>
+		<table tableName="test_01"
+			   domainObjectName="Test01"/>
 
 	</context>
 </generatorConfiguration>

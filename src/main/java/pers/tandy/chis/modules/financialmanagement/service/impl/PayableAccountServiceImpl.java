@@ -1,5 +1,8 @@
 package pers.tandy.chis.modules.financialmanagement.service.impl;
 
+import org.apache.ibatis.session.ExecutorType;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pers.tandy.chis.modules.financialmanagement.bean.PayableAccount;
@@ -18,17 +21,30 @@ import java.util.Map;
 public class PayableAccountServiceImpl implements PayableAccountService {
 
     private PayableAccountMapper payableAccountMapper;
-
     @Autowired
     public void setPayableAccountMapper(PayableAccountMapper payableAccountMapper) {
         this.payableAccountMapper = payableAccountMapper;
     }
 
+    private SqlSessionFactory sqlSessionFactory;
+    @Autowired
+    public void setSqlSessionFactory(SqlSessionFactory sqlSessionFactory) {
+        this.sqlSessionFactory = sqlSessionFactory;
+    }
     /* -------------------------------------------------------------------------------------------------------------- */
 
     @Override
     public void saveList(List<PayableAccount> payableAccountList) {
-        payableAccountMapper.saveList(payableAccountList);
+        SqlSession batchSqlSession = sqlSessionFactory.openSession(ExecutorType.BATCH);
+        PayableAccountMapper mapper = batchSqlSession.getMapper(PayableAccountMapper.class);
+        try {
+            for (PayableAccount payableAccount : payableAccountList) {
+                mapper.insert(payableAccount);
+            }
+            batchSqlSession.commit();
+        } finally {
+            batchSqlSession.close();
+        }
     }
 
     @Override

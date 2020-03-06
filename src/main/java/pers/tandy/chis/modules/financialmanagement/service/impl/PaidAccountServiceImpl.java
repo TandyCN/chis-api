@@ -1,5 +1,8 @@
 package pers.tandy.chis.modules.financialmanagement.service.impl;
 
+import org.apache.ibatis.session.ExecutorType;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,6 +38,12 @@ public class PaidAccountServiceImpl implements PaidAccountService {
         this.supplierService = supplierService;
     }
 
+    private SqlSessionFactory sqlSessionFactory;
+    @Autowired
+    public void setSqlSessionFactory(SqlSessionFactory sqlSessionFactory) {
+        this.sqlSessionFactory = sqlSessionFactory;
+    }
+
     /* -------------------------------------------------------------------------------------------------------------- */
     @Override
     public void saveList(List<PaidAccount> paidAccountList) {
@@ -45,15 +54,23 @@ public class PaidAccountServiceImpl implements PaidAccountService {
         // 初始化明细号
         int i = 1;
 
-        for (PaidAccount paidAccount : paidAccountList) {
-            paidAccount.setLsh(lsh);
-            paidAccount.setMxh(String.valueOf(i++));
-            paidAccount.setSysClinicId(user.getSysClinicId());
-            paidAccount.setCreatorId(user.getId());
-            paidAccount.setCreationDate(new Date());
-            paidAccount.setApproveState(ApproveStateEnum.PENDING.getIndex());
+        SqlSession batchSqlSession = sqlSessionFactory.openSession(ExecutorType.BATCH);
+        PaidAccountMapper mapper = batchSqlSession.getMapper(PaidAccountMapper.class);
+        try {
+            for (PaidAccount paidAccount : paidAccountList) {
+                paidAccount.setLsh(lsh);
+                paidAccount.setMxh(String.valueOf(i++));
+                paidAccount.setSysClinicId(user.getSysClinicId());
+                paidAccount.setCreatorId(user.getId());
+                paidAccount.setCreationDate(new Date());
+                paidAccount.setApproveState(ApproveStateEnum.PENDING.getIndex());
+
+                mapper.insert(paidAccount);
+            }
+            batchSqlSession.commit();
+        } finally {
+            batchSqlSession.close();
         }
-        paidAccountMapper.insertList(paidAccountList);
     }
 
     @Override

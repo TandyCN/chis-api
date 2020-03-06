@@ -21,20 +21,6 @@ public interface ShelfGoodsService {
     void saveOrUpdateList(List<ShelfGoods> shelfGoodsList);
 
     /**
-     * 保存集合操作
-     * @param shelfGoodsList
-     */
-    @Transactional
-    void saveList(List<ShelfGoods> shelfGoodsList);
-
-    /**
-     * 编辑集合操作
-     * @param shelfGoodsList
-     */
-    @Transactional
-    void updateList(List<ShelfGoods> shelfGoodsList);
-
-    /**
      * 根据条件获取机构货位商品明细
      * @param sysClinicId
      * @param gsmGoodsTypeId

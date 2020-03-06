@@ -386,7 +386,7 @@
 
 
   <!-- ************************************************************************************************************* -->
-
+  <!--
   <insert id="insertList">
     insert into pem_purchase_order
     (
@@ -429,6 +429,7 @@
       )
     </foreach>
   </insert>
+  -->
 
   <update id="updateApproveStateByLsh">
     update pem_purchase_order

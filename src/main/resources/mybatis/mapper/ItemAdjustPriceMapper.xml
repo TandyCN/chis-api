@@ -339,6 +339,7 @@
 
   <!--***************************************************************************************************************-->
 
+  <!--
   <insert id="insertList">
     insert into cim_item_adjust_price
     (
@@ -375,6 +376,7 @@
       )
     </foreach>
   </insert>
+  -->
 
   <select id="selectByLsh" resultType="map">
     select *

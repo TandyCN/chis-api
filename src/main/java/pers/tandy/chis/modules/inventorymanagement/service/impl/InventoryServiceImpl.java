@@ -1,6 +1,10 @@
 package pers.tandy.chis.modules.inventorymanagement.service.impl;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import org.apache.ibatis.exceptions.PersistenceException;
+import org.apache.ibatis.session.ExecutorType;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -23,6 +27,12 @@ import java.util.*;
  */
 @Service
 public class InventoryServiceImpl implements InventoryService {
+
+    private SqlSessionFactory sqlSessionFactory;
+    @Autowired
+    public void setSqlSessionFactory(SqlSessionFactory sqlSessionFactory) {
+        this.sqlSessionFactory = sqlSessionFactory;
+    }
 
     private InventoryMapper inventoryMapper;
     @Autowired
@@ -48,7 +58,7 @@ public class InventoryServiceImpl implements InventoryService {
             inventory.setAverageCostPrice(averageCostPrice); // 批次平均成本价
         }
         // 提交数据
-        inventoryMapper.insertList(inventoryList);
+        this.doSave(inventoryList);
     }
 
     private Map<Integer, Float> getLastAverageCostPrice(List<Inventory> inventoryList) {
@@ -83,42 +93,61 @@ public class InventoryServiceImpl implements InventoryService {
         }
     }
 
-    @Override
-    public void updateQuantityByList(List<Inventory> inventoryList) {
-        /*
-        * 2020-01-12 23:30 放弃使用注释的操作
-        * 由于使用了事务, 所有数据均在最后一次性提交,
-        * 所以使用 for 循环单个 update 和使用 mapper 一次执行多个 update 性能相同
-        * 200条数据用时13秒, 100条数据用时5.5秒, 50条数据用时3.5秒
-        * 改用循环操作, 方便提示库存不足的商品信息, 数据最好控制在 50条以内
-        **/
-
-        /*
+    private void doSave (List<Inventory> inventoryList) {
+        SqlSession batchSqlSession = sqlSessionFactory.openSession(ExecutorType.BATCH);
+        InventoryMapper mapper = batchSqlSession.getMapper(InventoryMapper.class);
         try {
-            inventoryMapper.updateQuantityByList(inventoryList);
-        } catch (DataIntegrityViolationException e) {
-            throw new RuntimeException("库存数量不足");
-        }
-        */
-
-        for (Inventory inventory : inventoryList) {
-            try {
-                inventoryMapper.updateQuantityById(inventory.getId(), inventory.getQuantity());
-            } catch (DataIntegrityViolationException e) {
-                throw new RuntimeException("商品编码:【" + inventory.getGsmGoodsOid() + "】" +
-                        " 商品名称:【" + inventory.getGsmGoodsName() + "】" +
-                        " 批号:【" + inventory.getPh() + "】" +
-                        " 批次号:【" + inventory.getPch() + "】" +
-                        " 库存数量不足");
+            for (Inventory inventory : inventoryList) {
+                mapper.insert(inventory);
             }
+            batchSqlSession.commit();
+        } finally {
+            batchSqlSession.close();
         }
-
-
     }
 
     @Override
-    public void updateIymInventoryTypeIdByIdList(List<Integer> idList, Integer iymInventoryTypeId) {
-        this.inventoryMapper.updateIymInventoryTypeIdByIdList(idList, iymInventoryTypeId);
+    public void updateQuantityByList(List<Inventory> inventoryList) {
+        // 获取批量执行的 sqlSessionFactory
+        SqlSession batchSqlSession = sqlSessionFactory.openSession(ExecutorType.BATCH);
+        // 获取操作的 Mapper 对象
+        InventoryMapper mapper = batchSqlSession.getMapper(InventoryMapper.class);
+        // 当前 Inventory (用于异常信息返回)
+        Inventory currentInventory = null;
+        try {
+            for (Inventory inventory : inventoryList) {
+                currentInventory = inventory;
+                mapper.updateQuantityById(inventory.getId(), inventory.getQuantity());
+            }
+            batchSqlSession.commit();
+        } catch (PersistenceException e) {
+            if (currentInventory == null) {
+                throw new RuntimeException(e.getCause());
+            } else {
+                throw new RuntimeException(
+                        "商品编码:【" + currentInventory.getGsmGoodsOid() + "】 " +
+                        "商品名称:【" + currentInventory.getGsmGoodsName() + "】 " +
+                        "批号:【" + currentInventory.getPh() + "】 " +
+                        "批次号:【" + currentInventory.getPch() + "】 " +
+                        "库存数量不足");
+            }
+        } finally {
+            batchSqlSession.close();
+        }
+    }
+
+    @Override
+    public void updateIymInventoryTypeIdByList(List<Inventory> inventoryList) {
+        SqlSession batchSqlSession = sqlSessionFactory.openSession(ExecutorType.BATCH);
+        InventoryMapper mapper = batchSqlSession.getMapper(InventoryMapper.class);
+        try {
+            for (Inventory inventory : inventoryList) {
+                mapper.updateIymInventoryTypeIdById(inventory.getIymInventoryTypeId(), inventory.getId());
+            }
+            batchSqlSession.commit();
+        } finally {
+            batchSqlSession.close();
+        }
     }
 
     @Override
@@ -182,13 +211,13 @@ public class InventoryServiceImpl implements InventoryService {
         inventoryList.add(splitInventory);
 
         // 提交拆分库存
-        inventoryMapper.insertList(inventoryList);
+        this.doSave(inventoryList);
 
         // 将拆分之前的库存数量减 1
         inventory.setQuantity((short) 1);
         List<Inventory> subtractInventoryList = new ArrayList<>();
         subtractInventoryList.add(inventory);
-        inventoryMapper.updateQuantityByList(subtractInventoryList);
+        this.updateQuantityByList(subtractInventoryList);
 
     }
 

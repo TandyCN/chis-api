@@ -1,6 +1,9 @@
 package pers.tandy.chis.modules.doctorworkstation.service.impl;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import org.apache.ibatis.session.ExecutorType;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -49,6 +52,12 @@ public class SellPrescriptionServiceImpl implements SellPrescriptionService {
     @Autowired
     public void setMemberService(MemberService memberService) {
         this.memberService = memberService;
+    }
+
+    private SqlSessionFactory sqlSessionFactory;
+    @Autowired
+    public void setSqlSessionFactory(SqlSessionFactory sqlSessionFactory) {
+        this.sqlSessionFactory = sqlSessionFactory;
     }
 
     /* -------------------------------------------------------------------------------------------------------------- */
@@ -206,7 +215,16 @@ public class SellPrescriptionServiceImpl implements SellPrescriptionService {
 
     @Override
     public void saveList(List<SellPrescription> sellPrescriptionList) {
-        sellPrescriptionMapper.insertList(sellPrescriptionList);
+        SqlSession batchSqlSession = sqlSessionFactory.openSession(ExecutorType.BATCH);
+        SellPrescriptionMapper mapper = batchSqlSession.getMapper(SellPrescriptionMapper.class);
+        try {
+            for (SellPrescription sellPrescription : sellPrescriptionList) {
+                mapper.insert(sellPrescription);
+            }
+            batchSqlSession.commit();
+        } finally {
+            batchSqlSession.close();
+        }
     }
 
     @Override

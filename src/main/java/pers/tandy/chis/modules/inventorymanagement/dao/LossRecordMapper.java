@@ -33,7 +33,7 @@ public interface LossRecordMapper {
 
     /*----------------------------------------------------------------------------------------------------------------*/
 
-    void insertList(@Param("lossRecordList") List<LossRecord> lossRecordList);
+    // void insertList(@Param("lossRecordList") List<LossRecord> lossRecordList);
 
     void updateApproveState(@Param("approverId") Integer approverId,
                             @Param("approveDate") Date approveDate,

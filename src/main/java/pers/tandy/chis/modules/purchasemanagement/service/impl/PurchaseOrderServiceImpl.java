@@ -1,5 +1,8 @@
 package pers.tandy.chis.modules.purchasemanagement.service.impl;
 
+import org.apache.ibatis.session.ExecutorType;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,6 +37,12 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
         this.purchasePlanService = purchasePlanService;
     }
 
+    private SqlSessionFactory sqlSessionFactory;
+    @Autowired
+    public void setSqlSessionFactory(SqlSessionFactory sqlSessionFactory) {
+        this.sqlSessionFactory = sqlSessionFactory;
+    }
+
     /*----------------------------------------------------------------------------------------------------------------*/
 
     @Override
@@ -48,16 +57,24 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
         // 初始化明细号
         int mxh = 1;
 
-        // 赋值流水号 明细号 单据状态 创建人 创建日期 入库状态
-        for (PurchaseOrder order : purchaseOrderList) {
-            order.setLsh(lsh);
-            order.setMxh(String.valueOf(mxh++));
-            order.setCreatorId(user.getId());
-            order.setCreationDate(new Date());
-            order.setApproveState(ApproveStateEnum.PENDING.getIndex());
-            order.setInventoryState(false);
+        SqlSession batchSqlSession = sqlSessionFactory.openSession(ExecutorType.BATCH);
+        PurchaseOrderMapper mapper = batchSqlSession.getMapper(PurchaseOrderMapper.class);
+        try {
+            for (PurchaseOrder order : purchaseOrderList) {
+                order.setLsh(lsh);
+                order.setMxh(String.valueOf(mxh++));
+                order.setCreatorId(user.getId());
+                order.setCreationDate(new Date());
+                order.setApproveState(ApproveStateEnum.PENDING.getIndex());
+                order.setInventoryState(false);
+
+                mapper.insert(order);
+            }
+            batchSqlSession.commit();
+        } finally {
+            batchSqlSession.close();
         }
-        purchaseOrderMapper.insertList(purchaseOrderList);
+
     }
 
     @Override
@@ -91,8 +108,8 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
         if (purchaseOrderList.size() == 0) {
             throw new RuntimeException("未能获取对应的采购计划明细");
         }
-        for (int i = 0; i < purchaseOrderList.size(); i++) {
-            if (purchaseOrderList.get(i).getInventoryState()) {
+        for (PurchaseOrder PurchaseOrder : purchaseOrderList) {
+            if (PurchaseOrder.getInventoryState()) {
                 throw new RuntimeException("操作未被允许, 单据明细需为未入库状态");
             }
         }

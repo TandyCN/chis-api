@@ -1,5 +1,8 @@
 package pers.tandy.chis.modules.chargesitemmanagement.service.impl;
 
+import org.apache.ibatis.session.ExecutorType;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,6 +38,11 @@ public class ItemAdjustPriceServiceImpl implements ItemAdjustPriceService {
         this.itemService = itemService;
     }
 
+    private SqlSessionFactory sqlSessionFactory;
+    @Autowired
+    public void setSqlSessionFactory(SqlSessionFactory sqlSessionFactory) {
+        this.sqlSessionFactory = sqlSessionFactory;
+    }
     /* -------------------------------------------------------------------------------------------------------------- */
 
     @Override
@@ -46,16 +54,23 @@ public class ItemAdjustPriceServiceImpl implements ItemAdjustPriceService {
         // 初始化明细号
         int mxh = 1;
 
-        // 赋值流水号 明细号 单据状态 创建人 创建日期 失效日期
-        for (ItemAdjustPrice iap : itemAdjustPriceList) {
-            iap.setLsh(lsh);
-            iap.setMxh(String.valueOf(mxh++));
-            iap.setApproveState(ApproveStateEnum.PENDING.getIndex());
-            iap.setCreatorId(user.getId());
-            iap.setCreationDate(new Date());
-            iap.setExpiryDate(DateUtils.getFutureDate(1));
+        SqlSession batchSqlSession = sqlSessionFactory.openSession(ExecutorType.BATCH);
+        ItemAdjustPriceMapper mapper = batchSqlSession.getMapper(ItemAdjustPriceMapper.class);
+        try {
+            for (ItemAdjustPrice iap : itemAdjustPriceList) {
+                iap.setLsh(lsh);
+                iap.setMxh(String.valueOf(mxh++));
+                iap.setApproveState(ApproveStateEnum.PENDING.getIndex());
+                iap.setCreatorId(user.getId());
+                iap.setCreationDate(new Date());
+                iap.setExpiryDate(DateUtils.getFutureDate(1));
+
+                mapper.insert(iap);
+            }
+            batchSqlSession.commit();
+        } finally {
+            batchSqlSession.close();
         }
-        itemAdjustPriceMapper.insertList(itemAdjustPriceList);
     }
 
     @Override

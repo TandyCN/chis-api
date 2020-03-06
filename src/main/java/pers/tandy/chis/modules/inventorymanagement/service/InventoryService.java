@@ -32,11 +32,10 @@ public interface InventoryService {
 
     /**
      * 变更仓库
-     * @param idList
-     * @param iymInventoryTypeId
+     * @param inventoryList
      */
     @Transactional
-    void updateIymInventoryTypeIdByIdList(List<Integer> idList, Integer iymInventoryTypeId);
+    void updateIymInventoryTypeIdByList(List<Inventory> inventoryList);
 
     /**
      * 拆零操作

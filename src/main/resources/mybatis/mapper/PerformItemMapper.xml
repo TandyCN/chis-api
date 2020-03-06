@@ -275,6 +275,7 @@
   </update>
 
   <!--***************************************************************************************************************-->
+  <!--
   <insert id="insertList">
     insert into dwt_perform_item (
     id,
@@ -301,6 +302,7 @@
       )
     </foreach>
   </insert>
+  -->
 
   <update id="updateResidueQuantityById">
     update dwt_perform_item

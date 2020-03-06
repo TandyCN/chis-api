@@ -907,13 +907,20 @@
 
 
   <!--***************************************************************************************************************-->
-
+  <!--
   <update id="updateRetailPriceByList">
     <foreach collection="goodsList" item="goods" separator=";" close=";">
       update gsm_goods
       set retail_price = #{goods.retailPrice}, split_price = #{goods.splitPrice}
       where id = #{goods.id}
     </foreach>
+  </update>
+  -->
+
+  <update id="updateRetailPriceById">
+    update gsm_goods
+    set retail_price = #{retailPrice}, split_price = #{splitPrice}
+    where id = #{id}
   </update>
 
   <select id="selectByCriteria" resultType="map">

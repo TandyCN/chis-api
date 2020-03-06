@@ -1,5 +1,8 @@
 package pers.tandy.chis.modules.chargesitemmanagement.service.impl;
 
+import org.apache.ibatis.session.ExecutorType;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.*;
@@ -29,7 +32,13 @@ public class ItemServiceImpl implements ItemService {
         this.itemMapper = itemMapper;
     }
 
-   /* --------------------------------------------------------------------------------------------------------------- */
+    private SqlSessionFactory sqlSessionFactory;
+    @Autowired
+    public void setSqlSessionFactory(SqlSessionFactory sqlSessionFactory) {
+        this.sqlSessionFactory = sqlSessionFactory;
+    }
+
+    /* --------------------------------------------------------------------------------------------------------------- */
 
     @CacheEvict(key = "'billingTypeId' + #item.billingTypeId")
     @Override
@@ -61,7 +70,16 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public void updateRetailPriceByList(List<Item> itemList) {
-        itemMapper.updateRetailPriceByList(itemList);
+        SqlSession batchSqlSession = sqlSessionFactory.openSession(ExecutorType.BATCH);
+        ItemMapper mapper = batchSqlSession.getMapper(ItemMapper.class);
+        try {
+            for (Item item : itemList) {
+                mapper.updateRetailPriceById(item.getRetailPrice(), item.getId());
+            }
+            batchSqlSession.commit();
+        } finally {
+            batchSqlSession.close();
+        }
     }
 
     @Caching(

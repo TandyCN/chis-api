@@ -33,7 +33,7 @@ public interface InventorySubtractMapper {
 
 
     /* -------------------------------------------------------------------------------------------------------------- */
-    int insertList(@Param("subtractList") List<InventorySubtract> subtractList);
+    // int insertList(@Param("subtractList") List<InventorySubtract> subtractList);
 
     int updateApproveStateByLsh(@Param("approverId") Integer approverId,
                                 @Param("approveDate") Date approvedate,

@@ -434,6 +434,10 @@
 
 
   <!--***************************************************************************************************************-->
+  <update id="updateRetailPriceById">
+    update cim_item set retail_price = #{retailPrice}
+    where id = #{id}
+  </update>
 
   <select id="selectByCriteria" resultType="map">
     select *
@@ -480,12 +484,5 @@
     order by id desc
     LIMIT 30
   </select>
-
-  <update id="updateRetailPriceByList">
-    <foreach collection="itemList" item="item" separator=";" close=";">
-      update cim_item set retail_price = #{item.retailPrice}
-      where id = #{item.id}
-    </foreach>
-  </update>
 
 </mapper>

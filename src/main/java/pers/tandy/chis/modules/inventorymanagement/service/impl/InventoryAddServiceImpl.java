@@ -1,5 +1,8 @@
 package pers.tandy.chis.modules.inventorymanagement.service.impl;
 
+import org.apache.ibatis.session.ExecutorType;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -56,6 +59,13 @@ public class InventoryAddServiceImpl implements InventoryAddService {
     public void setSupplierService(SupplierService supplierService) {
         this.supplierService = supplierService;
     }
+
+    private SqlSessionFactory sqlSessionFactory;
+    @Autowired
+    public void setSqlSessionFactory(SqlSessionFactory sqlSessionFactory) {
+        this.sqlSessionFactory = sqlSessionFactory;
+    }
+
     /*----------------------------------------------------------------------------------------------------------------*/
 
     @Override
@@ -93,27 +103,27 @@ public class InventoryAddServiceImpl implements InventoryAddService {
         String lsh = KeyUtils.getLSH(user.getId());
         int mxh = 1;
 
-        // 清空 addList 用于放置提交保存的数据
-        inventoryAddList.clear();
+        SqlSession batchSqlSession = sqlSessionFactory.openSession(ExecutorType.BATCH);
+        InventoryAddMapper mapper = batchSqlSession.getMapper(InventoryAddMapper.class);
+        try {
+            for (String key : distinctMap.keySet()) {
+                InventoryAdd inventoryAdd = distinctMap.get(key);
 
-        // 获取合并后的数据 并填充部分需要提交的信息
-        for (String key : distinctMap.keySet()) {
-            InventoryAdd inventoryAdd = distinctMap.get(key);
+                inventoryAdd.setLsh(lsh); // 设置流水号
+                inventoryAdd.setMxh(String.valueOf(mxh++)); // 设置明细号
+                inventoryAdd.setPch(KeyUtils.getPch()); // 设置批次号
+                inventoryAdd.setActionType(actionType); // 操作类型
+                inventoryAdd.setSysClinicId(user.getSysClinicId()); // 机构ID
+                inventoryAdd.setCreatorId(user.getId()); // 创建人ID
+                inventoryAdd.setCreationDate(new Date()); // 创建时间
+                inventoryAdd.setApproveState(ApproveStateEnum.PENDING.getIndex()); // 设置审批状态
 
-            inventoryAdd.setLsh(lsh); // 设置流水号
-            inventoryAdd.setMxh(String.valueOf(mxh++)); // 设置明细号
-            inventoryAdd.setPch(KeyUtils.getPch()); // 设置批次号
-            inventoryAdd.setActionType(actionType); // 操作类型
-            inventoryAdd.setSysClinicId(user.getSysClinicId()); // 机构ID
-            inventoryAdd.setCreatorId(user.getId()); // 创建人ID
-            inventoryAdd.setCreationDate(new Date()); // 创建时间
-            inventoryAdd.setApproveState(ApproveStateEnum.PENDING.getIndex()); // 设置审批状态
-
-            inventoryAddList.add(inventoryAdd);
+               mapper.insert(inventoryAdd);
+            }
+            batchSqlSession.commit();
+        } finally {
+            batchSqlSession.close();
         }
-
-        // 提交数据(添加入库记录)
-        inventoryAddMapper.insertList(inventoryAddList);
     }
 
     @Override

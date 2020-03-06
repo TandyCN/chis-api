@@ -33,9 +33,12 @@ public interface ShelfGoodsMapper {
 
     /* ------------------------------------------------------------------------------------------------------------- */
 
-    void saveList(@Param("shelfGoodsList") List<ShelfGoods> shelfGoodsList);
+    // void saveList(@Param("shelfGoodsList") List<ShelfGoods> shelfGoodsList);
 
-    void updateList(@Param("shelfGoodsList") List<ShelfGoods> shelfGoodsList);
+    void updateById(@Param("iymShelfPositionId") Integer iymShelfPositionId,
+                    @Param("maxQuantity") Integer maxQuantity,
+                    @Param("minQuantity") Integer minQuantity,
+                    @Param("id") Integer id);
 
     List<Map<String, Object>> selectClinicListByCriteria(@Param("sysClinicId") Integer sysClinicId,
                                                          @Param("gsmGoodsTypeId") Integer gsmGoodsTypeId,

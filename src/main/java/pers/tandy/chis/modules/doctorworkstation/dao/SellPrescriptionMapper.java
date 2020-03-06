@@ -32,7 +32,7 @@ public interface SellPrescriptionMapper {
 
     /******************************************************************************************************************/
 
-    void insertList(@Param("sellPrescriptionList") List<SellPrescription> sellPrescriptionList);
+    // void insertList(@Param("sellPrescriptionList") List<SellPrescription> sellPrescriptionList);
 
     List<Map<String, Object>> selectGroupListByCriteria(@Param("creationDate") String[] creationDate, // 处方日期
                                                         @Param("lsh") String lsh, // 流水号

@@ -370,7 +370,7 @@
 
 
   <!-- ************************************************************************************************************* -->
-
+  <!--
   <insert id="saveList">
      insert into flm_payable_account
      (id,
@@ -410,6 +410,7 @@
       )
     </foreach>
   </insert>
+  -->
 
   <select id="selectGroupListByCriteria" resultType="map">
     select a.*, ifnull(b.paidAmount, 0) as paidAmount

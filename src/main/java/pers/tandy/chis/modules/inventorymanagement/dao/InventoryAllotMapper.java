@@ -33,7 +33,7 @@ public interface InventoryAllotMapper {
 
     /* -------------------------------------------------------------------------------------------------------------- */
 
-    int insertList(@Param("allotList") List<InventoryAllot> allotList);
+    // int insertList(@Param("allotList") List<InventoryAllot> allotList);
 
     int updateApproveStateByLsh(@Param("approverId") Integer approverId,
                                 @Param("approveDate") Date approvedate,

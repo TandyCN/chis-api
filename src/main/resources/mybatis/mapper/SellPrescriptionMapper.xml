@@ -419,7 +419,7 @@
 
 
   <!--***************************************************************************************************************-->
-
+  <!--
   <insert id="insertList">
     insert into dwt_sell_prescription (
     id,
@@ -464,6 +464,7 @@
       )
     </foreach>
   </insert>
+  -->
 
   <select id="selectGroupListByCriteria" resultType="map">
     select

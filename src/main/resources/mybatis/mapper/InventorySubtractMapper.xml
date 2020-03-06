@@ -528,6 +528,7 @@
 
 
   <!-- ************************************************************************************************************* -->
+  <!--
   <insert id="insertList">
     insert into iym_inventory_subtract
     (
@@ -587,6 +588,7 @@
       )
     </foreach>
   </insert>
+  -->
 
   <update id="updateApproveStateByLsh">
     update

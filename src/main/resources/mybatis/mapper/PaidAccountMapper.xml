@@ -466,7 +466,7 @@
 
 
   <!-- ************************************************************************************************************* -->
-
+  <!--
   <insert id="insertList">
     insert into flm_paid_account
     (
@@ -519,6 +519,7 @@
       )
     </foreach>
   </insert>
+  -->
 
   <update id="updateInvoiceNo">
     update flm_paid_account

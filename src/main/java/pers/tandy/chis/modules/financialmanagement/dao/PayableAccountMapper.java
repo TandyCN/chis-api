@@ -33,7 +33,7 @@ public interface PayableAccountMapper {
 
     /* -------------------------------------------------------------------------------------------------------------- */
 
-    void saveList(@Param("payableAccountList") List<PayableAccount> payableAccountList);
+    // void saveList(@Param("payableAccountList") List<PayableAccount> payableAccountList);
 
     List<Map<String, Object>> selectGroupListByCriteria(@Param("creationDate") String[] creationDate,
                                                         @Param("pemSupplierId") Integer pemSupplierId,

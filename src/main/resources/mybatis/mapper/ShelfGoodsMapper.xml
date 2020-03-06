@@ -228,6 +228,7 @@
 
 
   <!-- ************************************************************************************************************* -->
+  <!--
   <insert id="saveList">
     insert into iym_shelf_goods
     (
@@ -250,17 +251,18 @@
       )
     </foreach>
   </insert>
+  -->
 
-  <update id="updateList">
-    <foreach collection="shelfGoodsList" item="shelfGoods" separator="," close=";">
-      update iym_shelf_goods
-      set iym_shelf_position_id = #{shelfGoods.iymShelfPositionId},
-      max_quantity = #{shelfGoods.maxQuantity},
-      min_quantity = #{shelfGoods.minQuantity}
-      where
-      id = #{shelfGoods.id}
-    </foreach>
+  <update id="updateById">
+    update iym_shelf_goods
+    set
+      iym_shelf_position_id = #{iymShelfPositionId},
+      max_quantity = #{maxQuantity},
+      min_quantity = #{minQuantity}
+    where
+      id = #{id}
   </update>
+
 
   <select id="selectClinicListByCriteria" resultType="map">
     select *

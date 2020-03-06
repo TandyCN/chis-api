@@ -1,5 +1,8 @@
 package pers.tandy.chis.modules.goodsitemmanagement.service.impl;
 
+import org.apache.ibatis.session.ExecutorType;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,6 +38,11 @@ public class GoodsAdjustPriceServiceImpl implements GoodsAdjustPriceService {
         this.goodsService = goodsService;
     }
 
+    private SqlSessionFactory sqlSessionFactory;
+    @Autowired
+    public void setSqlSessionFactory(SqlSessionFactory sqlSessionFactory) {
+        this.sqlSessionFactory = sqlSessionFactory;
+    }
     /*----------------------------------------------------------------------------------------------------------------*/
 
     @Override
@@ -46,16 +54,23 @@ public class GoodsAdjustPriceServiceImpl implements GoodsAdjustPriceService {
         // 初始化明细号
         int mxh = 1;
 
-        // 赋值流水号 明细号 单据状态 创建人 创建日期 失效日期
-        for (GoodsAdjustPrice gap : goodsAdjustPriceList) {
-            gap.setLsh(lsh);
-            gap.setMxh(String.valueOf(mxh++));
-            gap.setApproveState(ApproveStateEnum.PENDING.getIndex());
-            gap.setCreatorId(user.getId());
-            gap.setCreationDate(new Date());
-            gap.setExpiryDate(DateUtils.getFutureDate(1));
+        SqlSession batchSqlSession = sqlSessionFactory.openSession(ExecutorType.BATCH);
+        GoodsAdjustPriceMapper mapper = batchSqlSession.getMapper(GoodsAdjustPriceMapper.class);
+        try {
+            for (GoodsAdjustPrice goodsAdjustPrice : goodsAdjustPriceList) {
+                goodsAdjustPrice.setLsh(lsh);
+                goodsAdjustPrice.setMxh(String.valueOf(mxh++));
+                goodsAdjustPrice.setApproveState(ApproveStateEnum.PENDING.getIndex());
+                goodsAdjustPrice.setCreatorId(user.getId());
+                goodsAdjustPrice.setCreationDate(new Date());
+                goodsAdjustPrice.setExpiryDate(DateUtils.getFutureDate(1));
+
+                mapper.insert(goodsAdjustPrice);
+            }
+            batchSqlSession.commit();
+        } finally {
+            batchSqlSession.close();
         }
-        goodsAdjustPriceMapper.insertList(goodsAdjustPriceList);
     }
 
     @Override

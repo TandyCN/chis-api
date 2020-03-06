@@ -33,7 +33,7 @@ public interface GoodsAdjustPriceMapper {
 
 
     /*----------------------------------------------------------------------------------------------------------------*/
-    int insertList(@Param("gapList") List<GoodsAdjustPrice> goodsAdjustPriceList);
+    // int insertList(@Param("gapList") List<GoodsAdjustPrice> goodsAdjustPriceList);
 
     List<Map<String, Object>> selectByLsh(@Param("lsh") String lsh);
 

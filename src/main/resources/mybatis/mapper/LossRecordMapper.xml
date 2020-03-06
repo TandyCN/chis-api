@@ -515,7 +515,7 @@
 
 
   <!--***************************************************************************************************************-->
-
+  <!--
   <insert id="insertList">
     insert into iym_loss_record
     (
@@ -574,6 +574,7 @@
       )
     </foreach>
   </insert>
+  -->
 
   <update id="updateApproveState">
     update iym_loss_record

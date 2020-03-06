@@ -16,6 +16,9 @@ import pers.tandy.chis.main.component.KeyUtils;
 import pers.tandy.chis.main.component.PyUtils;
 import pers.tandy.chis.modules.chargesitemmanagement.bean.ItemAdjustPrice;
 import pers.tandy.chis.modules.chargesitemmanagement.service.ItemAdjustPriceService;
+import pers.tandy.chis.modules.inventorymanagement.bean.Inventory;
+import pers.tandy.chis.modules.inventorymanagement.service.InventoryService;
+import pers.tandy.chis.modules.mytest.service.TestService;
 import pers.tandy.chis.modules.purchasemanagement.service.PurchaseOrderService;
 import pers.tandy.chis.modules.purchasemanagement.service.PurchasePlanService;
 import pers.tandy.chis.modules.systemmanagement.bean.Role;
@@ -120,7 +123,6 @@ public class ChisApiApplicationTests {
         System.out.println(date1.after(date2));
 
     }
-
 
     @Test
     public void test5() {

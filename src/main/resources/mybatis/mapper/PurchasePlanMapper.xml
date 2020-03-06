@@ -338,6 +338,7 @@
 
 
   <!-- ************************************************************************************************************* -->
+  <!--
   <insert id="insertList">
     insert into pem_purchase_plan
     (
@@ -374,6 +375,7 @@
       )
     </foreach>
   </insert>
+  -->
 
   <update id="updateApproveStateByPlanIdList">
     UPDATE pem_purchase_plan

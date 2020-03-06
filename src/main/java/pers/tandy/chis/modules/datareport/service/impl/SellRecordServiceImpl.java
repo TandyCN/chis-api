@@ -1,6 +1,9 @@
 package pers.tandy.chis.modules.datareport.service.impl;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import org.apache.ibatis.session.ExecutorType;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
@@ -19,7 +22,6 @@ import java.util.*;
  */
 @Service
 public class SellRecordServiceImpl implements SellRecordService {
-
     private StringRedisTemplate stringRedisTemplate;
     @Autowired
     public void setStringRedisTemplate(StringRedisTemplate stringRedisTemplate) {
@@ -32,6 +34,11 @@ public class SellRecordServiceImpl implements SellRecordService {
         this.sellRecordMapper = sellRecordMapper;
     }
 
+    private SqlSessionFactory sqlSessionFactory;
+    @Autowired
+    public void setSqlSessionFactory(SqlSessionFactory sqlSessionFactory) {
+        this.sqlSessionFactory = sqlSessionFactory;
+    }
     /* -------------------------------------------------------------------------------------------------------------- */
 
     @Override
@@ -149,7 +156,16 @@ public class SellRecordServiceImpl implements SellRecordService {
 
     @Override
     public void saveList(List<SellRecord> sellRecordList) {
-        sellRecordMapper.insertList(sellRecordList);
+        SqlSession batchSqlSession = sqlSessionFactory.openSession(ExecutorType.BATCH);
+        SellRecordMapper mapper = batchSqlSession.getMapper(SellRecordMapper.class);
+        try {
+            for (SellRecord sellRecord : sellRecordList) {
+                mapper.insert(sellRecord);
+            }
+            batchSqlSession.commit();
+        } finally {
+            batchSqlSession.close();
+        }
     }
 
     @Override

@@ -1,5 +1,8 @@
 package pers.tandy.chis.modules.inventorymanagement.service.impl;
 
+import org.apache.ibatis.session.ExecutorType;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,6 +36,13 @@ public class SelfUsedRecordServiceImpl implements SelfUsedRecordService {
     public void setInventoryService(InventoryService inventoryService) {
         this.inventoryService = inventoryService;
     }
+
+    private SqlSessionFactory sqlSessionFactory;
+    @Autowired
+    public void setSqlSessionFactory(SqlSessionFactory sqlSessionFactory) {
+        this.sqlSessionFactory = sqlSessionFactory;
+    }
+
     /*----------------------------------------------------------------------------------------------------------------*/
 
     @Override
@@ -41,16 +51,23 @@ public class SelfUsedRecordServiceImpl implements SelfUsedRecordService {
         String lsh = KeyUtils.getLSH(user.getId()); // 获取流水号
         int mxh = 1;
 
-        for (SelfUsedRecord selfUsedRecord: selfUsedRecordList) {
-            selfUsedRecord.setLsh(lsh);
-            selfUsedRecord.setMxh(String.valueOf(mxh++));
-            selfUsedRecord.setSysClinicId(user.getSysClinicId());
-            selfUsedRecord.setCreatorId(user.getId());
-            selfUsedRecord.setCreationDate(new Date());
-            selfUsedRecord.setApproveState(ApproveStateEnum.PENDING.getIndex()); // 设置为待审批状态
+        SqlSession batchSqlSession = sqlSessionFactory.openSession(ExecutorType.BATCH);
+        SelfUsedRecordMapper mapper = batchSqlSession.getMapper(SelfUsedRecordMapper.class);
+        try {
+            for (SelfUsedRecord selfUsedRecord: selfUsedRecordList) {
+                selfUsedRecord.setLsh(lsh);
+                selfUsedRecord.setMxh(String.valueOf(mxh++));
+                selfUsedRecord.setSysClinicId(user.getSysClinicId());
+                selfUsedRecord.setCreatorId(user.getId());
+                selfUsedRecord.setCreationDate(new Date());
+                selfUsedRecord.setApproveState(ApproveStateEnum.PENDING.getIndex()); // 设置为待审批状态
+
+                mapper.insert(selfUsedRecord);
+            }
+            batchSqlSession.commit();
+        } finally {
+            batchSqlSession.close();
         }
-        // 保存记录
-        selfUsedRecordMapper.insertList(selfUsedRecordList);
     }
 
     @Override

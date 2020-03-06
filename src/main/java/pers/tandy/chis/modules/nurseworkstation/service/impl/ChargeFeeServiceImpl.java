@@ -524,7 +524,6 @@ public class ChargeFeeServiceImpl implements ChargeFeeService {
             }
         }
 
-        /* 挂号数据量不会太大 执行方式都采用了循环单独执行 没有采用批量执行 */
         // 获取所有的挂号记录
         List<RegistrationRecord> registrationRecordList = new ArrayList<>();
         for (String lsh : registrationRecordLshSet) {

@@ -1,5 +1,8 @@
 package pers.tandy.chis.modules.goodsitemmanagement.service.impl;
 
+import org.apache.ibatis.session.ExecutorType;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
@@ -31,6 +34,13 @@ public class GoodsServiceImpl implements GoodsService {
     public void setGoodsMapper(GoodsMapper goodsMapper) {
         this.goodsMapper = goodsMapper;
     }
+
+    private SqlSessionFactory sqlSessionFactory;
+    @Autowired
+    public void setSqlSessionFactory(SqlSessionFactory sqlSessionFactory) {
+        this.sqlSessionFactory = sqlSessionFactory;
+    }
+    /* -------------------------------------------------------------------------------------------------------------- */
 
     @Override
     public void save(Goods goods) {
@@ -70,7 +80,16 @@ public class GoodsServiceImpl implements GoodsService {
 
     @Override
     public void updateRetailPriceByList(List<Goods> goodsList) {
-        goodsMapper.updateRetailPriceByList(goodsList);
+        SqlSession batchSqlSession = sqlSessionFactory.openSession(ExecutorType.BATCH);
+        GoodsMapper mapper = batchSqlSession.getMapper(GoodsMapper.class);
+        try {
+            for (Goods goods : goodsList) {
+                mapper.updateRetailPriceById(goods.getRetailPrice(), goods.getSplitPrice(), goods.getId());
+            }
+            batchSqlSession.commit();
+        } finally {
+            batchSqlSession.close();
+        }
     }
 
     @CacheEvict(key = "#id")

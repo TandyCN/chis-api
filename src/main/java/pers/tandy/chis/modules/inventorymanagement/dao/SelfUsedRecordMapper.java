@@ -33,7 +33,7 @@ public interface SelfUsedRecordMapper {
 
     /*----------------------------------------------------------------------------------------------------------------*/
 
-    void insertList(@Param("selfUsedRecordList") List<SelfUsedRecord> selfUsedRecordList);
+    // void insertList(@Param("selfUsedRecordList") List<SelfUsedRecord> selfUsedRecordList);
 
     void updateApproveState(@Param("approverId") Integer approverId,
                             @Param("approveDate") Date approveDate,

@@ -1,5 +1,8 @@
 package pers.tandy.chis.modules.purchasemanagement.service.impl;
 
+import org.apache.ibatis.session.ExecutorType;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,6 +31,14 @@ public class PurchasePlanServiceImpl implements PurchasePlanService {
         this.purchasePlanMapper = purchasePlanMapper;
     }
 
+    private SqlSessionFactory sqlSessionFactory;
+    @Autowired
+    public void setSqlSessionFactory(SqlSessionFactory sqlSessionFactory) {
+        this.sqlSessionFactory = sqlSessionFactory;
+    }
+
+    /* -------------------------------------------------------------------------------------------------------------- */
+
     @Override
     public void save(List<PurchasePlan> purchasePlanList) {
         // 获取创建人信息
@@ -37,16 +48,23 @@ public class PurchasePlanServiceImpl implements PurchasePlanService {
         // 初始化明细号
         int mxh = 1;
 
-        // 赋值流水号 明细号 单据状态 创建人 创建日期 失效日期
-        for (PurchasePlan plan : purchasePlanList) {
-            plan.setLsh(lsh);
-            plan.setMxh(String.valueOf(mxh++));
-            plan.setSysClinicId(user.getSysClinicId());
-            plan.setCreatorId(user.getId());
-            plan.setCreationDate(new Date());
-            plan.setApproveState(ApproveStateEnum.PENDING.getIndex());
+        SqlSession batchSqlSession = sqlSessionFactory.openSession(ExecutorType.BATCH);
+        PurchasePlanMapper mapper = batchSqlSession.getMapper(PurchasePlanMapper.class);
+        try {
+            for (PurchasePlan plan : purchasePlanList) {
+                plan.setLsh(lsh);
+                plan.setMxh(String.valueOf(mxh++));
+                plan.setSysClinicId(user.getSysClinicId());
+                plan.setCreatorId(user.getId());
+                plan.setCreationDate(new Date());
+                plan.setApproveState(ApproveStateEnum.PENDING.getIndex());
+
+                mapper.insert(plan);
+            }
+            batchSqlSession.commit();
+        } finally {
+            batchSqlSession.close();
         }
-        purchasePlanMapper.insertList(purchasePlanList);
     }
 
     @Override

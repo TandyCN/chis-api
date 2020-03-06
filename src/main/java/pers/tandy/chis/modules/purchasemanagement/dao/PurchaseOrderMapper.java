@@ -33,7 +33,7 @@ public interface PurchaseOrderMapper {
 
     /* -------------------------------------------------------------------------------------------------------------- */
 
-    int insertList(@Param("poList") List<PurchaseOrder> purchaseOrderList);
+    // int insertList(@Param("poList") List<PurchaseOrder> purchaseOrderList);
 
     int updateApproveStateByLsh(@Param("approverId") Integer approverId,
                                 @Param("approveDate") Date approvedate,
@@ -41,9 +41,9 @@ public interface PurchaseOrderMapper {
                                 @Param("lsh") String lsh,
                                 @Param("currentApproveState") Byte currentApproveState);
 
-    int updateInventoryStateByCriteria(@Param("inventoryState") Boolean inventoryState,
-                                       @Param("lsh") String lsh,
-                                       @Param("sysClinicId") Integer sysClinicId);
+    void updateInventoryStateByCriteria(@Param("inventoryState") Boolean inventoryState,
+                                        @Param("lsh") String lsh,
+                                        @Param("sysClinicId") Integer sysClinicId);
 
     List<Map<String, Object>> selectLshGroupListByCriteria(@Param("creationDate") String[] creationDate,
                                                            @Param("approveState") Byte approveState,

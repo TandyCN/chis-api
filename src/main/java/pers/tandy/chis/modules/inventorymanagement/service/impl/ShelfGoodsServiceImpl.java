@@ -1,5 +1,8 @@
 package pers.tandy.chis.modules.inventorymanagement.service.impl;
 
+import org.apache.ibatis.session.ExecutorType;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,6 +14,7 @@ import pers.tandy.chis.modules.systemmanagement.bean.User;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @Author: Tandy
@@ -26,41 +30,35 @@ public class ShelfGoodsServiceImpl implements ShelfGoodsService {
         this.shelfGoodsMapper = shelfGoodsMapper;
     }
 
+    private SqlSessionFactory sqlSessionFactory;
+    @Autowired
+    public void setSqlSessionFactory(SqlSessionFactory sqlSessionFactory) {
+        this.sqlSessionFactory = sqlSessionFactory;
+    }
+
     /* -------------------------------------------------------------------------------------------------------------- */
     @Override
     public void saveOrUpdateList(List<ShelfGoods> shelfGoodsList) {
-        List<ShelfGoods> saveList = new ArrayList<>();
-        List<ShelfGoods> updateList = new ArrayList<>();
-
-        for (ShelfGoods shelfGoods : shelfGoodsList) {
-            if (shelfGoods.getId() == null) {
-                saveList.add(shelfGoods);
-            } else {
-                updateList.add(shelfGoods);
-            }
-        }
-
-        if (!saveList.isEmpty()) {
-            this.saveList(saveList);
-        }
-
-        if (!updateList.isEmpty()) {
-            this.updateList(updateList);
-        }
-    }
-
-    @Override
-    public void saveList(List<ShelfGoods> shelfGoodsList) {
+        List<ShelfGoods> saveList = shelfGoodsList.stream().filter(shelfGoods -> shelfGoods.getId() == null).collect(Collectors.toList());
+        List<ShelfGoods> updateList = shelfGoodsList.stream().filter(shelfGoods -> shelfGoods.getId() != null).collect(Collectors.toList());
+        
         User user = (User) SecurityUtils.getSubject().getPrincipal();  // 获取用户信息
-        for (ShelfGoods shelfGoods : shelfGoodsList) {
-            shelfGoods.setSysClinicId(user.getSysClinicId());
-        }
-        this.shelfGoodsMapper.saveList(shelfGoodsList);
-    }
+        SqlSession batchSqlSession = sqlSessionFactory.openSession(ExecutorType.BATCH);
+        ShelfGoodsMapper mapper = batchSqlSession.getMapper(ShelfGoodsMapper.class);
+        try {
+            for (ShelfGoods shelfGoods : saveList) {
+                shelfGoods.setSysClinicId(user.getSysClinicId());
+                mapper.insert(shelfGoods);
+            }
 
-    @Override
-    public void updateList(List<ShelfGoods> shelfGoodsList) {
-        this.shelfGoodsMapper.updateList(shelfGoodsList);
+            for (ShelfGoods shelfGoods : updateList) {
+                mapper.updateById(shelfGoods.getIymShelfPositionId(), shelfGoods.getMaxQuantity(),
+                        shelfGoods.getMinQuantity(), shelfGoods.getId());
+            }
+            batchSqlSession.commit();
+        } finally {
+            batchSqlSession.close();
+        }
     }
 
     @Override

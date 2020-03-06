@@ -686,7 +686,7 @@
 
 
   <!-- ************************************************************************************************************* -->
-
+  <!--
   <insert id="insertList">
     insert into dr_sell_record (
     id,
@@ -766,6 +766,7 @@
       )
     </foreach>
   </insert>
+  -->
 
   <update id="updateReturnedByIdList">
     update dr_sell_record

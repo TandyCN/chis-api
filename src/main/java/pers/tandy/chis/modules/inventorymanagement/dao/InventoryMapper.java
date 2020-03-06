@@ -32,14 +32,14 @@ public interface InventoryMapper {
 
     /* -------------------------------------------------------------------------------------------------------------- */
 
-    int insertList(@Param("inventoryList") List<Inventory> inventoryList);
+    // int insertList(@Param("inventoryList") List<Inventory> inventoryList);
 
-    int updateQuantityByList(@Param("inventoryList") List<Inventory> inventoryList);
+    // int updateQuantityByList(@Param("inventoryList") List<Inventory> inventoryList);
 
     void updateQuantityById(@Param("id") Integer id, @Param("quantity") Short quantity);
 
-    void updateIymInventoryTypeIdByIdList(@Param("idList") List<Integer> idList,
-                                          @Param("iymInventoryTypeId") Integer iymInventoryTypeId);
+    void updateIymInventoryTypeIdById(@Param("iymInventoryTypeId") Integer iymInventoryTypeId,
+                                      @Param("id") Integer id);
 
     List<Inventory> selectLastByGoodsIdList(@Param("goodsIdList") List<Integer> goodsIdList);
 
